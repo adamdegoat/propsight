@@ -8,7 +8,7 @@
     ['Tools', BASE + '/#tools', ''],
     ['Research', BASE + '/research/', 'feat'],
     ['New Launches', BASE + '/launches/', ''],
-    ['Market Pulse', BASE + '/notes/', ''],
+    ['Market Pulse', BASE + '/market-pulse/', ''],
     ['News', BASE + '/news/', ''],
     ['Guide', BASE + '/guide/', ''],
     ['About us', BASE + '/about/', ''],
