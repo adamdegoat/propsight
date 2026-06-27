@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="PropSight">
 <script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}</script>
 <meta property="og:title" content="PropSight · See Singapore property clearly"><meta property="og:description" content="Free Singapore property intelligence: value any home, see what you can afford, research any project, and ask Aillie, our AI guide. Just the real numbers."><meta property="og:image" content="https://propsight.sg/img/hero.jpg"><meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231b3a2d'/%3E%3Ctext x='15.5' y='23.5' text-anchor='middle' font-family='Georgia,serif' font-weight='500' font-size='22' fill='%23e3c98f'%3EP%3C/text%3E%3Ccircle cx='24' cy='10' r='1.7' fill='%23e3c98f'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231b3a2d'/%3E%3Cpath d='M8 18.5 L16 11 L24 18.5' fill='none' stroke='%23ead4a2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M11 23 L21 23' stroke='%23ead4a2' stroke-width='2.2' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='19.3' r='1.7' fill='%23c8a468'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Schibsted+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -112,6 +112,8 @@ html.menu-open,html.menu-open body{overflow:hidden}
 .hessentials:hover{border-color:var(--brass);transform:translateY(-1px)}
 .fresh{display:inline-flex;align-items:center;gap:9px;margin-top:14px;font-size:12.5px;color:var(--ink3);font-weight:600}
 .fresh .dot{width:8px;height:8px;border-radius:50%;background:#2e9e6b;box-shadow:0 0 0 0 rgba(46,158,107,.5);animation:pulse 2s infinite}
+.hsoon{display:inline-flex;align-items:center;gap:10px;margin-top:14px;font-size:12.5px;font-weight:600;color:var(--ink2);flex-wrap:wrap}
+.hsoon .t{font-size:9.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#241a0d;background:linear-gradient(135deg,var(--brass3),var(--brass));padding:4px 10px;border-radius:20px;white-space:nowrap}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.45)}}
 
 /* hero live-market panel */
@@ -386,6 +388,7 @@ html.menu-open,html.menu-open body{overflow:hidden}
 .hero .covers{color:rgba(246,241,231,.6)}
 .hero .covers b{color:rgba(246,241,231,.92)}
 .hero .fresh{color:rgba(246,241,231,.62)}
+.hero .hsoon{color:rgba(246,241,231,.82)}
 .hero .hinstall{color:var(--brass3)}
 .hero .hinstall:hover{border-bottom-color:var(--brass3)}
 .hero .hessentials{color:#f3efe6;border-color:rgba(243,239,230,.32)}
@@ -647,10 +650,10 @@ html.menu-open .cteaser{opacity:0;visibility:hidden}
 
 <header class="nav" id="nav"><div class="wrap nav-in">
   <div class="brand">
-    <svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2c5743"/><stop offset=".55" stop-color="#1b3a2d"/><stop offset="1" stop-color="#0f231a"/></linearGradient><linearGradient id="mb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#efd9a6"/><stop offset="1" stop-color="#c39a5b"/></linearGradient></defs><rect x="1" y="1" width="38" height="38" rx="11" fill="url(#mg)"/><text x="19.5" y="29.5" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-weight="500" font-size="27" fill="url(#mb)">P</text><circle cx="29" cy="13.5" r="2" fill="#e3c98f"/></svg>
+    <svg class="mark" aria-hidden="true" viewBox="0 0 64 64"><path d="M9 35 L32 13 L55 35" fill="none" stroke="currentColor" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 49 L48 49" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/><circle cx="32" cy="39" r="3.4" fill="#b08d57"/></svg>
     <span class="bw"><b>PropSight</b><span>Singapore</span></span>
   </div>
-  <nav class="links"><a href="#tools">Tools</a><a href="/thesis/" class="navfeat">Research</a><a href="launches/">New Launches</a><a href="notes/">Market Pulse</a><a href="news/">News</a><a href="essentials/">Guide</a><a href="about/">About us</a><a href="#talk">Contact</a></nav>
+  <nav class="links"><a href="#tools">Tools</a><a href="/research/" class="navfeat">Research</a><a href="launches/">New Launches</a><a href="notes/">Market Pulse</a><a href="news/">News</a><a href="essentials/">Guide</a><a href="about/">About us</a><a href="#talk">Contact</a></nav>
   <a class="btn navbtn" href="https://wa.me/6583219747">Let's talk <span class="arr">→</span></a>
   <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
     <svg class="ic-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -659,7 +662,7 @@ html.menu-open .cteaser{opacity:0;visibility:hidden}
 </div></header>
 <div class="mobile-menu" id="mobileMenu">
   <a class="mm" href="#tools"><span class="mm-n">01</span><span><span class="mm-t">Tools</span><span class="mm-d">Value, budget, stamp duty, grants &amp; more</span></span><span class="mm-ar">→</span></a>
-  <a class="mm" href="/thesis/"><span class="mm-n">02</span><span><span class="mm-t">Research</span><span class="mm-d">Any condo or HDB — prices, trends, rental yield &amp; tenure</span></span><span class="mm-ar">→</span></a>
+  <a class="mm" href="/research/"><span class="mm-n">02</span><span><span class="mm-t">Research</span><span class="mm-d">Any condo or HDB — prices, trends, rental yield &amp; tenure</span></span><span class="mm-ar">→</span></a>
   <a class="mm" href="launches/"><span class="mm-n">03</span><span><span class="mm-t">New Launches</span><span class="mm-d">The launches we're representing</span></span><span class="mm-ar">→</span></a>
   <a class="mm" href="notes/"><span class="mm-n">04</span><span><span class="mm-t">Market Pulse</span><span class="mm-d">Our read on the market, weekly</span></span><span class="mm-ar">→</span></a>
   <a class="mm" href="news/"><span class="mm-n">05</span><span><span class="mm-t">News</span><span class="mm-d">Singapore property news, refreshed daily</span></span><span class="mm-ar">→</span></a>
@@ -682,12 +685,13 @@ html.menu-open .cteaser{opacity:0;visibility:hidden}
   <div>
     <span class="eyebrow rv">Singapore property intelligence</span>
     <h1><span class="ln"><i>Singapore property,</i></span><span class="ln"><i>decoded.</i></span></h1>
-    <p class="lead lead-lg rv">PropSight is the free way to see Singapore property clearly: value any HDB or condo on real recent sales, work out what you can truly afford, and research how any project is really performing. No agent hard-sell, just the real numbers. And Aillie, our AI guide, is right here — ask her anything.</p>
-    <p class="lead lead-sm rv">The free way to see Singapore property clearly — real values, what you can truly afford, and how any project's really doing. And Aillie, our AI guide, is right here.</p>
+    <p class="lead lead-lg rv">PropSight is the free way to see Singapore property clearly: value any HDB or condo on real recent sales, work out what you can truly afford, and research how any project is really performing. No agent hard-sell, just the real numbers. And Aillie, your property intelligence, is right here — ask her anything.</p>
+    <p class="lead lead-sm rv">The free way to see Singapore property clearly — real values, what you can truly afford, and how any project's really doing. And Aillie, your property intelligence, is right here.</p>
     <div class="cta rv"><button class="btn brass" type="button" style="font-family:inherit;cursor:pointer" onclick="window.askAillie&&window.askAillie()">Ask Aillie <span class="arr">→</span></button><a class="btn btn-ghost" href="tools/value.html">Value a home <span class="arr">→</span></a></div>
     <p class="covers rv">Home values · affordability · stamp duty · grants · schools · selling · eligibility — <b>all free, all here.</b></p>
     <a class="hessentials rv" href="essentials/">New to property? Start with the guide →</a>
     <div class="fresh rv"><span class="dot"></span>Live · built on official URA data · refreshed weekly</div>
+    <div class="hsoon rv"><span class="t">Coming next</span> <span>A PropSight listings platform, every home with the real numbers built in.</span></div>
     <a class="hinstall rv" href="install.html">📲 Add this hub to your phone — one tap to every tool</a>
   </div>
   <aside class="hero-chat-mount" id="heroChatMount" aria-label="Ask Aillie"></aside>
@@ -1055,7 +1059,7 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
 })();
 </script>
 <script>
-/* ─── Inline research card — condo (thesis.json) + HDB (hdb.json), same numbers as /thesis/ ─── */
+/* ─── Inline research card — condo (thesis.json) + HDB (hdb.json), same numbers as /research/ ─── */
 (function(){
   let ready=null, PROJECTS=[], HDB=null, MEDY=null;
   const title=s=>(s||'').toLowerCase().replace(/\b\w/g,c=>c.toUpperCase());
@@ -1064,11 +1068,11 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
   function ensureThesis(){
     if(ready)return ready;
     ready=(async()=>{
-      const d=await (await fetch('/thesis/data/thesis.json',{cache:'force-cache'})).json();
+      const d=await (await fetch('/research/data/thesis.json',{cache:'force-cache'})).json();
       PROJECTS=d.projects||[];
       const ys=PROJECTS.map(p=>p.yield).filter(x=>x).sort((a,b)=>a-b);
       MEDY=ys.length?ys[ys.length>>1]:null;
-      try{ HDB=await (await fetch('/thesis/data/hdb.json',{cache:'force-cache'})).json(); }catch(e){ HDB=null; }
+      try{ HDB=await (await fetch('/research/data/hdb.json',{cache:'force-cache'})).json(); }catch(e){ HDB=null; }
       return true;
     })().catch(e=>{ready=null;throw e;});
     return ready;
@@ -1107,7 +1111,7 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
       const rng=(p.psf_lo&&p.psf_hi)?'most sell $'+p.psf_lo.toLocaleString()+'–$'+p.psf_hi.toLocaleString()+' psf':'recent transacted price per sqft';
       const yld=p.yield?p.yield+'% gross rental yield'+(MEDY?' (SG median ~'+MEDY+'%)':''):'rental yield not available';
       res.innerHTML='<div class="cval-est"><div class="rk">'+title(p.project)+' · '+(SEGP[p.seg]||p.seg||'')+'</div><div class="rv">~$'+(p.psf?p.psf.toLocaleString():'—')+' psf <span style="font-size:12px;font-weight:500;opacity:.78">typically</span></div><div class="rs">'+rng+'</div></div>'+
-        '<div class="cval-meta">'+(vsn?vsn+'.<br>':'')+'Price trend: <b>'+trendTxt(p.mom)+'</b>.<br>'+yld+'.<br>Tenure: '+(p.fh?'Freehold':'Leasehold')+' · '+(p.txns||0)+' recent sales.<br><a class="cval-full" href="/thesis/?p='+encodeURIComponent(p.project)+'" target="_blank" rel="noopener">See the full research, chart &amp; comparables →</a></div>';
+        '<div class="cval-meta">'+(vsn?vsn+'.<br>':'')+'Price trend: <b>'+trendTxt(p.mom)+'</b>.<br>'+yld+'.<br>Tenure: '+(p.fh?'Freehold':'Leasehold')+' · '+(p.txns||0)+' recent sales.<br><a class="cval-full" href="/research/?p='+encodeURIComponent(p.project)+'" target="_blank" rel="noopener">See the full research, chart &amp; comparables →</a></div>';
       res.classList.add('on');
     }
     function renderHDB(g){
@@ -1115,7 +1119,7 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
       const yld=g.yield?g.yield+'% gross rental yield':'rental yield not available';
       const vsN=g.vs_national!=null?(g.vs_national>0?g.vs_national+'% above':g.vs_national<0?(-g.vs_national)+'% below':'in line with')+' the national median for this flat type':'';
       res.innerHTML='<div class="cval-est"><div class="rk">'+g.town+' · '+title(g.ft)+'</div><div class="rv">~$'+(g.price?g.price.toLocaleString():'—')+' <span style="font-size:12px;font-weight:500;opacity:.78">typically</span></div><div class="rs">about $'+(g.psf?g.psf.toLocaleString():'—')+' psf · typically '+(g.lease||'—')+' years lease left</div></div>'+
-        '<div class="cval-meta">Price trend: <b>'+trendTxt(g.mom)+'</b>.<br>'+yld+'.<br>'+(g.txns||0)+' recent sales'+(vsN?', '+vsN:'')+'.<br><a class="cval-full" href="/thesis/?town='+encodeURIComponent(g.town)+'&ft='+encodeURIComponent(g.ft)+'" target="_blank" rel="noopener">See the full research, blocks &amp; chart →</a></div>';
+        '<div class="cval-meta">Price trend: <b>'+trendTxt(g.mom)+'</b>.<br>'+yld+'.<br>'+(g.txns||0)+' recent sales'+(vsN?', '+vsN:'')+'.<br><a class="cval-full" href="/research/?town='+encodeURIComponent(g.town)+'&ft='+encodeURIComponent(g.ft)+'" target="_blank" rel="noopener">See the full research, blocks &amp; chart →</a></div>';
       res.classList.add('on');
     }
   };
@@ -1153,7 +1157,7 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
     if(/(afford|budget|how much.*(can i|loan|borrow)|^afford$|downpayment|down payment)/.test(t))
       return {text:"Let's work out your real budget — from your income and savings, using the actual lending rules (TDSR, MSR, LTV).",link:{href:'tools/afford.html',label:'See what you can afford'}};
     if(/(research|project|condo.*(data|number|psf|yield)|rental yield|tenure|^research$)/.test(t))
-      return {text:"Our Research covers every Singapore condo and HDB — price psf, the price trend over time, rental yield, tenure, and how it's priced against comparable homes nearby, plus the new and upcoming launches pipeline.",link:{href:'/thesis/',label:'Open Research'}};
+      return {text:"Our Research covers every Singapore condo and HDB — price psf, the price trend over time, rental yield, tenure, and how it's priced against comparable homes nearby, plus the new and upcoming launches pipeline.",link:{href:'/research/',label:'Open Research'}};
     if(/(launch|lentor|showflat|vvip|preview|^launches$)/.test(t))
       return {text:"Here are the new launches we're representing right now — full project sites, real numbers, and first choice of units.",link:{href:'launches/',label:'See new launches'}};
     if(/(stamp duty|absd|bsd|^stamp)/.test(t))
@@ -1192,7 +1196,7 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
       t.remove();
       botReply("Sure — which condo or HDB? Type it below and I'll pull its real numbers: psf, the 6-month price trend, rental yield and tenure.");
       const mount=document.createElement('div');mount.style.cssText='margin-top:2px;animation:cmin .35s var(--ease)';body.appendChild(mount);
-      if(window.psResearchCard){window.psResearchCard(mount);}else{botReply("Tap below to open the full research tool.",{href:'/thesis/',label:'Open Research'});}
+      if(window.psResearchCard){window.psResearchCard(mount);}else{botReply("Tap below to open the full research tool.",{href:'/research/',label:'Open Research'});}
       scroll();showFollowups();
     },430);
   }
