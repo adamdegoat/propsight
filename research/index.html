@@ -677,7 +677,7 @@ function openHDB(town,ft){
      <div class="sect">How active it is</div>
      <div class="readout"><b>${g.txns.toLocaleString()}</b> ${tcFt(g.ft)} flats sold in ${g.town} over the last ${H.window_months} months${g.txns_recent?` (<b>${g.txns_recent}</b> in the last 6)`:''} — ${g.txns>=150?'a very active':g.txns>=40?'a fairly active':'a quieter'} resale market.</div>
      </div></div>
-     <div class="dd-actions"><a class="actbtn primary" href="https://adamdegoat.github.io/caveat/">Value a specific flat in Caveat</a></div>
+     <div class="dd-actions"><a class="actbtn primary" href="https://propsight.sg/caveat/">Value a specific flat in Caveat</a></div>
      <div class="dd-cross">Caveat values one specific flat · Thesis shows the whole town × flat-type picture.</div>
    </div>`;
   $('#ov').classList.add('show');
@@ -1029,7 +1029,7 @@ function upcomingCard(l){
 function openDD(name){
   const p=D.projects.find(x=>x.project===name);if(!p)return;
   const tv='https://www.google.com/search?q='+encodeURIComponent(p.project+' condo singapore');
-  const cav='https://adamdegoat.github.io/caveat/?p='+encodeURIComponent(p.project);
+  const cav='https://propsight.sg/caveat/?p='+encodeURIComponent(p.project);
   const rent=(p.yield&&p.price)?Math.round(p.price*p.yield/100/12/100)*100:null;
   const yCmp=(p.yield&&MEDY)?(p.yield>=MEDY+0.3?'above':p.yield<=MEDY-0.3?'below':'about in line with'):null;
   const a=p.amen||{};
