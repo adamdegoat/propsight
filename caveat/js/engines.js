@@ -146,7 +146,7 @@ const Engines = (() => {
     });
     const areaForEst = hasArea ? subj.area_sqm : C.median(pool.map(r => r.area_sqm));
     const res = finalize(comps, areaForEst, cross
-      ? { highN: 999, highCV: 0, medN: 6, medCV: 0.10 }
+      ? { highN: 999, highCV: 0, medN: 6, medCV: 0.10, cross: true }
       : { highN: 8, highCV: 0.07, medN: 6, medCV: 0.10 }, CONDO_CALIB);
     res.scope = scope; res.cross = cross; res.area_assumed = !hasArea;
     return res;
@@ -165,10 +165,17 @@ const Engines = (() => {
 
     const sqft = area_sqm * C.SQM_SQF;
     const estPrice = estPsf * sqft;
-    const band = Math.max(0.03, Math.min(cv, 0.09));
+    // Cross-district/segment fallback: the backtest shows ~16% real error on this path
+    // (vs ~4% same-project), so the narrow same-project band would overstate precision.
+    // Here we widen the band (floor 12%, cap 15%) and never let the chip read above
+    // "Lower" — an estimate built from other projects/segments is only indicative.
+    const isCross = !!(conf && conf.cross);
+    const band = isCross ? Math.max(0.12, Math.min(cv, 0.15)) : Math.max(0.03, Math.min(cv, 0.09));
     let confidence = 'Lower';
-    if (comps.length >= conf.highN && cv < conf.highCV) confidence = 'High';
-    else if (comps.length >= conf.medN && cv < conf.medCV) confidence = 'Medium';
+    if (!isCross) {
+      if (comps.length >= conf.highN && cv < conf.highCV) confidence = 'High';
+      else if (comps.length >= conf.medN && cv < conf.medCV) confidence = 'Medium';
+    }
 
     // monthly median PSF trend (raw, for the chart)
     const byM = {};

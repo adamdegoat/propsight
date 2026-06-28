@@ -65,7 +65,10 @@ h1 em{font-style:normal;color:inherit}
     var items=d.items||[];
     if(!items.length){mount.innerHTML='<div class="newsload">No news right now, check back soon.</div>';return;}
     mount.innerHTML=items.map(function(it){
-      var im=it.image?'<span class="nimg" style="background-image:url(\'../data/'+esc(it.image)+'\')"></span>':'';
+      var TAGCOL={HDB:['#1b3a2d','#27513f'],Condo:['#7a5a2e','#b08d57'],Policy:['#33414d','#516170'],'New Launch':['#1f5d52','#2f8a76'],Market:['#0f231a','#1b3a2d'],Rates:['#6b4f2a','#9c7b45'],Property:['#1b3a2d','#27513f']};
+      var tc=TAGCOL[it.tag]||TAGCOL.Property;
+      var im='<span class="nimg" style="background:linear-gradient(135deg,'+tc[0]+','+tc[1]+');display:flex;align-items:center;justify-content:center">'+
+        '<span style="font-family:Fraunces,Georgia,serif;color:#e3c98f;font-size:15px;letter-spacing:.08em;text-transform:uppercase;opacity:.92">'+esc(it.tag)+'</span></span>';
       return '<a class="ncard" href="'+esc(it.link)+'" target="_blank" rel="noopener">'+im+
         '<span class="ncard-b">'+
         '<span class="ntag">'+esc(it.tag)+'</span>'+

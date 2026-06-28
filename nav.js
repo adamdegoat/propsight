@@ -75,7 +75,15 @@
     '.psnav-menu a.psm-door .psm-door-d{display:block;font-family:"Schibsted Grotesk",system-ui,sans-serif;font-size:13px;color:#6b6357;margin-top:4px}' +
     '.psnav-menu a.psm-door .psm-arr{flex:none;width:34px;height:34px;border-radius:50%;background:#27513f;display:flex;align-items:center;justify-content:center}' +
     '.psnav-menu a.psm-door .psm-arr svg{width:15px;height:15px;stroke:#f3efe6}' +
-    '@media(max-width:1200px){.psnav-links{display:none}.psnav-door{display:none}.psnav-burger{display:flex}}@media(max-width:560px){.psnav-in{padding:0 20px}.psnav-brand b{font-size:20px}.psnav-brand .pm{width:34px;height:34px}}';
+    '@media(max-width:1200px){.psnav-links{display:none}.psnav-door{display:none}.psnav-burger{display:flex}}@media(max-width:560px){.psnav-in{padding:0 20px}.psnav-brand b{font-size:20px}.psnav-brand .pm{width:34px;height:34px}}' +
+    /* shared site footer — legal links + the global "information only" disclaimer */
+    '.psftr{background:#f1ece1;border-top:1px solid #e7e0d2;font-family:"Schibsted Grotesk",system-ui,sans-serif;padding:26px 0 calc(28px + env(safe-area-inset-bottom))}' +
+    '.psftr-in{max-width:1120px;margin:0 auto;padding:0 32px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}' +
+    '.psftr-links{display:flex;flex-wrap:wrap;gap:14px;align-items:center}' +
+    '.psftr-links a{font-size:13px;font-weight:600;color:#5a5248;text-decoration:none;transition:color .2s}.psftr-links a:hover{color:#191512}' +
+    '.psftr-cr{font-size:12.5px;color:#8a8175;font-weight:600}' +
+    '.psftr-disc{flex-basis:100%;font-size:12px;color:#8a8175;line-height:1.5;margin-top:4px;max-width:78ch}' +
+    '@media(max-width:560px){.psftr-in{padding:0 20px}}';
 
   function linkHtml(l, mobile) {
     var cls = [];
@@ -110,11 +118,34 @@
       '<span class="psm-arr">' + ARROW + '</span>' +
     '</a>' + '</div>';
 
+  var year = new Date().getFullYear();
+  var footerHTML = '<footer class="psftr" id="psFtr"><div class="psftr-in">' +
+    '<span class="psftr-cr">© ' + year + ' PropSight</span>' +
+    '<nav class="psftr-links">' +
+      '<a href="' + BASE + '/about/">About</a>' +
+      '<a href="' + BASE + '/privacy/">Privacy</a>' +
+      '<a href="' + BASE + '/terms/">Terms</a>' +
+      '<a href="mailto:propsightsg@gmail.com">Contact</a>' +
+    '</nav>' +
+    '<p class="psftr-disc">PropSight is information only — not financial or property advice. Figures are estimates; verify before acting.</p>' +
+  '</div></footer>';
+
+  // self-referential canonical → https://propsight.sg + pathname (index.html stripped)
+  function injectCanonical() {
+    if (document.querySelector('link[rel="canonical"]')) return;
+    var path = location.pathname.replace(/index\.html$/, '');
+    var l = document.createElement('link');
+    l.rel = 'canonical';
+    l.href = 'https://propsight.sg' + path + location.search.replace(/^\?$/, '');
+    document.head.appendChild(l);
+  }
+
   function init() {
     // the Join button opens the shared signup modal — make sure member.js is present
     if (!window.PS && !document.querySelector('script[src*="member.js"]')) {
       var ms = document.createElement('script'); ms.src = BASE + '/member.js'; document.head.appendChild(ms);
     }
+    injectCanonical();
     var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
     var holder = document.createElement('div'); holder.innerHTML = navHTML + menuHTML;
     var nav = holder.firstChild, menu = holder.lastChild;
@@ -125,6 +156,11 @@
     var b = document.getElementById('psBurger');
     b.addEventListener('click', function () { menu.classList.toggle('open'); });
     menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { menu.classList.remove('open'); }); });
+    // shared footer (legal links + global disclaimer) — append once, only if the page hasn't got one
+    if (!document.getElementById('psFtr')) {
+      var fh = document.createElement('div'); fh.innerHTML = footerHTML;
+      document.body.appendChild(fh.firstChild);
+    }
     if (window.PS && PS.applyAuthUI) PS.applyAuthUI();   // relabel Join→name if already signed in
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

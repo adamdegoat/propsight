@@ -49,6 +49,8 @@
    + '.psj-msg{font-size:13px;font-weight:600;margin-top:11px;min-height:1px}.psj-msg.ok{color:#1b7a52}.psj-msg.err{color:#c0392b}'
    + '.psj-fine{font-size:11.5px;color:var(--ink3);margin-top:13px;line-height:1.5}'
    + '.psj-fine a{color:var(--g2);font-weight:600;text-decoration:none;cursor:pointer}'
+   + '.psj-consent{font-size:11px;color:var(--ink3);margin-top:10px;line-height:1.5}'
+   + '.psj-consent a{color:var(--ink3);font-weight:600;text-decoration:underline;text-underline-offset:2px}'
    + '@media(min-width:480px){.psj-row{display:flex;gap:9px}.psj-row input{flex:1}}'
    /* modal */
    + '.psj-ov{position:fixed;inset:0;z-index:9999;background:rgba(12,20,16,.55);display:flex;align-items:center;justify-content:center;'
@@ -94,6 +96,7 @@
       +   '<div class="psj-row"><input name="name" placeholder="First name" autocomplete="given-name">'
       +   '<input name="email" type="email" placeholder="you@email.com" autocomplete="email"></div>'
       +   '<button type="submit">Join free →</button></form>'
+      +   '<div class="psj-consent">By joining you agree to receive PropSight emails and accept our <a href="/privacy/">Privacy Policy</a> &amp; <a href="/terms/">Terms</a>. Unsubscribe anytime.</div>'
       +   '<div class="psj-msg"></div>'
       +   '<div class="psj-fine">Free forever · no password · unsubscribe anytime. <a data-psj-tosignin>Already a member? Sign in</a></div>'
       + '</div>'
