@@ -33,7 +33,7 @@
    + 'font-family:"Schibsted Grotesk",system-ui,sans-serif;background:linear-gradient(180deg,#fff,#f7f4ec);'
    + 'border:1px solid var(--line);border-radius:22px;padding:30px 30px 26px;box-shadow:0 30px 80px rgba(15,35,26,.20),0 1px 0 rgba(255,255,255,.7) inset;text-align:left;color:var(--ink)}'
    + '.psj-ey{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#0f231a;'
-   + 'background:linear-gradient(135deg,#e3c98f,#b08d57);padding:5px 11px;border-radius:30px;margin-bottom:14px}'
+   + 'background:var(--gtex,none),#ead4a2;padding:5px 11px;border-radius:30px;margin-bottom:14px}'
    + '.psj-h{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:26px;line-height:1.12;letter-spacing:-.3px;margin:0 0 9px}'
    + '.psj-sub{font-size:14px;color:var(--ink2);line-height:1.5;margin:0 0 18px}'
    + '.psj-perks{list-style:none;margin:0 0 20px;padding:0}'
