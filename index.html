@@ -752,8 +752,8 @@ if(sa){var e=document.getElementById('navInstall');if(e)e.style.display='none';}
   <div>
     <span class="eyebrow rv">Singapore property intelligence</span>
     <h1><span class="ln"><i>Singapore property,</i></span><span class="ln"><i>decoded.</i></span></h1>
-    <p class="lead lead-lg rv">PropSight is the free way to see Singapore property clearly: value any HDB or condo on real recent sales, dig into deep research on every project and town, work out what you can truly afford, and read the property news that actually matters, in plain English. No agent hard-sell, just the real numbers. And Aillie, your AI property assistant, is right here, ask her anything.</p>
-    <p class="lead lead-sm rv">The free way to see Singapore property clearly: real values, deep research on every project and town, what you can truly afford, and the property news that matters, in plain English. Plus Aillie, your AI property assistant.</p>
+    <p class="lead lead-lg rv">PropSight is the free way to see Singapore property clearly: value any HDB or condo on real recent sales, dig into deep research on every project and town, work out what you can truly afford, and read the property news that actually matters, in plain English. No agent hard-sell, just the real numbers. And Aillie, your property intelligence, is right here, ask her anything.</p>
+    <p class="lead lead-sm rv">The free way to see Singapore property clearly: real values, deep research on every project and town, what you can truly afford, and the property news that matters, in plain English. Plus Aillie, your property intelligence.</p>
     <div class="cta rv"><button class="btn brass ps-join-cta" type="button" style="font-family:inherit;cursor:pointer" onclick="window.PS&&PS.cta('hero')">Join free <span class="arr">→</span></button><button class="btn brass-out" type="button" style="font-family:inherit;cursor:pointer" onclick="window.askAillie&&window.askAillie()">Ask Aillie <span class="arr">→</span></button><a class="btn btn-ghost" href="tools/value.html">Value a home <span class="arr">→</span></a></div>
     <p class="hperks rv"><span class="hperks-star" aria-hidden="true">★</span><span><b>Free membership</b>, the full research, more chats with Aillie, a weekly newsletter &amp; live Telegram signals. <b>Join in 10 seconds.</b></span></p>
     <div class="hsoon rv"><span class="hsoon-d"></span><span><b>Coming soon:</b> a PropSight listings platform, every home with the real numbers built in.</span></div>
@@ -870,7 +870,7 @@ if(sa){var e=document.getElementById('navInstall');if(e)e.style.display='none';}
 <section class="cpanel" id="cpanel" role="dialog" aria-label="Ask Aillie chat">
   <header class="chead">
     <span class="cmark"><span>A</span></span>
-    <div class="ct"><b>Aillie</b><span class="cstat"><i class="cdot"></i><span id="cliveTxt">AI assistant · Singapore</span></span></div>
+    <div class="ct"><b>Aillie</b><span class="cstat"><i class="cdot"></i><span id="cliveTxt">PropSight · Singapore</span></span></div>
     <button class="cx" id="cx" aria-label="Close chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </header>
   <div class="cbody" id="cbody"></div>
@@ -880,7 +880,7 @@ if(sa){var e=document.getElementById('navInstall');if(e)e.style.display='none';}
       <input id="cin" type="text" autocomplete="off" placeholder="Ask about value, budget, a project…" aria-label="Type your question">
       <button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
     </form>
-    <div class="cdisc">Aillie is an AI · answers can be wrong, verify before acting · not financial advice</div>
+    <div class="cdisc">Aillie can be wrong, verify before acting · not financial advice</div>
   </div>
 </section>
 
@@ -897,7 +897,7 @@ requestAnimationFrame(()=>document.body.classList.add('loaded'));
     return h12+':'+(m<10?'0':'')+m+ap;
   }
   function lines(){return [
-    'AI assistant · Singapore · '+sgClock(),
+    'PropSight · Singapore · '+sgClock(),
     'Reading real, recent caveats',
     'Watching all 26 HDB towns',
     'Every price from an actual sale'
@@ -1375,7 +1375,7 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
     panel.classList.add('open');btn.classList.add('hide');btn.classList.remove('cbtn-attn');
     const tz=document.getElementById('cteaser');if(tz)tz.classList.remove('show');
     if(!greeted){greeted=true;
-      setTimeout(()=>{botReply("Hi! I'm Aillie, PropSight's AI property assistant. I can be wrong, so please verify anything important before acting on it. I value any HDB or condo on real recent sales, check a project's price trend and rental yield, or work out your budget. What can I help you with?");setChips(SUGGEST);},250);
+      setTimeout(()=>{botReply("Hi! I'm Aillie, PropSight's property intelligence. I can be wrong, so please verify anything important before acting on it. I value any HDB or condo on real recent sales, check a project's price trend and rental yield, or work out your budget. What can I help you with?");setChips(SUGGEST);},250);
     }
     if(!panel.classList.contains('inhero'))setTimeout(()=>inp.focus(),360);
   }
