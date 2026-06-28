@@ -172,6 +172,8 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
 const $=s=>document.querySelector(s);
 const num=id=>parseFloat(($('#'+id).value||'').replace(/[^0-9.]/g,''))||0;
 let ptype='hdb', status='sc', owns='no', finance='no', senior='no', household='family', age35='yes';
+// income ceilings, default below but OVERWRITTEN from /caveat/data/rates.json (single source of truth)
+let EL={ec:16000, fam:14000};
 const CHECK='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#27513f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
 const WARN='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#b0883a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>';
 const NO='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#a23f28" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg>';
@@ -210,7 +212,7 @@ function compute(){
       } else {
         vk='You\'re eligible'; vh=(household==='single'?'Yes, a single Singapore Citizen aged 35+ can buy a resale flat.':'Yes, as a Singapore Citizen you can buy a resale flat.');
         P.push([CHECK,household==='single'?'On your own under the <b>singles scheme</b> (age 35+).':'With your family nucleus, a spouse, parents, or children.']);
-        P.push([CHECK,'<b>No income ceiling</b> to buy a resale flat, income limits only apply to HDB loans (≤$14,000 for families) and grants.']);
+        P.push([CHECK,'<b>No income ceiling</b> to buy a resale flat, income limits only apply to HDB loans (≤'+('$'+EL.fam.toLocaleString())+' for families) and grants.']);
       }
       if(!blocked){
         if(ownPriv){
@@ -234,14 +236,14 @@ function compute(){
     if(status==='foreigner'){
       v='no'; vk='Not allowed'; vh='New ECs aren\'t open to foreigners.';
       P.push([NO,'At least one buyer must be a Singapore Citizen. Look at private condos instead.']);
-    } else if(income>16000){
-      v='no'; vk='Over the limit'; vh='You\'re above the $16,000 income ceiling for a new EC.';
-      P.push([NO,'New ECs from a developer have a <b>$16,000</b> household income ceiling, your '+('$'+income.toLocaleString())+' is over it.']);
+    } else if(income>EL.ec){
+      v='no'; vk='Over the limit'; vh='You\'re above the '+('$'+EL.ec.toLocaleString())+' income ceiling for a new EC.';
+      P.push([NO,'New ECs from a developer have a <b>'+('$'+EL.ec.toLocaleString())+'</b> household income ceiling, your '+('$'+income.toLocaleString())+' is over it.']);
       P.push([CHECK,'Options: a <b>resale EC</b> (no income ceiling once it\'s 5+ years old) or <b>private property</b>.']);
     } else {
       v='cond'; vk='Eligible, a few conditions'; vh='Yes, you can buy a new EC.';
       P.push([CHECK,'At least one buyer must be a <b>Singapore Citizen</b>, with a co-applicant (SC or PR) forming a family nucleus.']);
-      P.push([CHECK,'Household income <b>≤ $16,000</b>, you\'re within it.']);
+      P.push([CHECK,'Household income <b>≤ '+('$'+EL.ec.toLocaleString())+'</b>, you\'re within it.']);
       P.push([ownPriv?WARN:CHECK,'You must <b>not have owned or sold any private property in the last 30 months</b>.'+(ownPriv?', you said you have, so you\'d need to wait it out.':'')]);
       P.push([WARN,'<b>5-year Minimum Occupation Period</b> (10 years for the newest EC sites launched from May 2026). A resale levy may apply if you\'ve taken a housing subsidy before.']);
     }
@@ -273,6 +275,8 @@ document.querySelectorAll('#owns .opt').forEach(o=>o.onclick=()=>{owns=o.dataset
 document.querySelectorAll('#finance .opt').forEach(o=>o.onclick=()=>{finance=o.dataset.v;pick('finance',finance);render();});
 document.querySelectorAll('#senior .opt').forEach(o=>o.onclick=()=>{senior=o.dataset.v;pick('senior',senior);render();});
 $('#income').addEventListener('input',e=>{const raw=e.target.value.replace(/[^0-9]/g,'');e.target.value=raw?Number(raw).toLocaleString('en-US'):'';render();});
+// single source of truth: income ceilings from rates.json (same file Aillie + the other tools read)
+fetch('/caveat/data/rates.json',{cache:'force-cache'}).then(function(r){return r.json();}).then(function(j){var c=j&&j.hdb&&j.hdb.income_ceiling;if(!c)return;if(c.ec)EL.ec=c.ec;if(c.family)EL.fam=c.family;render();}).catch(function(){});
 window.__elig={compute};
 render();
 </script>
