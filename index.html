@@ -638,10 +638,15 @@ html.menu-open .cbtn{opacity:0;visibility:hidden;pointer-events:none}
 .chead .cx{flex:none;width:32px;height:32px;border-radius:9px;border:1px solid rgba(243,239,230,.25);background:rgba(255,255,255,.06);color:#f3efe6;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s}
 .chead .cx:hover{background:rgba(255,255,255,.14)}.chead .cx svg{width:16px;height:16px}
 .cbody{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:18px 16px 8px;display:flex;flex-direction:column;gap:12px}
-.cmsg{max-width:86%;font-size:14px;line-height:1.55;padding:11px 14px;border-radius:15px;animation:cmin .35s var(--ease);font-family:"Schibsted Grotesk",system-ui,sans-serif;letter-spacing:-.005em}
+.cmsg{max-width:86%;font-size:14px;line-height:1.55;padding:11px 14px;border-radius:15px;animation:cpop .34s cubic-bezier(.22,1.2,.32,1);font-family:"Schibsted Grotesk",system-ui,sans-serif;letter-spacing:-.005em}
 @keyframes cmin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.cmsg.bot{align-self:flex-start;background:#f7f3ea;border:1px solid #e7e0d2;color:var(--ink);border-bottom-left-radius:5px;box-shadow:0 3px 12px rgba(25,21,18,.05)}
-.cmsg.me{align-self:flex-end;background:linear-gradient(135deg,var(--green2),var(--green3));color:#f3efe6;border-bottom-right-radius:5px}
+@keyframes cpop{0%{opacity:0;transform:scale(.84) translateY(6px)}55%{transform:scale(1.015)}100%{opacity:1;transform:none}}
+.cmsg.bot{align-self:flex-start;transform-origin:bottom left;background:#f7f3ea;border:1px solid #e7e0d2;color:var(--ink);border-bottom-left-radius:5px;box-shadow:0 3px 12px rgba(25,21,18,.05)}
+.cmsg.me{align-self:flex-end;transform-origin:bottom right;background:linear-gradient(135deg,var(--green2),var(--green3));color:#f3efe6;border-bottom-right-radius:5px}
+/* clustering: consecutive same-sender bubbles sit tighter; only the last in a cluster keeps its tail */
+.cmsg.clip{margin-top:-7px}
+.cmsg.bot.mid{border-bottom-left-radius:15px}
+.cmsg.me.mid{border-bottom-right-radius:15px}
 .cmsg .cbtnlink{display:inline-flex;align-items:center;gap:6px;margin-top:9px;background:linear-gradient(135deg,var(--brass3),var(--brass));color:#241a0d;font-weight:700;font-size:12.5px;padding:8px 13px;border-radius:9px;text-decoration:none}
 .cmsg .cbtnlink i{font-style:normal;transition:.2s}.cmsg .cbtnlink:hover i{transform:translateX(3px)}
 .ctyping{align-self:flex-start;display:flex;gap:4px;padding:13px 15px;background:#fff;border:1px solid var(--line);border-radius:15px;border-bottom-left-radius:5px}
@@ -654,7 +659,7 @@ html.menu-open .cbtn{opacity:0;visibility:hidden;pointer-events:none}
 .cfoot{flex:none;border-top:1px solid var(--line);padding:12px 14px;background:rgba(255,255,255,.5)}
 .cinput{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line2);border-radius:30px;padding:6px 6px 6px 16px;transition:.18s}
 .cinput:focus-within{border-color:var(--green2);box-shadow:0 0 0 3px rgba(39,81,63,.1)}
-.cinput input{flex:1;border:0;outline:0;font-family:var(--sans);font-size:14px;color:var(--ink);background:none;min-width:0}
+.cinput input{flex:1;border:0;outline:0;font-family:var(--sans);font-size:16px;color:var(--ink);background:none;min-width:0}
 .cinput button{flex:none;width:38px;height:38px;border-radius:50%;border:0;background:linear-gradient(135deg,var(--green2),var(--green3));color:#f3efe6;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s}
 .cinput button:hover{filter:brightness(1.12)}.cinput button svg{width:17px;height:17px}
 .cdisc{text-align:center;font-size:10.5px;color:var(--ink3);margin-top:8px}
@@ -674,7 +679,7 @@ html.menu-open .cteaser{opacity:0;visibility:hidden}
 .cval-seg button{flex:1;border:0;background:none;font-family:var(--sans);font-size:12.5px;font-weight:700;color:var(--ink2);padding:7px;border-radius:7px;cursor:pointer}
 .cval-seg button.on{background:var(--green);color:#f4efe6}
 .cval-f{position:relative;margin-bottom:8px}
-.cval-in,.cval-sel{width:100%;font-family:var(--sans);font-size:13.5px;font-weight:600;padding:11px 13px;border:1px solid rgba(219,209,191,.8);border-radius:11px;background:rgba(255,255,255,.92);color:var(--ink);outline:none}
+.cval-in,.cval-sel{width:100%;font-family:var(--sans);font-size:16px;font-weight:600;padding:11px 13px;border:1px solid rgba(219,209,191,.8);border-radius:11px;background:rgba(255,255,255,.92);color:var(--ink);outline:none}
 .cval-in:focus,.cval-sel:focus{border-color:var(--green2);box-shadow:0 0 0 3px rgba(39,81,63,.1)}
 .cval-ac{position:absolute;top:calc(100% + 3px);left:0;right:0;z-index:5;background:#fff;border:1px solid var(--line2);border-radius:10px;box-shadow:0 14px 30px rgba(25,21,18,.16);max-height:172px;overflow-y:auto;display:none}
 .cval-ac.on{display:block}
@@ -956,6 +961,8 @@ document.querySelectorAll('.count').forEach(el=>cio.observe(el));
   const num=id=>parseFloat((g(id).value||'').replace(/[^0-9.]/g,''))||0;
   const fmtM=n=>n>=1e6?'$'+(n/1e6).toFixed(2).replace(/0+$/,'').replace(/\.$/,'')+'M':'$'+Math.round(n/1000)+'k';
   const loanFromMonthly=(m,y)=>{const r=R.stress/12,n=y*12;return m<=0?0:m*(1-Math.pow(1+r,-n))/r;};
+  // expose the real lending math so Aillie's chat afford-flow uses the exact same rules (R stays live as rates.json loads)
+  window.PS_AFFORD={R:R,loanFromMonthly:loanFromMonthly,PT:PT};
   const autoTen=age=>Math.max(5,Math.min(PT[type].maxTen,65-age));
   function syncCta(){
     const a=g('amCta'); if(!a)return;
@@ -1100,6 +1107,8 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
     })().catch(e=>{ready=null;throw e;});
     return ready;
   }
+  // expose the live engine + autocomplete data so Aillie's chat value-flow reuses the same lists/estimator
+  window.PS_VALUE={ensure:ensureEngine,idx:()=>IDX,streets:()=>STREETS};
   window.psValueCard=function(mount){
     ensureEngine().catch(()=>{});
     const card=document.createElement('div');card.className='cval';
@@ -1233,7 +1242,7 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
   if(!btn||!panel)return;
   const WA='https://wa.me/6583219747';
   const API='https://web-production-07326.up.railway.app/api/ask';
-  let HIST=[],greeted=false;
+  let HIST=[],greeted=false,pendingAsk=null,lastSender=null,lastBubble=null;
   // Primary-school proximity data (real 1km/2km bands), powers Aillie's "Homes near a school" flow, client-side + accurate.
   let SCHOOLS=null, SCHOOLKEYS=[], awaitingSchool=false;
   fetch('/tools/school-homes.json',{cache:'force-cache'}).then(r=>r.json()).then(d=>{
@@ -1245,9 +1254,17 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
   }).catch(()=>{});
   let SCHOOLS_HDB={};
   fetch('/tools/school-hdb.json',{cache:'force-cache'}).then(r=>r.json()).then(d=>{ (((d&&d.schools))||[]).forEach(s=>{ if(s&&s.n)SCHOOLS_HDB[s.n.toLowerCase()]=s; }); }).catch(()=>{});
+  // Afford-flow lending rules: self-contained copy of the Afford tool's exact math (rates.json keeps it current).
+  let AffR={tdsr:.55,msr:.30,stress:.04,ltv:.75,ltvReduced:.55,minCash:.05,minCashReduced:.10};
+  const AffPT={private:{msr:false,maxTen:30},hdb:{msr:true,maxTen:25}};
+  const affLoanFromMonthly=(m,y)=>{const r=AffR.stress/12,n=y*12;return m<=0?0:m*(1-Math.pow(1+r,-n))/r;};
+  fetch('/caveat/data/rates.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{if(d.financing){const f=d.financing;AffR.tdsr=f.tdsr_pct/100;AffR.msr=f.msr_pct/100;AffR.stress=f.stress_rate_pct/100;if(f.ltv&&f.ltv.bank)AffR.ltv=f.ltv.bank['1']/100;if(f.ltv&&f.ltv.bank_reduced)AffR.ltvReduced=f.ltv.bank_reduced['1']/100;if(f.min_cash_pct){AffR.minCash=f.min_cash_pct.ltv75/100;AffR.minCashReduced=f.min_cash_pct.ltv55/100;}}}).catch(()=>{});
   const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const scroll=()=>{body.scrollTop=body.scrollHeight;};
-  function add(who,html){const d=document.createElement('div');d.className='cmsg '+who;d.innerHTML=html;body.appendChild(d);scroll();return d;}
+  function add(who,html){const d=document.createElement('div');d.className='cmsg '+who;
+    const sender=/\bme\b/.test(who)?'me':'bot';
+    if(sender===lastSender&&lastBubble){d.classList.add('clip');lastBubble.classList.add('mid');} // cluster: tighten + drop the previous tail
+    d.innerHTML=html;body.appendChild(d);lastSender=sender;lastBubble=d;scroll();return d;}
   function typing(){const d=document.createElement('div');d.className='ctyping';d.innerHTML='<span></span><span></span><span></span>';body.appendChild(d);scroll();return d;}
   function setChips(arr){chips.innerHTML='';arr.forEach(c=>{const b=document.createElement('button');b.className='cchip';b.textContent=c.label;b.onclick=()=>chipHandle(c.label);chips.appendChild(b);});}
   const SUGGEST=[{label:"What's my home worth?"},{label:"What can I afford?"},{label:"Homes near a school"},{label:"Price trend for a project"},{label:"See new launches"}];
@@ -1260,6 +1277,130 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
     let html=esc(text).replace(/\n/g,'<br>');
     if(link)html+='<br><a class="cbtnlink" href="'+link.href+'"'+(link.blank?' target="_blank" rel="noopener"':'')+'>'+esc(link.label)+' <i>→</i></a>';
     return add('bot',html);
+  }
+  /* ── Messaging-feel primitives (shared by every conversational flow) ── */
+  const wait=ms=>new Promise(r=>setTimeout(r,ms));
+  const rnd=(a,b)=>a+Math.random()*(b-a);
+  const tc=s=>(s||'').toLowerCase().replace(/\b\w/g,c=>c.toUpperCase());
+  const fmtM=n=>n>=1e6?'$'+(n/1e6).toFixed(2).replace(/0+$/,'').replace(/\.$/,'')+'M':'$'+Math.round(n/1000)+'k';
+  function clusterReset(){lastSender=null;lastBubble=null;}
+  function meSay(text){return add('me',esc(text).replace(/\n/g,'<br>'));}   // instant user bubble
+  async function say(text,link){               // one bot bubble, paced like a person texting
+    await wait(rnd(280,520));                   // short reading beat
+    const t=typing();                           // then the typing indicator
+    await wait(Math.min(1700,Math.max(480,String(text).length*15))+rnd(0,220)); // held for a human duration scaled to length
+    t.remove();
+    let html=esc(text).replace(/\n/g,'<br>');
+    if(link)html+='<br><a class="cbtnlink" href="'+link.href+'"'+(link.blank?' target="_blank" rel="noopener"':'')+'>'+esc(link.label)+' <i>&rarr;</i></a>';
+    return add('bot',html);
+  }
+  async function sayAll(arr){for(const m of arr){await say(m);}}            // 2-3 short bubbles with pauses
+  function ask(messages,chipsArr){             // say, then resolve on a chip tap OR a typed answer
+    return new Promise(resolve=>{(async()=>{
+      await sayAll(Array.isArray(messages)?messages:[messages]);
+      let done=false;
+      const settle=v=>{if(done)return;done=true;pendingAsk=null;chips.innerHTML='';resolve(v);};
+      chips.innerHTML='';
+      (chipsArr||[]).forEach(c=>{const b=document.createElement('button');b.className='cchip';b.textContent=c.label;b.onclick=()=>{if(done)return;meSay(c.label);settle(c.value);};chips.appendChild(b);});
+      pendingAsk=typed=>{if(done)return;meSay(typed);settle(typed);};   // typed answers route here while a flow waits
+    })();});
+  }
+  function setActionChips(arr){chips.innerHTML='';arr.forEach(c=>{const b=document.createElement('button');b.className='cchip';b.textContent=c.label;b.onclick=()=>{if(c.href){if(c.blank){window.open(c.href,'_blank','noopener');}else{location.href=c.href;}}};chips.appendChild(b);});}
+  function parseMoney(s){if(typeof s==='number')return s;const t=(s||'').toString().toLowerCase().replace(/[,$\s]/g,'');if(!t||/^(skip|none|no|nil|na|n\/a)$/.test(t))return null;const m=t.match(/([\d.]+)\s*(k|m)?/);if(!m)return null;let n=parseFloat(m[1]);if(isNaN(n))return null;if(m[2]==='m')n*=1e6;else if(m[2]==='k')n*=1e3;else if(n<1000)n*=1e3;return n;}
+  function isAfford(q){const r=route(q);return !!(r&&r.link&&/afford\.html/.test(r.link.href));}
+  /* ── Afford flow: converse, then reveal the real budget from the actual lending rules ── */
+  async function affordFlow(){
+    clusterReset();
+    const A=window.PS_AFFORD||{R:AffR,loanFromMonthly:affLoanFromMonthly,PT:AffPT}; // live rates from PS_AFFORD if the hero mini is present, else the self-contained copy
+    await sayAll(["Happy to work that out with you.","Just two or three quick questions and I'll give you a real number."]);
+    const incRaw=await ask("Roughly what's your monthly household income?",[{label:'Under $5k',value:4000},{label:'$5k to $8k',value:6500},{label:'$8k to $12k',value:10000},{label:'$12k+',value:15000}]);
+    const income=parseMoney(incRaw)||0;
+    const typeRaw=await ask("Are you looking at an HDB flat or a private condo?",[{label:'HDB flat',value:'hdb'},{label:'Private condo',value:'private'}]);
+    const ptype=/hdb/i.test(String(typeRaw))?'hdb':'private';
+    const saveRaw=await ask("Roughly how much have you saved for the downpayment, including CPF? Tap a range, type a number, or say skip.",[{label:'Under $50k',value:35000},{label:'$50k to $150k',value:100000},{label:'$150k to $300k',value:220000},{label:'$300k+',value:380000}]);
+    let savings=parseMoney(saveRaw);if(savings==null)savings=0;
+    if(!(income>0)){await say("I'd need a rough income to work this out. Want to try the full budget tool?",{href:'tools/afford.html',label:'Open the budget tool'});showFollowups();return;}
+    // real math, same R + loanFromMonthly as the Afford tool
+    const R=A.R,cfg=(A.PT&&A.PT[ptype])||{msr:ptype==='hdb',maxTen:ptype==='hdb'?25:30},tenure=cfg.maxTen;
+    const capacity=cfg.msr?Math.min(income*R.tdsr,income*R.msr):income*R.tdsr;
+    const maxLoan=A.loanFromMonthly(capacity,tenure);
+    const ltv=R.ltv;
+    const priceByIncome=ltv>0?maxLoan/ltv:maxLoan;
+    let maxPrice,loan,downpay;
+    if(savings>0){const priceBySavings=ltv<1?savings/(1-ltv):priceByIncome;maxPrice=Math.min(priceByIncome,priceBySavings);}
+    else{maxPrice=priceByIncome;}
+    loan=Math.min(ltv*maxPrice,maxLoan);downpay=Math.max(0,maxPrice-loan);
+    if(!(maxPrice>0)){await say("Those numbers don't give me enough to work with. The full tool can take more detail.",{href:'tools/afford.html',label:'Open the budget tool'});showFollowups();return;}
+    await say("On about "+fmtM(income)+" a month, with today's loan rules, you can comfortably look at homes up to around "+fmtM(maxPrice)+".");
+    await say(savings>0
+      ? "That's roughly a "+fmtM(loan)+" loan over "+tenure+" years, plus about "+fmtM(downpay)+" of your savings for the downpayment."
+      : "That's roughly a "+fmtM(loan)+" loan over "+tenure+" years, assuming you can cover the downpayment of about "+fmtM(maxPrice-loan)+".");
+    const q=new URLSearchParams({t:ptype,inc:Math.round(income),cash:Math.round(savings),cpf:0,age:35}).toString();
+    setActionChips([{label:'Show the breakdown',href:'tools/afford.html?'+q},{label:'Find homes in my budget',href:'/research/'}]);
+  }
+  /* ── Value flow: converse, then reveal the real range from Caveat's live estimator ── */
+  async function askArea(){
+    const a=await ask("Floor area? I can use a typical size, or you can give me the exact square feet for a tighter range.",[{label:'Use a typical size',value:0},{label:'Enter the size',value:'enter'}]);
+    if(typeof a==='number')return a;
+    if(/enter/i.test(a)){const n=await ask("Roughly how many square feet?",[]);return parseFloat(String(n).replace(/[^0-9.]/g,''))||0;}
+    return parseFloat(String(a).replace(/[^0-9.]/g,''))||0;
+  }
+  async function valueFlow(){
+    clusterReset();
+    if(!window.PS_VALUE){await say("Let me open the valuation tool for you.",{href:'tools/value.html',label:'Value a home'});showFollowups();return;}
+    await sayAll(["Happy to value it with you, right here.","Just need a couple of details."]);
+    const modeRaw=await ask("Is it an HDB flat or a private condo?",[{label:'HDB flat',value:'hdb'},{label:'Private condo',value:'condo'}]);
+    const mode=/hdb/i.test(String(modeRaw))?'hdb':'condo';
+    let IDX,STREETS;
+    try{await window.PS_VALUE.ensure();IDX=window.PS_VALUE.idx();STREETS=window.PS_VALUE.streets()||[];}
+    catch(e){await say("My valuation data is still loading. Open the full tool and it'll be ready there.",{href:'tools/value.html',label:'Value a home'});showFollowups();return;}
+    let r,label,fullURL='tools/value.html';
+    if(mode==='hdb'){
+      let st=null;
+      while(!st){
+        const typed=await ask("What's the street? Type it and I'll find it.",[]);
+        const v=String(typed).trim().toUpperCase();
+        const matches=STREETS.filter(o=>o.s.indexOf(v)>=0).slice(0,6);
+        if(!matches.length){await say("I can't find that street in our data. Mind checking the spelling, or try the main road nearby?");continue;}
+        if(matches.length===1){st=matches[0];}
+        else{const pv=await ask("I found a few. Which one?",matches.map((o,i)=>({label:tc(o.s)+' · '+tc(o.t),value:i})));
+          st=(typeof pv==='number')?matches[pv]:(STREETS.filter(o=>o.s.indexOf(String(pv).toUpperCase())>=0)[0]||matches[0]);}
+      }
+      const fts=(IDX&&IDX.hdb_towns&&IDX.hdb_towns[st.t])||[];
+      let ft='4 ROOM';
+      if(fts.length){const fv=await ask("What flat type?",fts.slice(0,6).map(f=>({label:tc(f),value:f})));ft=fts.indexOf(String(fv))>=0?String(fv):(fts.find(f=>String(fv).toUpperCase().indexOf(f.toUpperCase())>=0)||fts[0]);}
+      const sqft=await askArea();
+      const rows=await window.Caveat.hdbTown(st.t);
+      r=Engines.hdbEstimate(rows,{flat_type:ft,town:st.t,street:st.s,block:null,area_sqm:sqft?sqft/10.7639:null,storey_mid:null});
+      label=tc(ft)+' in '+tc(st.t);
+      fullURL+='?t=hdb&street='+encodeURIComponent(st.s)+'&town='+encodeURIComponent(st.t)+'&ft='+encodeURIComponent(ft)+(sqft?'&size='+sqft:'');
+    }else{
+      const PROJ=(IDX&&IDX.condo_projects)||[];
+      let proj=null;
+      while(!proj){
+        const typed=await ask("What's the project called? Type it and I'll find it.",[]);
+        const v=String(typed).trim().toUpperCase();
+        const matches=PROJ.filter(p=>p[0].indexOf(v)>=0).slice(0,6);
+        if(!matches.length){await say("I can't find that project in our data. Try the spelling, or a nearby project?");continue;}
+        if(matches.length===1){proj=matches[0];}
+        else{const pv=await ask("A few match. Which one?",matches.map((p,i)=>({label:tc(p[0])+' · D'+p[1],value:i})));
+          proj=(typeof pv==='number')?matches[pv]:(PROJ.filter(p=>p[0].indexOf(String(pv).toUpperCase())>=0)[0]||matches[0]);}
+      }
+      const sqft=await askArea();
+      const rows=await window.Caveat.condoDistrict(proj[1]);
+      r=Engines.condoEstimate(rows,{project:proj[0],district:proj[1],seg:proj[2],ptype:proj[3],tenure_fh:proj[4],area_sqm:sqft?sqft/10.7639:null,floor_mid:null});
+      label=tc(proj[0]);
+      fullURL+='?t=condo&proj='+encodeURIComponent(proj[0])+(sqft?'&size='+sqft:'');
+    }
+    if(!r||!r.ok){await sayAll(["I found "+label+", but no similar homes have sold right around there recently, so there is nothing solid to value it from.","A valuation is only as good as the recent sales behind it, and there just are not enough nearby yet.","You can still see whatever sales there are, and the comparable homes around it, in the full breakdown."]);setActionChips([{label:'See what sales there are',href:fullURL},{label:'Ask the team',href:WA,blank:true}]);return;}
+    const vLo=(r.low>0?r.low:(r.obs_low>0?r.obs_low:Math.round((r.estimate_price||0)*0.94)));
+    const vHi=(r.high>0?r.high:(r.obs_high>0?r.obs_high:Math.round((r.estimate_price||0)*1.06)));
+    const reliable=r.confidence!=='Lower'&&(r.n_comps||0)>=4&&vLo>0&&vHi>0;
+    if(!reliable){var nc=r.n_comps||0;await sayAll([nc>=1?("I found "+label+", but only "+nc+" similar "+(nc===1?"home has":"homes have")+" sold nearby in recent months. That is too few to pin down a value I would trust."):("I found "+label+", but no similar homes have sold nearby recently, so there is nothing solid to value it from yet."),"With so few sales, one unusual one, say a high floor, a renovated unit, or an odd size, would skew the whole number. I would rather not hand you something shaky.","You can see those actual recent sales and the comparable homes nearby in the full breakdown, or the team can work out a proper figure for you."]);setActionChips([{label:'See the comparable sales',href:fullURL},{label:'Ask the team',href:WA,blank:true}]);return;}
+    const cm={High:'High confidence',Medium:'Fair confidence'}[r.confidence]||(r.confidence?r.confidence+' confidence':'Fair confidence');
+    await say("Going by recent sales nearby, a typical "+label+" is worth around "+fmtM(vLo)+" to "+fmtM(vHi)+".");
+    await say(cm+", based on "+r.n_comps+" recent sale"+(r.n_comps===1?'':'s')+" of similar homes nearby, about $"+Math.round(r.estimate_psf).toLocaleString()+" for each square foot.");
+    setActionChips([{label:'See the full breakdown',href:fullURL}]);
   }
   function route(q){
     const t=(q||'').toLowerCase();
@@ -1356,17 +1497,20 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
     else{botReply("Let me get our team on that so you get a straight, accurate answer. Tap below to message us on WhatsApp.",{href:WA,label:'Message our team',blank:true});}
     showFollowups();
   }
-  function chipHandle(label){            // the suggestion chips are clear tool-intents → route instantly (free, no API call)
+  function chipHandle(label){            // the suggestion chips are clear tool-intents → converse, no API call
+    if(pendingAsk){pendingAsk(label);return;}                 // a flow is waiting on an answer
     if(isSchool(label)){ add('me',esc(label)); const s=matchSchool(label); if(s){schoolHomesMsg(s);}else{schoolAsk();} return; }
-    if(isValue(label)){valueInChat(label);return;}
+    if(isAfford(label)){meSay(label);affordFlow();return;}    // conversational budget flow (no instant form)
+    if(isValue(label)){meSay(label);valueFlow();return;}      // conversational valuation flow (no instant card)
     if(isResearch(label)){researchInChat(label);return;}
     add('me',esc(label));const t=typing();
     setTimeout(()=>{t.remove();conciergeReply(label);},420);
   }
-  function handle(q){                    // a typed question → the real PropSight AI brain (/api/ask), capped server-side
+  function handle(q){                    // a typed question → conversational flow, else the PropSight brain (/api/ask)
     if(awaitingSchool){ awaitingSchool=false; removeSchoolList(); const s=matchSchool(q); if(s){ add('me',esc(q)); schoolHomesMsg(s); return; } }
     else if(isSchool(q)){ add('me',esc(q)); const s=matchSchool(q); if(s){schoolHomesMsg(s);}else{schoolAsk();} return; }
-    if(isValue(q)){valueInChat(q);return;}
+    if(isAfford(q)){meSay(q);affordFlow();return;}
+    if(isValue(q)){meSay(q);valueFlow();return;}
     if(isResearch(q)){researchInChat(q);return;}
     add('me',esc(q));
     const t=typing(),tool=route(q);
@@ -1405,7 +1549,7 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
     // Mobile: never auto-open. Draw the eye to the launcher with a soft ring + the teaser bubble.
     btn.classList.add('cbtn-attn');
   }
-  form.onsubmit=e=>{e.preventDefault();const v=inp.value.trim();if(!v)return;inp.value='';handle(v);};
+  form.onsubmit=e=>{e.preventDefault();const v=inp.value.trim();if(!v)return;inp.value='';if(pendingAsk){pendingAsk(v);return;}handle(v);};
   // nudge: rotating input placeholder (only while empty + unfocused)
   let phi=0;setInterval(()=>{if(inp&&document.activeElement!==inp&&!inp.value){phi=(phi+1)%PH.length;inp.placeholder=PH[phi];}},4200);
   // nudge: launcher teaser bubble, surfaces example questions before they open it
