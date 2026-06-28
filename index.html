@@ -94,16 +94,14 @@ em{font-style:italic;color:var(--brass)}
 .mobile-menu{position:fixed;inset:0;z-index:55;display:flex;flex-direction:column;padding:calc(104px + env(safe-area-inset-top)) 26px calc(30px + env(safe-area-inset-bottom));opacity:0;visibility:hidden;transform:translateY(-10px);transition:opacity .42s var(--ease),transform .42s var(--ease),visibility .42s;overflow-y:auto;-webkit-overflow-scrolling:touch;background:radial-gradient(680px 380px at 88% -6%,rgba(176,141,87,.14),transparent 60%),linear-gradient(180deg,#f6f3ea,#efeadd)}
 .mobile-menu::before{content:"Menu";position:absolute;top:88px;left:26px;font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--brass)}
 .mobile-menu.open{opacity:1;visibility:visible;transform:none}
-.mobile-menu .mm{display:grid;grid-template-columns:32px 1fr auto;align-items:baseline;gap:14px;padding:17px 2px;border-bottom:1px solid rgba(176,141,87,.2);opacity:0;transform:translateY(12px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.mobile-menu .mm{display:flex;align-items:center;gap:10px;padding:12.5px 2px;opacity:0;transform:translateY(12px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
 .mobile-menu.open .mm{opacity:1;transform:none}
 .mobile-menu.open .mm-door{opacity:1;transform:none}
-.mobile-menu .mm-n{font-size:12px;font-weight:800;color:var(--brass);font-variant-numeric:tabular-nums}
-.mobile-menu .mm-t{display:block;font-family:var(--serif);font-weight:600;font-size:27px;letter-spacing:-.015em;color:var(--ink);line-height:1.08}
-.mobile-menu .mm-pill{display:inline-block;vertical-align:middle;position:relative;top:-4px;margin-left:10px;font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:800;font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:#241a0d;background:var(--gtex,none),#ead4a2;border-radius:20px;padding:4px 9px;box-shadow:0 2px 6px rgba(176,141,87,.3)}
-.mobile-menu .mm-pill.mm-soon{background:linear-gradient(135deg,#2f5a46,#1b3a2d);color:#eadfc8;box-shadow:0 2px 6px rgba(27,58,45,.3)}
-.mobile-menu .mm-d{display:block;font-size:13px;color:var(--ink3);font-weight:500;margin-top:5px}
-.mobile-menu .mm-ar{align-self:center;font-size:17px;color:var(--brass);transition:transform .25s var(--ease)}
-.mobile-menu .mm:active{background:rgba(176,141,87,.06)}.mobile-menu .mm:active .mm-ar{transform:translateX(4px)}
+.mobile-menu .mm-t{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);line-height:1.1}
+.mobile-menu .mm-pill{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:800;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:#241a0d;background:var(--gtex,none),#ead4a2;border-radius:20px;padding:3px 7px;line-height:1.4}
+.mobile-menu .mm-pill.mm-soon{background:linear-gradient(135deg,#2f5a46,#1b3a2d);color:#eadfc8}
+.mobile-menu .mm-sep{height:1px;background:rgba(176,141,87,.2);margin:9px 2px}
+.mobile-menu .mm:active .mm-t{color:#9a7b3e}
 .mobile-menu .mm-door{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;padding:18px;border:1px solid #cdd9d0;border-radius:15px;background:linear-gradient(180deg,#fff,#eef4ef);text-decoration:none;opacity:0;transform:translateY(12px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
 .mobile-menu .mm-door .mmd-t{display:block;font-family:var(--serif);font-weight:600;font-size:21px;color:var(--green);line-height:1.1}
 .mobile-menu .mm-door .mmd-d{display:block;font-size:13px;color:#6b6357;margin-top:4px}
@@ -755,14 +753,15 @@ html.menu-open .cteaser{opacity:0;visibility:hidden}
   </button>
 </div></header>
 <div class="mobile-menu" id="mobileMenu">
-  <a class="mm" href="#tools"><span class="mm-n">01</span><span><span class="mm-t">Tools</span><span class="mm-d">Value, budget, stamp duty, grants &amp; more</span></span><span class="mm-ar">→</span></a>
-  <a class="mm" href="/research/"><span class="mm-n">02</span><span><span class="mm-t">Research <span class="mm-pill">Featured</span></span><span class="mm-d">Any condo or HDB, prices, trends, rental yield &amp; tenure</span></span><span class="mm-ar">→</span></a>
-  <a class="mm" href="launches/"><span class="mm-n">03</span><span><span class="mm-t">New Launches</span><span class="mm-d">The launches we're representing</span></span><span class="mm-ar">→</span></a>
-  <a class="mm" href="market-pulse/"><span class="mm-n">04</span><span><span class="mm-t">Market Pulse</span><span class="mm-d">Our read on the market, weekly</span></span><span class="mm-ar">→</span></a>
-  <a class="mm" href="news/"><span class="mm-n">05</span><span><span class="mm-t">News <span class="mm-pill">Smart</span></span><span class="mm-d">Singapore property news, refreshed daily</span></span><span class="mm-ar">→</span></a>
-  <a class="mm" href="guide/"><span class="mm-n">06</span><span><span class="mm-t">Guide</span><span class="mm-d">How buying &amp; selling actually works</span></span><span class="mm-ar">→</span></a>
-  <a class="mm" href="about/"><span class="mm-n">07</span><span><span class="mm-t">About us</span><span class="mm-d">What PropSight is, and everything it does</span></span><span class="mm-ar">→</span></a>
-  <a class="mm" href="#talk"><span class="mm-n">08</span><span><span class="mm-t">Contact</span><span class="mm-d">Get in touch, no pressure</span></span><span class="mm-ar">→</span></a>
+  <a class="mm" href="#tools"><span class="mm-t">Tools</span></a>
+  <a class="mm" href="/research/"><span class="mm-t">Research</span><span class="mm-pill">Featured</span></a>
+  <a class="mm" href="launches/"><span class="mm-t">New Launches</span></a>
+  <a class="mm" href="market-pulse/"><span class="mm-t">Market Pulse</span></a>
+  <a class="mm" href="news/"><span class="mm-t">News</span><span class="mm-pill">Smart</span></a>
+  <a class="mm" href="guide/"><span class="mm-t">Guide</span></a>
+  <div class="mm-sep"></div>
+  <a class="mm" href="about/"><span class="mm-t">About</span></a>
+  <a class="mm" href="#talk"><span class="mm-t">Contact</span></a>
   <a class="mm-door" href="listings/"><span><span class="mmd-t">Listing Platform</span><span class="mmd-d">Coming soon, step into the platform</span></span><span class="mmd-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></a>
   <div class="mm-foot">
     <button class="mm-cta ps-join-cta" type="button" style="border:0;font-family:inherit;cursor:pointer;width:100%" onclick="document.getElementById('menuToggle').click();window.PS&&PS.cta('menu')">Join free →</button>

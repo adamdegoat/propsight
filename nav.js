@@ -72,8 +72,9 @@
     '.psnav-burger svg{width:22px;height:22px;stroke:#191512;fill:none;stroke-width:2;stroke-linecap:round}' +
     '.psnav-menu{position:fixed;left:0;right:0;top:calc(76px + env(safe-area-inset-top));bottom:0;z-index:299;background:#f6f3ea;padding:14px 24px 30px;display:none;flex-direction:column;overflow-y:auto}' +
     '.psnav-menu.open{display:flex}' +
-    '.psnav-menu a{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:23px;color:#191512;text-decoration:none;padding:16px 2px;border-bottom:1px solid #e7e0d2}' +
-    '.psnav-menu a .psm-pill{display:inline-block;vertical-align:middle;position:relative;top:-3px;margin-left:9px;font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:800;font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:#241a0d;background:var(--gtex,none),#ead4a2;border-radius:20px;padding:3px 8px;box-shadow:0 2px 6px rgba(176,141,87,.3)}' +
+    '.psnav-menu a:not(.psm-door){display:flex;align-items:center;gap:10px;font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:#23201c;text-decoration:none;padding:12.5px 2px}' +
+    '.psnav-menu a:not(.psm-door):active .psm-t,.psnav-menu a:not(.psm-door):active{color:#9a7b3e}' +
+    '.psnav-menu a .psm-pill{display:inline-block;vertical-align:middle;margin-left:8px;font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:800;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:#241a0d;background:var(--gtex,none),#ead4a2;border-radius:20px;padding:3px 7px}' +
     '.psnav-menu a .psm-soon{background:linear-gradient(135deg,#2f5a46,#1b3a2d);color:#eadfc8;box-shadow:0 2px 6px rgba(27,58,45,.3)}' +
     '.psnav-mjoin{width:100%;background:var(--gtex,none),#ead4a2;color:#241a0d;font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:800;font-size:16px;border:0;border-radius:14px;padding:15px;margin-bottom:8px;cursor:pointer;box-shadow:0 10px 26px rgba(176,141,87,.34)}' +
     '.psnav-msignin{width:100%;background:none;border:0;font-family:"Schibsted Grotesk",system-ui,sans-serif;font-size:14px;font-weight:600;color:#27513f;padding:6px;margin-bottom:8px;cursor:pointer}' +
