@@ -794,7 +794,7 @@ if(sa){var e=document.getElementById('navInstall');if(e)e.style.display='none';}
     <a class="tool rv" data-aud="buy explore" href="tools/afford.html"><span class="badge">Start here</span><svg class="ti2" viewBox="0 0 32 32" fill="none" stroke="#27513f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="16" cy="9" rx="10" ry="3.5"/><path d="M6 9v7c0 2 4.5 3.5 10 3.5s10-1.5 10-3.5V9"/><path d="M6 16v7c0 2 4.5 3.5 10 3.5s10-1.5 10-3.5v-7"/></svg><h4>What can I afford?</h4><p>Your real budget from your income and savings, using the actual lending rules. Start here.</p><span class="free">Free</span></a>
     <a class="tool feat rv" data-aud="buy sell explore" href="tools/value.html"><span class="badge">★ Most useful</span><svg class="ti2" viewBox="0 0 32 32" fill="none" stroke="#27513f" stroke-width="1.6" stroke-linecap="round"><path d="M17 4H7v10l11 11 10-10z"/><circle cx="12" cy="9" r="1.6"/></svg><h4>Value a home</h4><p>Any condo or HDB, valued on real transactions, with an honest confidence range.</p><span class="free">Free</span></a>
     <a class="tool rv" data-aud="buy" href="tools/stamp-duty.html"><svg class="ti2" viewBox="0 0 32 32" fill="none" stroke="#27513f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="4" width="16" height="24" rx="2"/><path d="M12 11h8M12 16h8M12 21h5"/></svg><h4>Stamp duty</h4><p>The tax you'll pay on a home — buyer's stamp duty plus any extra, to the dollar.</p><span class="free">Free</span></a>
-    <a class="tool rv" data-aud="buy explore" href="tools/schools.html"><svg class="ti2" viewBox="0 0 32 32" fill="none" stroke="#27513f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 5 3 11l13 6 10-4.6V19"/><path d="M8 14v5c0 1.7 3.6 3 8 3s8-1.3 8-3v-5"/></svg><h4>Homes near a school</h4><p>Pick a primary school — see the condos within 1km and 2km for P1 registration priority.</p><span class="free">Free</span></a>
+    <a class="tool rv" data-aud="buy explore" href="tools/schools.html"><svg class="ti2" viewBox="0 0 32 32" fill="none" stroke="#27513f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 5 3 11l13 6 10-4.6V19"/><path d="M8 14v5c0 1.7 3.6 3 8 3s8-1.3 8-3v-5"/></svg><h4>Homes near a school</h4><p>Pick a primary school to see the condos within 1km and 2km for P1 registration priority.</p><span class="free">Free</span></a>
     <a class="tool rv" data-aud="sell" href="tools/sell.html"><span class="badge2">Next step</span><svg class="ti2" viewBox="0 0 32 32" fill="none" stroke="#27513f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 27V5"/><path d="M21 9c0-2.2-2.2-3.5-5-3.5S11 6.8 11 9s2.2 3.2 5 3.7 5 1.5 5 3.8-2.2 3.5-5 3.5-5-1.3-5-3.5"/></svg><h4>Selling? Your net proceeds</h4><p>See your Seller's Stamp Duty (if any) and exactly what you pocket after loan, CPF and costs.</p><span class="free">Free</span></a>
     <a class="tool rv" data-aud="buy explore" href="tools/eligibility.html"><svg class="ti2" viewBox="0 0 32 32" fill="none" stroke="#27513f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l11 4v8c0 7-5 11-11 14-6-3-11-7-11-14V7z"/><path d="M11 16l4 4 7-8"/></svg><h4>Can I buy it?</h4><p>HDB, EC or condo — check if you're even eligible (citizenship, income, lock-in) before you fall for it.</p><span class="free">Free</span></a>
     <a class="tool rv" data-aud="buy explore" href="tools/grants.html"><svg class="ti2" viewBox="0 0 32 32" fill="none" stroke="#27513f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="13" width="22" height="14" rx="2"/><path d="M5 17h22M16 13v14"/><path d="M16 13c-1.8-3.6-7-3.4-7-.6 0 1.8 3.6 1.4 7 .6z"/><path d="M16 13c1.8-3.6 7-3.4 7-.6 0 1.8-3.6 1.4-7 .6z"/></svg><h4>What grants can I get?</h4><p>First-timer? See your likely CPF housing grants — EHG, Family, Proximity — and how much, free.</p><span class="free">Free</span></a>
@@ -1234,13 +1234,22 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
   const WA='https://wa.me/6583219747';
   const API='https://web-production-07326.up.railway.app/api/ask';
   let HIST=[],greeted=false;
+  // Primary-school proximity data (real 1km/2km bands) — powers Aillie's "Homes near a school" flow, client-side + accurate.
+  let SCHOOLS=null, SCHOOLKEYS=[], awaitingSchool=false;
+  fetch('/tools/school-homes.json',{cache:'force-cache'}).then(r=>r.json()).then(d=>{
+    const arr=(d&&d.schools)||d||[]; SCHOOLS={};
+    arr.forEach(s=>{ if(!s||!s.n)return; SCHOOLS[s.n.toLowerCase()]=s;
+      const key=s.n.toLowerCase().replace(/\s*primary school$/,'').replace(/\s*school$/,'').trim();
+      if(key.length>=4)SCHOOLKEYS.push({key,name:s.n.toLowerCase()}); });
+    SCHOOLKEYS.sort((a,b)=>b.key.length-a.key.length);
+  }).catch(()=>{});
   const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const scroll=()=>{body.scrollTop=body.scrollHeight;};
   function add(who,html){const d=document.createElement('div');d.className='cmsg '+who;d.innerHTML=html;body.appendChild(d);scroll();return d;}
   function typing(){const d=document.createElement('div');d.className='ctyping';d.innerHTML='<span></span><span></span><span></span>';body.appendChild(d);scroll();return d;}
   function setChips(arr){chips.innerHTML='';arr.forEach(c=>{const b=document.createElement('button');b.className='cchip';b.textContent=c.label;b.onclick=()=>chipHandle(c.label);chips.appendChild(b);});}
-  const SUGGEST=[{label:"What's my home worth?"},{label:"What can I afford?"},{label:"Price trend for a project"},{label:"See new launches"}];
-  const FOLLOW=[{label:"What's my home worth?"},{label:"What can I afford?"},{label:"Price trend for a project"},{label:"Rental yield of a condo"},{label:"Stamp duty & ABSD"},{label:"What grants can I get?"},{label:"Is now a good time to buy?"},{label:"See new launches"}];
+  const SUGGEST=[{label:"What's my home worth?"},{label:"What can I afford?"},{label:"Homes near a school"},{label:"Price trend for a project"},{label:"See new launches"}];
+  const FOLLOW=[{label:"What's my home worth?"},{label:"What can I afford?"},{label:"Homes near a school"},{label:"Price trend for a project"},{label:"Rental yield of a condo"},{label:"Stamp duty & ABSD"},{label:"What grants can I get?"},{label:"Is now a good time to buy?"},{label:"See new launches"}];
   const TEASERS=["What's your home worth?","How's the market in your area?","What can you afford?","Research a new launch","Rental yield of a condo?"];
   const PH=["Ask about value, budget, a project…","Try: what's my Bishan flat worth?","Try: price trend for Lentor condos?","Try: what can I afford on $8k?","Try: rental yield of a project?"];
   let fi=0;
@@ -1276,6 +1285,35 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
       return {text:"I can help you value a home, work out your budget, research a project, check stamp duty or grants, or point you to a new launch. What are you trying to do?"};
     return null;
   }
+  function matchSchool(q){ if(!SCHOOLS)return null; const t=(q||'').toLowerCase();
+    if(SCHOOLS[t])return SCHOOLS[t];
+    for(const k in SCHOOLS){ if(t.includes(k))return SCHOOLS[k]; }
+    for(const o of SCHOOLKEYS){ if(t.includes(o.key))return SCHOOLS[o.name]; }
+    return null; }
+  function isSchool(q){ const t=(q||'').toLowerCase();
+    if(/primary school|p1 registration|\bballot|which (primary )?school|near (my |our )?(child'?s )?school|homes? near a school|registration priority/.test(t))return true;
+    if(SCHOOLS){ for(const k in SCHOOLS){ if(t.includes(k))return true; } }
+    return false; }
+  function attachSchoolList(){ if(!SCHOOLS)return;
+    if(!document.getElementById('aillieSchools')){ const dl=document.createElement('datalist'); dl.id='aillieSchools';
+      Object.values(SCHOOLS).forEach(s=>{const o=document.createElement('option');o.value=s.n;dl.appendChild(o);}); document.body.appendChild(dl); }
+    inp.setAttribute('list','aillieSchools'); }
+  function removeSchoolList(){ inp.removeAttribute('list'); }
+  function renderSchoolHomes(s){ removeSchoolList(); const enc=encodeURIComponent, e=esc;
+    const fmt=m=> m>=1000?(m/1000).toFixed(1).replace(/\.0$/,'')+'km':m+'m';
+    const link=c=>'<a href="/research/?p='+enc(c.n)+'" style="display:flex;justify-content:space-between;gap:10px;padding:7px 11px;margin:4px 0;border:1px solid #e7e0d2;border-radius:10px;color:#191512;text-decoration:none;font-size:13.5px"><span>'+e(c.n)+'</span><span style="color:#27513f;font-weight:600;white-space:nowrap">'+fmt(c.d)+' &rarr;</span></a>';
+    const grp=(arr,lbl)=> (arr&&arr.length)?'<div style="margin-top:8px"><div style="font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#6b6253;margin-bottom:2px">'+lbl+'</div>'+arr.slice(0,6).map(link).join('')+'</div>':'';
+    const p1=s.p1||[],p2=s.p2||[];
+    let html='<b>Homes near '+e(s.n)+'</b>';
+    if(!p1.length&&!p2.length){ html+='<br>I could not find any condos within 2km of this school in our data. It may be a newer or less central area.'; add('bot',html); return; }
+    html+=grp(p1,'Within 1km · top P1 priority')+grp(p2,'1-2km · next priority');
+    const total=(s.p1n||p1.length)+(s.p2n||p2.length);
+    html+='<a class="cbtnlink" href="/research/?school='+enc(s.n)+'&zone=2km" style="margin-top:8px">See all '+total+' homes in Research <i>&rarr;</i></a>';
+    html+='<div style="font-size:11.5px;color:#6b6253;margin-top:7px">Tap any home for its real price, value and yield. Distances are indicative; confirm on MOE OneMap before deciding.</div>';
+    add('bot',html); }
+  function schoolHomesMsg(s){ const t=typing(); setTimeout(()=>{t.remove();renderSchoolHomes(s);showFollowups();},420); }
+  function schoolAsk(){ const t=typing(); setTimeout(()=>{t.remove();
+    botReply("Sure, which primary school? Type its name (for example Nan Hua, Rosyth, or Tao Nan) and I'll show the homes within 1km and 2km, with the real prices."); attachSchoolList(); awaitingSchool=true; showFollowups(); },420); }
   function isValue(q){const r=route(q);return !!(r&&r.link&&/value\.html/.test(r.link.href));}
   function valueInChat(q){              // valuation intent → drop the live inline valuation card right in the chat
     add('me',esc(q));
@@ -1306,13 +1344,16 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
     else{botReply("Let me get our team on that so you get a straight, accurate answer. Tap below to message us on WhatsApp.",{href:WA,label:'Message our team',blank:true});}
     showFollowups();
   }
-  function chipHandle(label){            // the 4 suggestion chips are clear tool-intents → route instantly (free, no API call)
+  function chipHandle(label){            // the suggestion chips are clear tool-intents → route instantly (free, no API call)
+    if(isSchool(label)){ add('me',esc(label)); const s=matchSchool(label); if(s){schoolHomesMsg(s);}else{schoolAsk();} return; }
     if(isValue(label)){valueInChat(label);return;}
     if(isResearch(label)){researchInChat(label);return;}
     add('me',esc(label));const t=typing();
     setTimeout(()=>{t.remove();conciergeReply(label);},420);
   }
   function handle(q){                    // a typed question → the real PropSight AI brain (/api/ask), capped server-side
+    if(awaitingSchool){ awaitingSchool=false; removeSchoolList(); const s=matchSchool(q); if(s){ add('me',esc(q)); schoolHomesMsg(s); return; } }
+    else if(isSchool(q)){ add('me',esc(q)); const s=matchSchool(q); if(s){schoolHomesMsg(s);}else{schoolAsk();} return; }
     if(isValue(q)){valueInChat(q);return;}
     if(isResearch(q)){researchInChat(q);return;}
     add('me',esc(q));
