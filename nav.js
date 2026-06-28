@@ -60,6 +60,11 @@
     '.psnav-door.cur{border-color:#27513f;background:linear-gradient(180deg,#27513f,#1b3a2d)}' +
     '.psnav-door.cur .pd-top{color:#f3efe6}.psnav-door.cur .pd-sub{color:rgba(243,239,230,.82)}' +
     '@media(max-width:860px){.psnav-signin{display:none}.psnav-join{margin-left:auto;margin-right:10px;font-size:13px;padding:9px 15px}}' +
+    '.psnav-back{display:none;margin-right:2px;width:40px;height:40px;flex:none;align-items:center;justify-content:center;border:1px solid #dbd1bf;border-radius:11px;background:rgba(255,255,255,.6);cursor:pointer;color:#1b3a2d;-webkit-tap-highlight-color:transparent;transition:background .2s}' +
+    '.psnav-back svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}' +
+    '.psnav-back:active{background:#efe9db}' +
+    '@media(max-width:860px){.psnav-back{display:inline-flex}}' +
+    '@media all and (display-mode:standalone){.psnav-back{display:inline-flex}}' +
     '.psnav-burger{display:none;margin-left:auto;width:42px;height:42px;border:1px solid #dbd1bf;border-radius:10px;background:rgba(255,255,255,.6);cursor:pointer;align-items:center;justify-content:center}' +
     '.psnav-burger svg{width:22px;height:22px;stroke:#191512;fill:none;stroke-width:2;stroke-linecap:round}' +
     '.psnav-menu{position:fixed;left:0;right:0;top:calc(76px + env(safe-area-inset-top));bottom:0;z-index:299;background:#f6f3ea;padding:14px 24px 30px;display:none;flex-direction:column;overflow-y:auto}' +
@@ -99,6 +104,7 @@
     return '<a href="' + l[1] + '"' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') + '>' + label + '</a>';
   }
   var navHTML = '<header class="psnav"><div class="psnav-in">' +
+    '<button class="psnav-back" id="psBack" type="button" aria-label="Go back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>' +
     '<a class="psnav-brand" href="' + BASE + '/">' + MARK + '<span class="bw"><b>PropSight</b><span>Singapore</span></span></a>' +
     '<nav class="psnav-links">' + LINKS.map(function (l) { return linkHtml(l, false); }).join('') + '</nav>' +
     '<a class="psnav-door' + (active(LISTINGS) ? ' cur' : '') + '" href="' + LISTINGS + '">' +
@@ -155,6 +161,11 @@
     document.body.appendChild(menu);
     var b = document.getElementById('psBurger');
     b.addEventListener('click', function () { menu.classList.toggle('open'); });
+    var back = document.getElementById('psBack');
+    if (back) back.addEventListener('click', function () {
+      // go back within the app if there's history, otherwise home
+      if (history.length > 1) history.back(); else location.href = BASE + '/';
+    });
     menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { menu.classList.remove('open'); }); });
     // shared footer (legal links + global disclaimer), append once, only if the page hasn't got one
     if (!document.getElementById('psFtr')) {
