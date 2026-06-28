@@ -312,6 +312,15 @@ html.menu-open,html.menu-open body{overflow:hidden}
 
 /* weekly blog */
 .notes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+/* Guide teaser as numbered "chapters" (calm handbook look) so it reads distinctly from the news cards */
+#notes .notes{gap:0 32px}
+#notes .note{background:none;border:0;border-top:1.5px solid var(--line2);border-radius:0;padding:22px 0 18px;box-shadow:none}
+#notes .note::before{display:none}
+#notes .note:hover{transform:none;box-shadow:none}
+#notes .note .chn{font-family:var(--serif);font-weight:600;font-size:30px;line-height:1;color:var(--brass);letter-spacing:-.02em;display:block;margin-bottom:9px}
+#notes .note:hover .chn{color:var(--green2);transition:color .25s var(--ease)}
+#notes .note .date{color:var(--ink3)}
+@media(max-width:880px){#notes .notes{grid-template-columns:1fr;gap:0}}
 .note.cta{background:linear-gradient(160deg,#fbf6ec,#f1ead9);border-color:var(--line2);display:flex;flex-direction:column;justify-content:center}
 .note.cta .date{color:var(--brass)}
 .note{position:relative;display:block;background:#fffefc;border:1px solid var(--line);border-radius:18px;padding:24px 22px;overflow:hidden;transition:transform .3s var(--ease),box-shadow .3s,border-color .3s}
@@ -821,7 +830,7 @@ if(sa){var e=document.getElementById('navInstall');if(e)e.style.display='none';}
 <section class="sec divtop" id="notes"><div class="wrap">
   <div class="sec-h"><div><span class="eyebrow rv">The Guide</span><h2 class="rv">New here? Learn how it all works.</h2><svg class="hl" viewBox="0 0 188 15" preserveAspectRatio="none" aria-hidden="true"><path d="M4 9 C 48 4, 140 4, 184 8"/></svg></div>
     <p class="rv">Never bought before? Don't know your OTP from your ABSD? Our guide walks you through the whole process, step by step, plus the tips that quietly save people money.</p></div>
-  <div class="notes"><a class="note rv" href="guide/#buying"><div class="date">Step by step</div><h3>How buying actually works</h3><p>The full journey for a condo or HDB, from first viewing to keys in hand, and exactly what you pay at each step.</p><span class="go">See the steps <i>→</i></span></a><a class="note rv" href="guide/#selling"><div class="date">Step by step</div><h3>How selling works</h3><p>The selling journey end to end, plus the timing traps near the finish line that catch people out.</p><span class="go">See the steps <i>→</i></span></a><a class="note rv" href="guide/#tips"><div class="date">Tips</div><h3>Tips worth knowing</h3><p>Straight answers to the things every buyer wishes they'd known first, budgets, hidden costs, lease decay and more.</p><span class="go">Read the tips <i>→</i></span></a></div>
+  <div class="notes"><a class="note rv" href="guide/#buying"><span class="chn">01</span><div class="date">Step by step</div><h3>How buying actually works</h3><p>The full journey for a condo or HDB, from first viewing to keys in hand, and exactly what you pay at each step.</p><span class="go">See the steps <i>→</i></span></a><a class="note rv" href="guide/#selling"><span class="chn">02</span><div class="date">Step by step</div><h3>How selling works</h3><p>The selling journey end to end, plus the timing traps near the finish line that catch people out.</p><span class="go">See the steps <i>→</i></span></a><a class="note rv" href="guide/#tips"><span class="chn">03</span><div class="date">Tips</div><h3>Tips worth knowing</h3><p>Straight answers to the things every buyer wishes they'd known first, budgets, hidden costs, lease decay and more.</p><span class="go">Read the tips <i>→</i></span></a></div>
   <a class="notes-all rv" href="guide/">Open the Guide <span>→</span></a>
 </div></section>
 
