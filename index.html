@@ -613,12 +613,12 @@ body::before{animation:none}
   .chatcue span{display:block;font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(36,26,13,.62);margin-top:1px}
   .chatcue::after{display:none}
   @keyframes cuebob{0%,100%{transform:rotate(3.5deg) translateY(0)}50%{transform:rotate(3.5deg) translateY(-5px)}}
-  .cpanel.inhero{position:static;width:100%;max-width:none;height:548px;min-height:500px;max-height:82vh;opacity:1 !important;visibility:visible !important;transform:none !important;background:rgba(248,245,238,.62);box-shadow:0 34px 80px rgba(8,20,14,.42),0 0 0 1px rgba(227,201,143,.3),inset 0 1px 0 rgba(255,255,255,.4)}
+  .cpanel.inhero{position:static;width:100%;max-width:none;height:648px;min-height:580px;max-height:88vh;opacity:1 !important;visibility:visible !important;transform:none !important;background:rgba(248,245,238,.62);box-shadow:0 34px 80px rgba(8,20,14,.42),0 0 0 1px rgba(227,201,143,.3),inset 0 1px 0 rgba(255,255,255,.4)}
   .cpanel.inhero .chead{background:radial-gradient(420px 200px at 88% -30%,rgba(227,201,143,.3),transparent 60%),linear-gradient(150deg,rgba(39,81,63,.92),rgba(15,35,26,.92))}
   .cpanel.inhero .cfoot{background:rgba(255,255,255,.26)}
   .cpanel.inhero .cx{display:none}
-  .cpanel.inhero .cbody{padding:22px 20px 10px;gap:14px}
-  .cpanel.inhero .cmsg{font-size:15px;max-width:90%;padding:12px 16px}
+  .cpanel.inhero .cbody{padding:20px 20px 10px;gap:10px}
+  .cpanel.inhero .cmsg{font-size:13.5px;line-height:1.5;max-width:90%;padding:10px 14px}
   .cbtn,.cteaser{display:none !important}
 }
 /* single-colour headline, no gold word, no underline squiggle (read as AI) */
@@ -1203,6 +1203,43 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
 })();
 </script>
 <script>
+/* ─── Inline budget form-card (same lending rules as the Afford tool, via PS_AFFORD) ─── */
+(function(){
+  const fmtM=n=>n>=1e6?'$'+(n/1e6).toFixed(2).replace(/0+$/,'').replace(/\.$/,'')+'M':'$'+Math.round(n/1000)+'k';
+  const pct=x=>Math.round(x*100);
+  function parseInc(s){const t=(s||'').toString().toLowerCase().replace(/[,$\s]/g,'');const m=t.match(/([\d.]+)\s*(k|m)?/);if(!m)return 0;let n=parseFloat(m[1]);if(isNaN(n))return 0;if(m[2]==='m')n*=1e6;else if(m[2]==='k')n*=1e3;else if(n<1000&&n>0)n*=1e3;return n;}
+  // self-contained lending rules, used when the hero mini-budget widget (which defines PS_AFFORD) isn't on the page
+  const FALLBACK={R:{tdsr:.55,msr:.30,stress:.04,ltv:.75},PT:{private:{msr:false,maxTen:30},hdb:{msr:true,maxTen:25}},
+                  loanFromMonthly:(m,y)=>{const r=.04/12,n=y*12;return m<=0?0:m*(1-Math.pow(1+r,-n))/r;}};
+  window.psAffordCard=function(mount){
+    const A=window.PS_AFFORD||FALLBACK;
+    const card=document.createElement('div');card.className='cval';
+    card.innerHTML='<div class="cval-seg"><button class="on" data-t="hdb">HDB flat</button><button data-t="private">Private condo</button></div>'+
+      '<div class="cval-f"><input class="cval-in af-inc" placeholder="Monthly household income (e.g. 8000)" inputmode="numeric"></div>'+
+      '<button class="cval-go af-go">Work out my budget →</button>'+
+      '<div class="cval-err af-err" style="display:none"></div><div class="cval-res af-res"></div>';
+    mount.appendChild(card);
+    const q=s=>card.querySelector(s);
+    let ptype='hdb';
+    const incI=q('.af-inc'),go=q('.af-go'),err=q('.af-err'),res=q('.af-res');
+    card.querySelectorAll('.cval-seg button').forEach(b=>b.onclick=()=>{ptype=b.dataset.t;card.querySelectorAll('.cval-seg button').forEach(x=>x.classList.toggle('on',x===b));});
+    go.onclick=()=>{
+      err.style.display='none';res.classList.remove('on');
+      const income=parseInc(incI.value);
+      if(!(income>0)){err.textContent='Enter a rough monthly income to work this out.';err.style.display='block';return;}
+      const R=A.R,cfg=(A.PT&&A.PT[ptype])||{msr:ptype==='hdb',maxTen:ptype==='hdb'?25:30},tenure=cfg.maxTen;
+      const capacity=cfg.msr?Math.min(income*R.tdsr,income*R.msr):income*R.tdsr;
+      const maxLoan=A.loanFromMonthly(capacity,tenure),ltv=R.ltv;
+      const maxPrice=ltv>0?maxLoan/ltv:maxLoan,loan=Math.min(ltv*maxPrice,maxLoan),downpay=Math.max(0,maxPrice-loan);
+      const qs='t='+ptype+'&inc='+Math.round(income)+'&age=35';
+      res.innerHTML='<div class="cval-est"><div class="rk">Your budget · '+(ptype==='hdb'?'HDB flat':'Private condo')+'</div><div class="rv">Up to '+fmtM(maxPrice)+'</div><div class="rs">a comfortable max on today\'s loan rules</div></div>'+
+        '<div class="cval-meta">Roughly a <b>'+fmtM(loan)+'</b> loan over '+tenure+' years, plus about <b>'+fmtM(downpay)+'</b> for the downpayment. Based on TDSR '+pct(R.tdsr)+'%'+(cfg.msr?', MSR '+pct(R.msr)+'%':'')+' and '+pct(ltv)+'% financing.<br><a class="cval-full" href="tools/afford.html?'+qs+'" target="_blank" rel="noopener">See the full breakdown and add your savings →</a></div>';
+      res.classList.add('on');setTimeout(function(){var c=document.getElementById('cbody');if(c)c.scrollTo({top:c.scrollHeight,behavior:'smooth'});},70);
+    };
+  };
+})();
+</script>
+<script>
 /* ─── Inline research card, condo (thesis.json) + HDB (hdb.json), same numbers as /research/ ─── */
 (function(){
   let ready=null, PROJECTS=[], HDB=null, MEDY=null;
@@ -1514,6 +1551,17 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
       scroll();showFollowups();
     },430);
   }
+  function affordInChat(q){             // budget intent → drop the live inline budget form right in the chat
+    add('me',esc(q));
+    const t=typing();
+    setTimeout(()=>{
+      t.remove();
+      botReply("Happy to work out your budget right here. Tell me your income and whether it's HDB or condo, and I'll use the real loan rules.");
+      const mount=document.createElement('div');mount.style.cssText='margin-top:2px;animation:cmin .35s var(--ease)';body.appendChild(mount);
+      if(window.psAffordCard){window.psAffordCard(mount);}else{botReply("Tap below to open the budget tool.",{href:'tools/afford.html',label:'See what you can afford'});}
+      scroll();showFollowups();
+    },430);
+  }
   function isResearch(q){return /(research|psf|yield|trend|tenure)/i.test(q||'');}
   function researchInChat(q){            // research intent → drop the live Thesis research card in the chat
     add('me',esc(q));
@@ -1535,8 +1583,8 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
   function chipHandle(label){            // the suggestion chips are clear tool-intents → converse, no API call
     if(pendingAsk){pendingAsk(label);return;}                 // a flow is waiting on an answer
     if(isSchool(label)){ add('me',esc(label)); const s=matchSchool(label); if(s){schoolHomesMsg(s);}else{schoolAsk();} return; }
-    if(isAfford(label)){meSay(label);affordFlow();return;}    // conversational budget flow (no instant form)
-    if(isValue(label)){meSay(label);valueFlow();return;}      // conversational valuation flow (no instant card)
+    if(isAfford(label)){affordInChat(label);return;}          // instant budget form-card
+    if(isValue(label)){valueInChat(label);return;}            // instant valuation form-card
     if(isResearch(label)){researchInChat(label);return;}
     add('me',esc(label));const t=typing();
     setTimeout(()=>{t.remove();conciergeReply(label);},420);
@@ -1544,8 +1592,8 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
   function handle(q){                    // a typed question → conversational flow, else the PropSight brain (/api/ask)
     if(awaitingSchool){ awaitingSchool=false; removeSchoolList(); const s=matchSchool(q); if(s){ add('me',esc(q)); schoolHomesMsg(s); return; } }
     else if(isSchool(q)){ add('me',esc(q)); const s=matchSchool(q); if(s){schoolHomesMsg(s);}else{schoolAsk();} return; }
-    if(isAfford(q)){meSay(q);affordFlow();return;}
-    if(isValue(q)){meSay(q);valueFlow();return;}
+    if(isAfford(q)){affordInChat(q);return;}
+    if(isValue(q)){valueInChat(q);return;}
     if(isResearch(q)){researchInChat(q);return;}
     add('me',esc(q));
     const t=typing(),tool=route(q);
