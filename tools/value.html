@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>What's My Home Worth?, PropSight · Singapore Property</title>
-<meta property="og:type" content="website"><meta property="og:site_name" content="PropSight"><meta property="og:url" content="https://propsight.sg/tools/value.html"><meta property="og:title" content="What's My Home Worth?, PropSight"><meta property="og:description" content="Value any HDB or condo on real recent sales. Free and instant."><meta property="og:image" content="https://propsight.sg/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://propsight.sg/og.jpg">
-<meta name="description" content="Free home valuation for any Singapore HDB flat or condo, estimated from real, recent URA & HDB transactions, with an honest confidence range. By PropSight.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="PropSight"><meta property="og:url" content="https://propsight.sg/tools/value.html"><meta property="og:title" content="What's My Home Worth?, PropSight"><meta property="og:description" content="Value any HDB or condo on real recent sales, plus landed and new-launch price references. Free and instant."><meta property="og:image" content="https://propsight.sg/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://propsight.sg/og.jpg">
+<meta name="description" content="Free home valuation for any Singapore HDB flat or condo, estimated from real, recent URA & HDB transactions, with an honest confidence range. Plus landed and new-launch price references. By PropSight.">
 <meta name="theme-color" content="#1b3a2d">
 <link rel="manifest" href="../manifest.json">
 <link rel="apple-touch-icon" href="../icons/icon-180.png">
@@ -129,11 +129,11 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
   <div class="head">
     <span class="kick">Home valuation</span>
     <h1>What's your home worth?</h1><svg class="hl-i" viewBox="0 0 172 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 9 C 44 4, 128 4, 168 8"/></svg>
-    <p class="sub">A real estimate for any HDB flat or condo, built from actual, recent transactions, with an honest range. No sign-up, no agent calling you after.</p>
+    <p class="sub">A real estimate for any HDB flat or condo, plus reference prices for landed homes and new launches, built from actual, recent transactions. No sign-up, no agent calling you after.</p>
   </div>
 
   <div class="card">
-    <div class="opts" id="mode"><div class="opt on" data-m="hdb">HDB flat</div><div class="opt" data-m="condo">Condo / private</div></div>
+    <div class="opts" id="mode"><div class="opt on" data-m="hdb">HDB flat</div><div class="opt" data-m="condo">Condo / private</div><div class="opt" data-m="landed">Landed</div><div class="opt" data-m="newlaunch">New launch</div></div>
 
     <!-- HDB inputs -->
     <div id="hdbInputs">
@@ -160,6 +160,24 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
       <div class="two">
         <div class="field"><label>Floor area <span style="font-weight:500;color:var(--ink3)">(optional)</span><small>In sqft. Leave blank for a typical unit.</small></label><input type="text" id="csize" inputmode="numeric" placeholder="e.g. 750"></div>
         <div class="field"><label>Floor <span style="font-weight:500;color:var(--ink3)">(optional)</span><small>Roughly which level</small></label><input type="text" id="floor" inputmode="numeric" placeholder="e.g. 15"></div>
+      </div>
+    </div>
+
+    <!-- Landed inputs -->
+    <div id="landedInputs" style="display:none">
+      <div class="field search"><label>Street or area<small>Type at least 2 letters, then pick your street from the list.</small></label>
+        <input type="text" id="lstreet" autocomplete="off" placeholder="e.g. Alnwick Road">
+        <div class="ac" id="lstreetac"></div>
+      </div>
+      <div class="field"><label>Landed type <span style="font-weight:500;color:var(--ink3)">(optional)</span><small>Terrace, semi-detached or detached. Leave on "All landed" to see everything.</small></label>
+        <select id="ltype"><option value="">All landed</option><option>Terrace</option><option>Semi-detached</option><option>Detached</option></select></div>
+    </div>
+
+    <!-- New launch inputs -->
+    <div id="nlInputs" style="display:none">
+      <div class="field search"><label>New launch project<small>Start typing, then pick the launch from the list.</small></label>
+        <input type="text" id="nlproj" autocomplete="off" placeholder="e.g. Parktown Residence">
+        <div class="ac" id="nlac"></div>
       </div>
     </div>
 
@@ -234,6 +252,10 @@ const fmt=n=>'$'+Math.round(n).toLocaleString('en-US');
 const fmtM=n=>n>=1e6?'$'+(n/1e6).toFixed(2).replace(/0$/,'')+'M':'$'+Math.round(n/1000)+'k';
 let mode='hdb', IDX=null, projSel=null, projList=[], cur=-1, STREETS={};
 let STREET_LIST=[], addrTown='', addrStreet='', addrList=[], acur=-1;
+// landed + new-launch reference data (reference/benchmark, not a single valuation)
+const LANDED_TYPES=['Terrace','Semi-detached','Detached','Strata Terrace','Strata Semi-detached','Strata Detached'];
+let LANDED_STREETS=[], landedSel=null, landedList=[], lcur=-1;
+let NL_LIST=[], nlSel=null, nlList=[], nlcur=-1;
 // plain-English area names (no district codes) + plain segment labels
 const AREAS={1:'City Centre',2:'Tanjong Pagar',3:'Queenstown / Tiong Bahru',4:'Sentosa / Harbourfront',5:'Clementi / West Coast',6:'City Hall',7:'Bugis / Beach Road',8:'Little India',9:'Orchard',10:'Bukit Timah / Holland',11:'Novena / Newton',12:'Toa Payoh / Balestier',13:'Macpherson / Potong Pasir',14:'Geylang / Paya Lebar',15:'East Coast (Katong)',16:'Bedok / Upper East Coast',17:'Changi / Loyang',18:'Tampines / Pasir Ris',19:'Serangoon / Hougang',20:'Bishan / Ang Mo Kio',21:'Upper Bukit Timah',22:'Jurong',23:'Bukit Panjang / Choa Chu Kang',24:'Tengah / Lim Chu Kang',25:'Woodlands',26:'Upper Thomson',27:'Yishun / Sembawang',28:'Seletar / Yio Chu Kang'};
 const area=d=>AREAS[parseInt(d,10)]||('District '+d);
@@ -246,6 +268,9 @@ if(typeof Engines==='undefined'){ $('#go').disabled=true; $('#err').classList.ad
 Caveat.index().then(d=>{ IDX=d; }).catch(()=>{ $('#err').classList.add('on'); $('#err').textContent='Couldn’t load property data, please refresh.'; });
 // flat street list for the address search (street → town behind the scenes)
 Caveat.getJSON('hdb_streets.json').then(t=>{ t.rows.forEach(([st,tn])=>{ STREET_LIST.push({s:st,t:tn}); (STREETS[tn]=STREETS[tn]||[]).push(st); }); }).catch(()=>{});
+// landed streets for the street search, and the new-launch benchmark list
+Caveat.getJSON('landed_streets.json').then(t=>{ LANDED_STREETS=Caveat.expand(t); }).catch(()=>{});
+Caveat.getJSON('new_launch.json').then(t=>{ NL_LIST=Caveat.expand(t); }).catch(()=>{});
 
 // Prefill + auto-run from URL params (so a valuation started in the Aillie chat carries over here, no re-keying)
 (async function prefillFromURL(){
@@ -274,11 +299,15 @@ Caveat.getJSON('hdb_streets.json').then(t=>{ t.rows.forEach(([st,tn])=>{ STREET_
 function title(s){return (s||'').toLowerCase().replace(/\b\w/g,c=>c.toUpperCase());}
 
 // mode toggle
+function goLabel(){return mode==='landed'?'Show recent landed sales →':mode==='newlaunch'?'Show launch benchmark →':'Value this home →';}
 document.querySelectorAll('#mode .opt').forEach(o=>o.onclick=()=>{
   document.querySelectorAll('#mode .opt').forEach(x=>x.classList.remove('on'));o.classList.add('on');mode=o.dataset.m;
   $('#hdbInputs').style.display=mode==='hdb'?'':'none';
   $('#condoInputs').style.display=mode==='condo'?'':'none';
-  $('#res').classList.remove('on');$('#err').classList.remove('on');$('#note').innerHTML='';
+  $('#landedInputs').style.display=mode==='landed'?'':'none';
+  $('#nlInputs').style.display=mode==='newlaunch'?'':'none';
+  $('#go').textContent=goLabel();
+  $('#res').classList.remove('on');$('#err').classList.remove('on');$('#note').innerHTML='';$('#compsWrap').innerHTML='';
 });
 
 // HDB address autocomplete: type a street → pick → resolves the town + flat types behind the scenes
@@ -330,14 +359,62 @@ $('#proj').addEventListener('keydown',e=>{
   else if(e.key==='ArrowUp'){cur=Math.max(cur-1,0);renderAc();e.preventDefault();}
   else if(e.key==='Enter'){pickProj(projList[cur>=0?cur:0]);e.preventDefault();}
 });
-document.addEventListener('click',e=>{if(!e.target.closest('.search')){$('#projac').classList.remove('on');$('#addrac').classList.remove('on');}});
+// Landed street autocomplete (busiest streets first)
+$('#lstreet').addEventListener('input',e=>{
+  const v=e.target.value.trim().toUpperCase(); landedSel=null; lcur=-1;
+  if(v.length<2||!LANDED_STREETS.length){$('#lstreetac').classList.remove('on');return;}
+  landedList=LANDED_STREETS.filter(o=>o.street.includes(v)).sort((a,b)=>b.n-a.n).slice(0,8);
+  renderLandedAc();
+});
+function renderLandedAc(){
+  const ac=$('#lstreetac');
+  if(!landedList.length){ac.innerHTML='<div class="meta" style="cursor:default">No matching street, try fewer letters.</div>';ac.classList.add('on');return;}
+  ac.innerHTML=landedList.map((o,i)=>`<div data-i="${i}" class="${i===lcur?'hl':''}">${title(o.street)} <span class="meta">· ${area(o.district)} · ${o.n} sale${o.n>1?'s':''}</span></div>`).join('');
+  ac.classList.add('on');
+  ac.querySelectorAll('div[data-i]').forEach(el=>el.onclick=()=>pickLanded(landedList[+el.dataset.i]));
+}
+function pickLanded(o){ landedSel=o; $('#lstreet').value=title(o.street); $('#lstreetac').classList.remove('on'); }
+$('#lstreet').addEventListener('keydown',e=>{
+  if(!landedList.length)return;
+  if(e.key==='ArrowDown'){lcur=Math.min(lcur+1,landedList.length-1);renderLandedAc();e.preventDefault();}
+  else if(e.key==='ArrowUp'){lcur=Math.max(lcur-1,0);renderLandedAc();e.preventDefault();}
+  else if(e.key==='Enter'){pickLanded(landedList[lcur>=0?lcur:0]);e.preventDefault();}
+});
+
+// New-launch autocomplete (click the box to see recent launches)
+function renderNlAc(){
+  const ac=$('#nlac');
+  if(!nlList.length){ac.innerHTML='<div class="meta" style="cursor:default">No matching launch.</div>';ac.classList.add('on');return;}
+  ac.innerHTML=nlList.map((p,i)=>`<div data-i="${i}" class="${i===nlcur?'hl':''}">${title(p.project)} <span class="meta">· ${area(p.district)} · ${segPlain(p.seg)}</span></div>`).join('');
+  ac.classList.add('on');
+  ac.querySelectorAll('div[data-i]').forEach(el=>el.onclick=()=>pickNl(nlList[+el.dataset.i]));
+}
+function nlUpdate(){
+  const v=$('#nlproj').value.trim().toUpperCase(); nlSel=null; nlcur=-1;
+  if(!NL_LIST.length){$('#nlac').classList.remove('on');return;}
+  nlList = v.length===0 ? NL_LIST.slice(0,14) : NL_LIST.filter(p=>p.project.toUpperCase().includes(v)).slice(0,12);
+  renderNlAc();
+}
+$('#nlproj').addEventListener('focus',nlUpdate);
+$('#nlproj').addEventListener('input',nlUpdate);
+function pickNl(p){ nlSel=p; $('#nlproj').value=title(p.project); $('#nlac').classList.remove('on'); }
+$('#nlproj').addEventListener('keydown',e=>{
+  if(!nlList.length)return;
+  if(e.key==='ArrowDown'){nlcur=Math.min(nlcur+1,nlList.length-1);renderNlAc();e.preventDefault();}
+  else if(e.key==='ArrowUp'){nlcur=Math.max(nlcur-1,0);renderNlAc();e.preventDefault();}
+  else if(e.key==='Enter'){pickNl(nlList[nlcur>=0?nlcur:0]);e.preventDefault();}
+});
+
+document.addEventListener('click',e=>{if(!e.target.closest('.search')){$('#projac').classList.remove('on');$('#addrac').classList.remove('on');$('#lstreetac').classList.remove('on');$('#nlac').classList.remove('on');}});
 
 // run valuation
 $('#go').addEventListener('click',run);
 async function run(){
   $('#err').classList.remove('on');$('#res').classList.remove('on');$('#note').innerHTML='';$('#compsWrap').innerHTML='';
-  $('#go').disabled=true;$('#go').textContent='Valuing…';
+  $('#go').disabled=true;$('#go').textContent='Working…';
   try{
+    if(mode==='landed'){ await genLanded(); $('#go').disabled=false;$('#go').textContent=goLabel(); return; }
+    if(mode==='newlaunch'){ await genNewLaunch(); $('#go').disabled=false;$('#go').textContent=goLabel(); return; }
     let r, subj, rows, label;
     if(mode==='hdb'){
       const town=addrTown, ft=$('#ftype').value;
@@ -360,12 +437,70 @@ async function run(){
     if(!r.ok){throw new Error(plainReason(r.reason));}
     render(r,label,subj);
   }catch(err){ $('#err').classList.add('on'); $('#err').textContent=err.message||'Something went wrong, try again.'; }
-  $('#go').disabled=false;$('#go').textContent='Value this home →';
+  $('#go').disabled=false;$('#go').textContent=goLabel();
 }
 
 function plainReason(s){return s;} // engine reasons are already plain enough
 
+// ===================== LANDED (reference only) =====================
+async function genLanded(){
+  let sel=landedSel;
+  if(!sel){ const typed=$('#lstreet').value.trim().toUpperCase(); sel=LANDED_STREETS.find(s=>s.street===typed); }
+  if(!sel){ throw new Error('Type your street and pick it from the list.'); }
+  const d=String(sel.district), street=sel.street, streetU=street.toUpperCase(), type=$('#ltype').value;
+  let areaRows=(await Caveat.condoDistrict(d)).filter(r=>LANDED_TYPES.includes(r.ptype));
+  if(type) areaRows=areaRows.filter(r=>r.ptype===type||r.ptype==='Strata '+type);
+  const rows=areaRows.filter(r=>(r.street||'').toUpperCase()===streetU).sort((a,b)=>String(b.yymm).localeCompare(String(a.yymm)));
+  if(!rows.length){ throw new Error(`No recent ${type||'landed'} sales on ${title(street)}. Try "All landed", or another street.`); }
+  const prices=rows.map(r=>r.price), psfs=rows.map(r=>r.psf);
+  const aPrices=areaRows.map(r=>r.price), aPsf=areaRows.map(r=>r.psf);
+  $('#res .tot-k').textContent='Recent landed sales, reference';
+  $('#tot').textContent=fmtM(Caveat.median(prices));
+  $('#totsub').innerHTML=`<b>${title(street)}, ${area(d)}.</b> Landed homes vary a lot by land size, tenure and plot, so there is no single reliable price. These are <b>actual recent transactions</b> to anchor your own judgement, not a valuation.`;
+  $('#conf').className='chip Lower';$('#conftxt').textContent='Reference only';
+  $('#rows').innerHTML=[
+    rowHTML('Median price on this street','the middle of recent sales here',fmt(Caveat.median(prices))),
+    rowHTML('Median land $/sqft','on the land or strata area, as filed','$'+Math.round(Caveat.median(psfs))+' psf'),
+    rowHTML('Recent sales ranged','lowest to highest recent sale',`${fmtM(Math.min(...prices))} to ${fmtM(Math.max(...prices))}`),
+    rowHTML('Wider area for context',`${area(d)} ${type||'landed'}: typically ${fmt(Caveat.median(aPrices))} at $${Math.round(Caveat.median(aPsf))} psf, across ${areaRows.length} recent sale${areaRows.length===1?'':'s'}`,''),
+  ].join('');
+  renderLandedComps(rows,street);
+  $('#note').innerHTML=`Showing the ${Math.min(rows.length,14)} most recent of ${rows.length} sale${rows.length===1?'':'s'} on ${title(street)}. Because every landed plot is different, treat these as <b>reference points</b>, not a single valuation. Want a proper read on a specific house? <a href="https://wa.me/6583219747" style="color:var(--green2);font-weight:700">Message us</a>.`;
+  $('#res').classList.add('on');$('#res').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function renderLandedComps(rows,street){
+  const body=rows.slice(0,14).map(r=>{
+    const sf=Math.round((r.area_sqm||0)*SQF), when=mLabel(r.yymm);
+    return `<tr><td><b>${r.ptype}</b><span class="cstreet">${title(r.street||'')}</span></td><td class="cnum cflr">${when}</td><td class="cnum hide-sm">${sf?sf.toLocaleString()+' sf':'n/a'}</td><td class="cnum hide-sm">$${Math.round(r.psf)}</td><td class="cnum cpr">${fmtM(r.price)}</td></tr>`;
+  }).join('');
+  $('#compsWrap').innerHTML=`<div class="comps-h"><b>Recent reference sales on ${title(street)}</b><span>newest first · reference only</span></div>
+    <div class="comps-scroll"><table class="comps"><thead><tr><th>Type</th><th class="cnum">Sold</th><th class="cnum hide-sm">Land size</th><th class="cnum hide-sm">$psf</th><th class="cnum">Price</th></tr></thead><tbody>${body}</tbody></table></div>
+    <p class="comps-note">Actual transacted landed prices from URA caveats. The $psf is on the land or strata area as filed. Each plot is different, so these prices are not directly comparable to each other.</p>`;
+}
+
+// ===================== NEW LAUNCH (benchmark only) =====================
+async function genNewLaunch(){
+  let p=nlSel;
+  if(!p){ const typed=$('#nlproj').value.trim().toUpperCase(); p=NL_LIST.find(x=>x.project.toUpperCase()===typed); }
+  if(!p){ throw new Error('Type a project and pick it from the list.'); }
+  $('#res .tot-k').textContent='New-launch benchmark';
+  $('#tot').textContent=fmtM(p.median_price);
+  $('#totsub').innerHTML=`<b>${title(p.project)}, ${area(p.district)}.</b> New launches are priced by the developer, not the resale market. This is the <b>benchmark of actual new-sale transactions</b> at this project, useful context for pricing, not a resale estimate.`;
+  $('#conf').className='chip Medium';$('#conftxt').textContent='Benchmark';
+  $('#rows').innerHTML=[
+    rowHTML('Median new-sale $/sqft','the middle of recent new sales here','$'+p.median_psf+' psf'),
+    rowHTML('Typical price','a representative unit at this launch',fmt(p.median_price)),
+    rowHTML('Units sold','new-sale transactions counted so far',p.txns.toLocaleString()),
+    rowHTML('Where it is','area and market segment',`${area(p.district)} · ${segPlain(p.seg)}`),
+    rowHTML('Latest sale logged','most recent new-sale month',mLabel(p.last)),
+  ].join('');
+  $('#compsWrap').innerHTML='';
+  $('#note').innerHTML=`This is the developer's <b>new-sale benchmark</b> for ${title(p.project)}, drawn from ${p.txns.toLocaleString()} transaction${p.txns===1?'':'s'}, not a resale valuation. New-launch pricing usually sits above comparable resale stock nearby. Comparing a specific unit or stack? <a href="https://wa.me/6583219747" style="color:var(--green2);font-weight:700">Message us</a>.`;
+  $('#res').classList.add('on');$('#res').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
 function render(r,label,subj){
+  $('#res .tot-k').textContent='Estimated value range';
   $('#tot').textContent=`${fmtM(r.low)}, ${fmtM(r.high)}`;
   const rough = r.confidence==='Lower' || (r.n_comps||99) < 4;
   $('#totsub').innerHTML = rough
