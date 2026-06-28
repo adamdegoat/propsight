@@ -174,7 +174,7 @@
    this is a no-op, so it can never slow or break the site. (Swap to Cloudflare/Plausible
    here later if you prefer — same one place.) */
 (function () {
-  var GC_CODE = ""; // e.g. "propsight"
+  var GC_CODE = "propsight"; // https://propsight.goatcounter.com
   if (!GC_CODE) return;
   var s = document.createElement('script');
   s.async = true; s.src = '//gc.zgo.at/count.js';
