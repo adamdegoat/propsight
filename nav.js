@@ -146,7 +146,7 @@
     var path = location.pathname.replace(/index\.html$/, '');
     var l = document.createElement('link');
     l.rel = 'canonical';
-    l.href = 'https://propsight.sg' + path + location.search.replace(/^\?$/, '');
+    l.href = 'https://www.propsight.sg' + path + location.search.replace(/^\?$/, '');
     document.head.appendChild(l);
   }
 
