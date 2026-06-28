@@ -629,10 +629,12 @@ function init(){
   // deep-link from Caveat: ?p=PROJECT opens that condo's breakdown
   const pq=new URLSearchParams(location.search).get('p');
   if(pq){const hit=D.projects.find(x=>String(x.project).toUpperCase()===pq.toUpperCase());if(hit)openDD(hit.project);}
-  // deep-link from the Aillie chat: ?town=X&ft=Y opens that HDB town + flat-type breakdown
+  // deep-link from the school finder / Aillie: ?town=X (optionally &ft=Y) opens that HDB town
   const _sp=new URLSearchParams(location.search),_tq=_sp.get('town'),_fq=_sp.get('ft');
-  if(_tq&&_fq&&H){MODE='hdb';TAB='hdb';$$('.modebtn').forEach(x=>x.classList.toggle('on',x.dataset.mode==='hdb'));setDataTag();renderTabs();render();
-    const _g=H.groups.find(x=>String(x.town).toUpperCase()===_tq.toUpperCase()&&String(x.ft).toUpperCase()===_fq.toUpperCase());if(_g)openHDB(_g.town,_g.ft);}
+  if(_tq&&H){MODE='hdb';TAB='hdb';$$('.modebtn').forEach(x=>x.classList.toggle('on',x.dataset.mode==='hdb'));setDataTag();
+    const _tn=(H.groups.find(x=>String(x.town).toUpperCase()===_tq.toUpperCase())||{}).town;if(_tn)FILT.town=_tn;
+    renderTabs();render();
+    if(_fq){const _g=H.groups.find(x=>String(x.town).toUpperCase()===_tq.toUpperCase()&&String(x.ft).toUpperCase()===_fq.toUpperCase());if(_g)openHDB(_g.town,_g.ft);}}
   // deep-link: ?school=NAME (&zone=1km|2km) → condo mode + research tab, filtered to homes near that primary school
   const _sc=_sp.get('school');
   if(_sc&&SCHOOL_IDX){
