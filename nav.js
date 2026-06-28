@@ -166,3 +166,18 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
+
+/* ── Analytics: cookieless, privacy-first (PDPA-friendly — no cookies, no PII). ──
+   Paste your free GoatCounter site code below to switch it on. Sign up (2 min, free)
+   at https://www.goatcounter.com/signup → pick a code e.g. "propsight" → it becomes
+   https://propsight.goatcounter.com . Set GC_CODE to that code and re-sync. Until then
+   this is a no-op, so it can never slow or break the site. (Swap to Cloudflare/Plausible
+   here later if you prefer — same one place.) */
+(function () {
+  var GC_CODE = ""; // e.g. "propsight"
+  if (!GC_CODE) return;
+  var s = document.createElement('script');
+  s.async = true; s.src = '//gc.zgo.at/count.js';
+  s.setAttribute('data-goatcounter', 'https://' + GC_CODE + '.goatcounter.com/count');
+  document.head.appendChild(s);
+})();
