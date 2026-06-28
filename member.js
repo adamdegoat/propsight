@@ -42,7 +42,7 @@
    + '.psj-tick{flex:none;width:20px;height:20px;border-radius:50%;background:#eaf5ef;border:1px solid #cde7d8;display:flex;align-items:center;justify-content:center;margin-top:1px}'
    + '.psj-tick svg{width:11px;height:11px;stroke:var(--g);fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}'
    + '.psj-form,.psj-siform{display:flex;flex-direction:column;gap:9px}'
-   + '.psj-form input,.psj-siform input{width:100%;padding:13px 15px;border:1px solid #d8cfbe;border-radius:12px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink)}'
+   + '.psj-form input,.psj-siform input{width:100%;padding:13px 15px;border:1px solid #d8cfbe;border-radius:12px;font-size:16px;font-family:inherit;background:#fff;color:var(--ink)}'
    + '.psj-form input:focus,.psj-siform input:focus{outline:none;border-color:var(--g);box-shadow:0 0 0 3px rgba(31,193,143,.14)}'
    + '.psj-form button,.psj-siform button{width:100%;padding:14px;border:0;border-radius:12px;background:var(--g);color:#f5f1e8;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:.18s;margin-top:2px}'
    + '.psj-form button:hover,.psj-siform button:hover{background:#163025}.psj-form button:disabled,.psj-siform button:disabled{opacity:.55;cursor:default}'
@@ -63,7 +63,7 @@
    + '.psj-x:hover{background:#f4f0e6}'
    /* account view */
    + '.psj-acct{display:flex;flex-direction:column;gap:10px;margin-top:6px}'
-   + '.psj-acct a,.psj-acct button{display:flex;align-items:center;justify-content:center;width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;text-decoration:none;border:0}'
+   + '.psj-acct a,.psj-acct button{display:flex;align-items:center;justify-content:center;width:100%;padding:14px;border-radius:12px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;text-decoration:none;border:0}'
    + '.psj-acct .psj-go{background:var(--g);color:#f5f1e8}.psj-acct .psj-go:hover{background:#163025}'
    + '.psj-acct .psj-tg{background:#eaf5ef;color:var(--g);border:1px solid #cde7d8}.psj-acct .psj-tg:hover{background:#dff0e7;border-color:#bfe0cd}'
    + '.psj-acct .psj-out{background:#fff;color:var(--ink);border:1px solid var(--line)}.psj-acct .psj-out:hover{border-color:var(--br);color:#8a2f2f}'
