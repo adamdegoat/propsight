@@ -312,6 +312,20 @@ html.menu-open,html.menu-open body{overflow:hidden}
 .tool .badge2{display:none;position:absolute;top:-10px;left:18px;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--green2);background:#fffefc;border:1px solid var(--line2);padding:5px 11px;border-radius:20px;box-shadow:0 4px 12px rgba(25,21,18,.07)}
 .tool.feat2 .badge2{display:inline-block}
 .tool.feat2{border-color:var(--brass)}
+/* compact "about PropSight" bar, slots between the Guide and Contact sections */
+.abwrap{padding-top:2px;padding-bottom:30px}
+.aboutbar{display:flex;align-items:center;gap:18px;position:relative;overflow:hidden;text-decoration:none;color:#f3efe6;background:linear-gradient(135deg,#27513f,#16352a);border:1px solid #2f5a46;border-radius:18px;padding:16px 18px 16px 18px;box-shadow:0 14px 34px rgba(15,35,26,.16);transition:transform .2s var(--ease),box-shadow .2s}
+.aboutbar:hover{transform:translateY(-2px);box-shadow:0 20px 46px rgba(15,35,26,.24)}
+.aboutbar::before{content:"";position:absolute;right:-30px;top:-70px;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle,rgba(234,212,162,.13),transparent 62%);pointer-events:none}
+.ab-mark{flex:none;width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:rgba(247,244,236,.06);border:1px solid rgba(234,212,162,.26)}
+.ab-mark svg{width:29px;height:29px}
+.ab-txt{display:flex;flex-direction:column;gap:2px;min-width:0;z-index:1}
+.ab-txt b{font-family:var(--serif);font-weight:600;font-size:17px;letter-spacing:.005em}
+.ab-txt span{font-size:12.5px;color:rgba(243,239,230,.74);line-height:1.35}
+.ab-go{flex:none;margin-left:auto;display:inline-flex;align-items:center;gap:7px;background:var(--gtex,none),#ead4a2;color:#241a0d;font-weight:800;font-size:13px;padding:10px 17px;border-radius:30px;white-space:nowrap;z-index:1}
+.ab-go i{font-style:normal;transition:transform .2s}
+.aboutbar:hover .ab-go i{transform:translateX(3px)}
+@media(max-width:600px){.aboutbar{flex-wrap:wrap;gap:13px}.ab-txt{flex:1 1 auto}.ab-go{margin-left:0;width:100%;justify-content:center;margin-top:2px}}
 
 /* weekly blog */
 .notes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -817,7 +831,7 @@ if(sa){var e=document.getElementById('navInstall');if(e)e.style.display='none';}
     <a class="tool rv" data-aud="sell" href="tools/sell.html"><span class="badge2">Next step</span><svg class="ti2" viewBox="0 0 32 32" fill="none" stroke="#27513f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 27V5"/><path d="M21 9c0-2.2-2.2-3.5-5-3.5S11 6.8 11 9s2.2 3.2 5 3.7 5 1.5 5 3.8-2.2 3.5-5 3.5-5-1.3-5-3.5"/></svg><h4>Net proceeds</h4><p>What you pocket</p><span class="free">Free</span></a>
     <a class="tool rv" data-aud="buy explore" href="tools/eligibility.html"><svg class="ti2" viewBox="0 0 32 32" fill="none" stroke="#27513f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l11 4v8c0 7-5 11-11 14-6-3-11-7-11-14V7z"/><path d="M11 16l4 4 7-8"/></svg><h4>Eligibility</h4><p>Can I buy it?</p><span class="free">Free</span></a>
     <a class="tool rv" data-aud="buy explore" href="tools/grants.html"><svg class="ti2" viewBox="0 0 32 32" fill="none" stroke="#27513f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="13" width="22" height="14" rx="2"/><path d="M5 17h22M16 13v14"/><path d="M16 13c-1.8-3.6-7-3.4-7-.6 0 1.8 3.6 1.4 7 .6z"/><path d="M16 13c1.8-3.6 7-3.4 7-.6 0 1.8-3.6 1.4-7 .6z"/></svg><h4>Grants</h4><p>CPF housing grants</p><span class="free">Free</span></a>
-    <a class="tool rv" data-aud="buy sell explore" href="/research/"><svg class="ti2" viewBox="0 0 32 32" fill="none" stroke="#27513f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 27V5"/><path d="M5 27h22"/><rect x="9" y="17" width="4" height="6"/><rect x="16" y="11" width="4" height="12"/><rect x="23" y="7" width="4" height="16"/></svg><h4>Research</h4><p>Condos and HDB</p><span class="free">Free</span></a>
+    <a class="tool feat rv" data-aud="buy sell explore" href="/research/"><span class="badge">Go deeper</span><svg class="ti2" viewBox="0 0 32 32" fill="none" stroke="#27513f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 27V5"/><path d="M5 27h22"/><rect x="9" y="17" width="4" height="6"/><rect x="16" y="11" width="4" height="12"/><rect x="23" y="7" width="4" height="16"/></svg><h4>Research</h4><p>Condos and HDB</p><span class="free">Free</span></a>
     <a class="tool rv" data-aud="buy sell explore" href="#talk" onclick="if(window.askAillie){event.preventDefault();window.askAillie();}"><svg class="ti2" viewBox="0 0 32 32" fill="none" stroke="#27513f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M27 18c0 1.7-1.3 3-3 3H13l-6 5V8c0-1.7 1.3-3 3-3h14c1.7 0 3 1.3 3 3z"/><path d="M12 12h10M12 16h6"/></svg><h4>Ask Aillie</h4><p>Get real numbers</p><span class="free">Free</span></a>
   </div>
   </div>
@@ -836,6 +850,12 @@ if(sa){var e=document.getElementById('navInstall');if(e)e.style.display='none';}
   <div class="notes"><a class="note rv" href="guide/#buying"><span class="chn">01</span><div class="date">Step by step</div><h3>How buying actually works</h3><p>The full journey for a condo or HDB, from first viewing to keys in hand, and exactly what you pay at each step.</p><span class="go">See the steps <i>→</i></span></a><a class="note rv" href="guide/#selling"><span class="chn">02</span><div class="date">Step by step</div><h3>How selling works</h3><p>The selling journey end to end, plus the timing traps near the finish line that catch people out.</p><span class="go">See the steps <i>→</i></span></a><a class="note rv" href="guide/#tips"><span class="chn">03</span><div class="date">Tips</div><h3>Tips worth knowing</h3><p>Straight answers to the things every buyer wishes they'd known first, budgets, hidden costs, lease decay and more.</p><span class="go">Read the tips <i>→</i></span></a></div>
   <a class="notes-all rv" href="guide/">Open the Guide <span>→</span></a>
 </div></section>
+
+<div class="wrap abwrap"><a class="aboutbar rv" href="about/">
+  <span class="ab-mark"><svg viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="27" cy="27" r="19" stroke="#ead4a2" stroke-width="3.4"/><path d="M17.5 32 L27 22 L36.5 32" stroke="#ead4a2" stroke-width="3"/><path d="M21 36.4 L33 36.4" stroke="#ead4a2" stroke-width="3"/><circle cx="27" cy="33" r="1.8" fill="#d8b15e"/><path d="M40.5 40.5 L53 53" stroke="#d8b15e" stroke-width="5.2"/></svg></span>
+  <span class="ab-txt"><b>The story behind PropSight</b><span>Why we built it, and everything the platform does.</span></span>
+  <span class="ab-go">About us <i>→</i></span>
+</a></div>
 
 <section class="foot" id="talk"><div class="wrap">
   <span class="fhalo" aria-hidden="true"></span>
@@ -1046,6 +1066,8 @@ const LEDE={
 const FEAT={all:'tools/value.html',explore:'tools/value.html',sell:'tools/value.html',buy:'tools/afford.html'};
 // sellers get a soft "next step" cue on net-proceeds (value first → then what you pocket)
 const FEAT2={sell:'tools/sell.html'};
+// Research is always featured too (our flagship data tool), in every audience
+const ALWAYS_FEAT=['/research/'];
 function applyFilter(aud,scroll){
   aud=LEDE[aud]?aud:'all';
   const featHref=FEAT[aud]||FEAT.all, feat2Href=FEAT2[aud];
@@ -1054,7 +1076,7 @@ function applyFilter(aud,scroll){
     t.style.display=show?'':'none';
     if(show)t.classList.add('in'); // never leave a filtered-in card stuck pre-reveal
     const href=t.getAttribute('href');
-    t.classList.toggle('feat',show&&href===featHref);
+    t.classList.toggle('feat',show&&(href===featHref||ALWAYS_FEAT.includes(href)));
     t.classList.toggle('feat2',show&&!!feat2Href&&href===feat2Href);
   });
   document.querySelectorAll('.fpill').forEach(p=>p.classList.toggle('on',p.dataset.f===aud));
