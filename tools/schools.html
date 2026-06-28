@@ -1,10 +1,10 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Homes Near a Primary School — PropSight · Singapore Property</title>
-<meta name="description" content="Pick a Singapore primary school and see which condos sit within 1km (P1 priority) and 1–2km — straight-line, the same basis MOE uses. Free, by PropSight.">
+<meta name="description" content="Pick a Singapore primary school and see which condos sit within 1km (P1 priority) and 1-2km, straight-line, the same basis MOE uses. Free, by PropSight.">
 <meta name="theme-color" content="#1b3a2d">
 <link rel="manifest" href="../manifest.json">
 <link rel="apple-touch-icon" href="../icons/icon-180.png">
-<meta property="og:type" content="website"><meta property="og:site_name" content="PropSight"><meta property="og:url" content="https://propsight.sg/tools/schools.html"><meta property="og:title" content="Homes Near a Primary School — PropSight"><meta property="og:description" content="Pick a Singapore primary school and see which condos sit within 1km (P1 priority) and 1–2km — straight-line, the same basis MOE uses. Free, by PropSight."><meta property="og:image" content="https://propsight.sg/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Homes Near a Primary School — PropSight"><meta name="twitter:description" content="See which condos sit within 1km and 1–2km of any Singapore primary school. Free, no sign-up."><meta name="twitter:image" content="https://propsight.sg/og.jpg">
+<meta property="og:type" content="website"><meta property="og:site_name" content="PropSight"><meta property="og:url" content="https://propsight.sg/tools/schools.html"><meta property="og:title" content="Homes Near a Primary School — PropSight"><meta property="og:description" content="Pick a Singapore primary school and see which condos sit within 1km (P1 priority) and 1-2km, straight-line, the same basis MOE uses. Free, by PropSight."><meta property="og:image" content="https://propsight.sg/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Homes Near a Primary School — PropSight"><meta name="twitter:description" content="See which condos sit within 1km and 1-2km of any Singapore primary school. Free, no sign-up."><meta name="twitter:image" content="https://propsight.sg/og.jpg">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -57,10 +57,21 @@ input:focus{border-color:var(--green2);box-shadow:0 0 0 3px rgba(39,81,63,.1)}
 .grp .gt{font-weight:700;font-size:15px}.grp.p1 .gt{color:#f3efe6}
 .grp .gt small{display:block;font-weight:500;font-size:12.5px;opacity:.8;margin-top:1px}
 .grp ul{list-style:none}
-.grp li{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 20px;border-bottom:1px solid var(--line);font-size:15px}
+.grp li{border-bottom:1px solid var(--line);font-size:15px}
 .grp li:last-child{border-bottom:0}
+.grp li a{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 20px;color:inherit;transition:background .15s}
+.grp li a:hover,.grp li a:focus-visible{background:#f3eee2}
 .grp li .nm{font-weight:600}
+.grp li .r{display:flex;align-items:center;gap:11px;white-space:nowrap}
 .grp li .d{font-weight:700;font-family:var(--serif);font-size:15px;color:var(--green2);white-space:nowrap}
+.grp li .go{font-family:var(--serif);font-weight:600;color:var(--brass);opacity:.5;transition:transform .15s,opacity .15s,color .15s}
+.grp li a:hover .go,.grp li a:focus-visible .go{opacity:1;color:var(--green2);transform:translateX(2px)}
+.seeall{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;padding:15px 20px;border-radius:14px;background:linear-gradient(135deg,var(--brass3),var(--brass));color:#241a0d;font-weight:700;font-size:15px;box-shadow:0 8px 22px rgba(176,141,87,.22);transition:transform .16s,box-shadow .16s}
+.seeall:hover,.seeall:focus-visible{transform:translateY(-1px);box-shadow:0 12px 28px rgba(176,141,87,.3)}
+.seeall b{font-weight:800}
+.seeall .sa-go{font-family:var(--serif);font-size:18px;flex:none}
+.bandnote{font-size:13px;color:var(--ink3);margin-top:7px}
+@media(max-width:560px){.seeall{font-size:13.5px;padding:14px 16px}}
 .grp .more{padding:11px 20px;font-size:13px;color:var(--ink3);background:#faf6ec}
 .grp .empty{padding:16px 20px;font-size:14px;color:var(--ink3)}
 .expl{margin-top:26px;background:#fff8e9;border:1px solid #ecdcb4;border-radius:14px;padding:18px 20px;font-size:14px;color:#6b5526;line-height:1.6}
@@ -105,12 +116,14 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
   <div class="res" id="res">
     <div class="schoolname" id="sname"></div>
     <div class="count" id="scount"></div>
+    <div class="bandnote">Both groups below get registration priority over homes more than 2km away. The 1km group is first, then 1-2km. Tap any home to see its prices, value and yield.</div>
+    <a class="seeall" id="seeall" href="#"><span>📊 See all <b id="seeall-n"></b> homes in Research</span><span class="sa-go" aria-hidden="true">→</span></a>
     <div class="grp p1" id="g1">
-      <div class="gh"><span class="badge">1 km</span><span class="gt">Within 1km — first priority<small>Highest balloting priority for Singapore Citizens</small></span></div>
+      <div class="gh"><span class="badge">1 km</span><span class="gt">Within 1km, top priority for P1 registration<small>Highest priority in the ballot for Singapore Citizens</small></span></div>
       <ul id="l1"></ul>
     </div>
     <div class="grp p2" id="g2">
-      <div class="gh"><span class="badge">1–2 km</span><span class="gt">Between 1km and 2km — next in line<small>Priority after the 1km group, before those beyond 2km</small></span></div>
+      <div class="gh"><span class="badge">1-2 km</span><span class="gt">1-2km, next priority<small>Comes after the 1km group, ahead of homes beyond 2km</small></span></div>
       <ul id="l2"></ul>
     </div>
   </div>
@@ -189,7 +202,7 @@ $('#q').addEventListener('keydown',e=>{
 });
 document.addEventListener('click',e=>{if(!e.target.closest('.search'))$('#ac').classList.remove('on');});
 
-function li(c){return `<li><span class="nm">${c.n}</span><span class="d">${c.d} m</span></li>`;}
+function li(c){return `<li><a href="/research/?p=${encodeURIComponent(c.n)}"><span class="nm">${c.n}</span><span class="r"><span class="d">${c.d} m</span><span class="go" aria-hidden="true">→</span></span></a></li>`;}
 function fill(ul,arr,total,near){
   const el=$(ul);
   if(!arr.length){el.innerHTML=`<li class="empty">No condos ${near} of this school.</li>`;return;}
@@ -202,6 +215,8 @@ function pick(s){
   $('#q').value=s.n;$('#ac').classList.remove('on');matches=[];cur=-1;
   $('#sname').textContent=s.n;
   $('#scount').textContent=`${s.p1n} condo${s.p1n===1?'':'s'} within 1km · ${s.p2n} between 1–2km`;
+  $('#seeall').href=`/research/?school=${encodeURIComponent(s.n)}&zone=2km`;
+  $('#seeall-n').textContent=s.n.replace(/ Primary School$/,'').replace(/ School$/,'');
   fill('#l1',s.p1,s.p1n,'within 1km');
   fill('#l2',s.p2,s.p2n,'within 1–2km');
   $('#res').classList.add('on');

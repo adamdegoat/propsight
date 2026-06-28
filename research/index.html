@@ -474,6 +474,37 @@ select.f{padding:13px 13px;border-radius:13px}
   box-shadow:0 10px 24px rgba(176,141,87,.4)}
 .gatehold .psj-form button:hover{filter:brightness(1.06);background:linear-gradient(135deg,#e3c98f,#b08d57)}
 @media(max-width:560px){.gatewrap{max-height:210px}.gatehold{margin-top:-46px}}
+/* ===== school filter (condo mode) + distance badges ===== */
+.schoolctl{display:inline-flex;align-items:center;gap:7px;flex:0 0 auto}
+.schoolinput{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px 13px;color:var(--ink2);font-size:13px;font-family:inherit;min-width:188px;max-width:232px}
+.schoolinput:focus{outline:0;border-color:var(--green-d)}
+.schoolinput::placeholder{color:var(--ink3)}
+.schoolchip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--green-d);background:rgba(15,157,118,.1);border:1px solid rgba(15,157,118,.32);border-radius:30px;padding:9px 14px;cursor:pointer;white-space:nowrap}
+.schoolchip:hover{background:rgba(15,157,118,.16)}
+.zoneseg{display:inline-flex;background:var(--panel2);border:1px solid var(--line);border-radius:30px;padding:3px;gap:2px}
+.zonebtn{font-size:11.5px;font-weight:700;color:var(--ink3);padding:6px 12px;border-radius:30px;background:none;border:0;cursor:pointer;font-family:inherit}
+.zonebtn.on{background:var(--bg2);color:var(--green-d);box-shadow:var(--shadow)}
+.schoolnote{font-size:12.5px;color:var(--ink2);line-height:1.5;background:linear-gradient(120deg,rgba(15,157,118,.07),var(--panel2));border:1px solid rgba(15,157,118,.25);border-radius:10px;padding:10px 13px;margin:2px 0 14px}
+.schoolnote b{color:var(--green-d)}
+.distbadge{display:inline-block;font-size:10.5px;font-weight:700;font-family:var(--sans);padding:3px 9px;border-radius:30px;margin-top:5px;white-space:nowrap}
+.distbadge.p1{background:rgba(15,157,118,.13);color:#0b7d5e}
+.distbadge.p2{background:rgba(192,132,24,.12);color:#9a6a10}
+/* ===== deep-dive quick-facts strip + jump chips ===== */
+.qfacts{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:2px 0 6px}
+.qf{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:10px 12px}
+.qf .qk{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3)}
+.qf .qv{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--ink);margin-top:4px;line-height:1.2}
+.qf .qv small{display:block;font-family:var(--sans);font-size:10.5px;color:var(--ink3);font-weight:500;margin-top:2px}
+.qf .qv.pos{color:#0b7d5e}.qf .qv.neg{color:#b33f36}
+@media(max-width:720px){.qfacts{grid-template-columns:1fr 1fr}}
+.jumpchips{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 2px}
+.jumpchip{font-size:11.5px;font-weight:600;color:var(--ink2);background:var(--panel);border:1px solid var(--line);border-radius:30px;padding:7px 13px;cursor:pointer;transition:.15s}
+.jumpchip:hover{border-color:var(--green-d);color:var(--green-d)}
+.dd-body .sect{scroll-margin-top:78px}
+/* ===== mode-toggle discoverability hint ===== */
+.modebar .wrap{display:flex;align-items:center;gap:12px}
+.modehint{font-size:11.5px;color:var(--ink3);font-weight:500}
+@media(max-width:560px){.modehint{display:none}}
 </style>
 <script src="/nav.js" defer></script>
 <script src="/member.js"></script>
@@ -488,7 +519,7 @@ select.f{padding:13px 13px;border-radius:13px}
 <div class="modebar"><div class="wrap"><div class="modeseg" id="modeseg">
   <button class="modebtn on" data-mode="condo">Condos</button>
   <button class="modebtn" data-mode="hdb">HDB</button>
-</div></div></div>
+</div><span class="modehint" id="modehint">Condos · HDB resale · switch anytime</span></div></div>
 <div class="tabsbar"><div class="wrap"><div class="tabs" id="tabs"></div></div></div>
 <div class="wrap"><div class="freshbar" id="freshbar"></div></div>
 <div class="wrap"><div id="app"><div class="empty"><div class="b serif">Loading…</div>Pulling every condo's numbers from official caveats.</div></div></div>
@@ -498,7 +529,9 @@ select.f{padding:13px 13px;border-radius:13px}
 
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-let D=null,H=null,MODE='condo',TAB='research',SORT={k:'project',dir:1},HSORT={k:'town',dir:1},FILT={q:'',seg:'',district:'',tenure:'',price:'',town:'',ft:'',mature:'',grade:'',upreg:'',lview:'feed',lold:false},CMP=[];
+let D=null,H=null,MODE='condo',TAB='research',SORT={k:'project',dir:1},HSORT={k:'town',dir:1},FILT={q:'',seg:'',district:'',tenure:'',price:'',town:'',ft:'',mature:'',grade:'',upreg:'',lview:'feed',lold:false,school:'',schoolZone:'2km'},CMP=[];
+// school → primary-school proximity index (built on load from /tools/school-homes.json); null if it fails to load
+let SCHOOL_IDX=null,SCHOOL_NAMES=[];
 const TABS_CONDO=[['research','▦','Condos'],['map','◎','Map'],['launches','◆','New launches'],['upcoming','◇','Upcoming'],['compare','⇄','Compare'],['about','ⓘ','About']];
 const TABS_HDB=[['hdb','▦','HDB flats'],['about','ⓘ','About']];
 const tabsFor=()=>MODE==='hdb'?TABS_HDB:TABS_CONDO;
@@ -549,6 +582,20 @@ fetch('data/thesis.json?cb='+Date.now()).then(r=>r.json()).then(async d=>{
   MEDY=median(D.projects.map(p=>p.yield).filter(x=>x));
   try{ window.RESEARCH=await (await fetch('data/research.json?cb='+Date.now())).json(); }catch(e){ window.RESEARCH=null; }
   try{ H=await (await fetch('data/hdb.json?cb='+Date.now())).json(); }catch(e){ H=null; }
+  // primary-school proximity — schoolName → Map(UPPERCASE project → {band:'p1'|'p2', d}); fail soft (just disables the school filter)
+  try{
+    const sh=await (await fetch('/tools/school-homes.json?cb='+Date.now())).json();
+    SCHOOL_IDX=new Map();
+    (sh.schools||[]).forEach(sc=>{
+      const m=new Map();
+      ['p1','p2'].forEach(band=>(sc[band]||[]).forEach(e=>{
+        const k=String(e.n).toUpperCase();
+        if(!m.has(k)||e.d<m.get(k).d) m.set(k,{band,d:e.d});   // nearest wins if a project appears twice
+      }));
+      SCHOOL_IDX.set(sc.n,m); SCHOOL_NAMES.push(sc.n);
+    });
+    SCHOOL_NAMES.sort();
+  }catch(e){ SCHOOL_IDX=null; }
   init();
 }).catch(e=>{$('#app').innerHTML='<div class="empty">Could not load research data. '+e+'</div>';});
 
@@ -564,7 +611,7 @@ function fresh(builtISO){
 function init(){
   const fr=fresh(D.built);
   $('#freshbar').innerHTML=`<span class="live"><span class="dot"></span>Live</span><span class="sep">·</span> data refreshed <b>${fr.ago}</b>${fr.built?' ('+fr.built+')':''} <span class="sep">·</span> auto-updates weekly <span class="sep">·</span> next refresh <b>${fr.next}</b>`;
-  if(!H){const h=document.querySelector('.modebtn[data-mode="hdb"]');if(h)h.style.display='none';}  // no HDB data → hide toggle
+  if(!H){const h=document.querySelector('.modebtn[data-mode="hdb"]');if(h)h.style.display='none';const mh=$('#modehint');if(mh)mh.style.display='none';}  // no HDB data → hide toggle + hint
   $('#modeseg').onclick=e=>{const b=e.target.closest('.modebtn');if(!b)return;const m=b.dataset.mode;if(m===MODE)return;
     MODE=m; TAB=(MODE==='hdb'?'hdb':'research');
     $$('.modebtn').forEach(x=>x.classList.toggle('on',x.dataset.mode===MODE));
@@ -579,6 +626,13 @@ function init(){
   const _sp=new URLSearchParams(location.search),_tq=_sp.get('town'),_fq=_sp.get('ft');
   if(_tq&&_fq&&H){MODE='hdb';TAB='hdb';$$('.modebtn').forEach(x=>x.classList.toggle('on',x.dataset.mode==='hdb'));setDataTag();renderTabs();render();
     const _g=H.groups.find(x=>String(x.town).toUpperCase()===_tq.toUpperCase()&&String(x.ft).toUpperCase()===_fq.toUpperCase());if(_g)openHDB(_g.town,_g.ft);}
+  // deep-link: ?school=NAME (&zone=1km|2km) → condo mode + research tab, filtered to homes near that primary school
+  const _sc=_sp.get('school');
+  if(_sc&&SCHOOL_IDX){
+    const found=[...SCHOOL_IDX.keys()].find(n=>n.toLowerCase()===_sc.toLowerCase());
+    if(found){MODE='condo';TAB='research';FILT.school=found;FILT.schoolZone=_sp.get('zone')==='1km'?'1km':'2km';
+      $$('.modebtn').forEach(x=>x.classList.toggle('on',x.dataset.mode==='condo'));setDataTag();renderTabs();render();}
+  }
 }
 function setDataTag(){
   if(MODE==='hdb'&&H) $('#dataTag').innerHTML=`<b>${H.n_txns.toLocaleString()}</b> HDB resales · <b>${H.n_towns}</b> towns<br>official HDB data · as of ${MON[+H.as_of.slice(2)]} ’${H.as_of.slice(0,2)}`;
@@ -623,9 +677,24 @@ function filterProjects(){
     if(FILT.tenure==='fh'&&!p.fh)return false;
     if(FILT.tenure==='lh'&&p.fh)return false;
     if(FILT.price){const b=PRICEBANDS[FILT.price];if(b&&(p.psf<b[0]||(b[1]&&p.psf>=b[1])))return false;}
+    if(FILT.school&&SCHOOL_IDX){const idx=SCHOOL_IDX.get(FILT.school);
+      if(idx){const e=idx.get(p.project.toUpperCase());if(!e)return false;if(FILT.schoolZone==='1km'&&e.band!=='p1')return false;}}
     return true;
   });
 }
+// distance entry {band,d} for a project relative to the active school filter (null if none)
+function schoolDist(p){if(!FILT.school||!SCHOOL_IDX)return null;const idx=SCHOOL_IDX.get(FILT.school);return idx?idx.get(p.project.toUpperCase())||null:null;}
+// the school filter control for the condo bar: a datalist input, or an active chip + 1km/2km zone toggle
+function schoolControl(){
+  if(!SCHOOL_IDX)return '';
+  if(FILT.school){const z=FILT.schoolZone||'2km';
+    return `<span class="schoolctl"><button class="schoolchip" id="schoolClear" title="Clear school filter">✕ ${esc(FILT.school)}</button>
+      <span class="zoneseg"><button class="zonebtn ${z!=='1km'?'on':''}" data-zone="2km">Within 2km</button><button class="zonebtn ${z==='1km'?'on':''}" data-zone="1km">1km only</button></span></span>`;}
+  return `<span class="schoolctl"><input class="schoolinput" id="fschool" list="schoolList" autocomplete="off" placeholder="🏫 Near a primary school…">
+    <datalist id="schoolList">${SCHOOL_NAMES.map(n=>`<option value="${esc(n)}">`).join('')}</datalist></span>`;
+}
+function schoolBadge(p){const e=schoolDist(p);if(!e)return '';const p1=e.band==='p1';
+  return `<span class="distbadge ${p1?'p1':'p2'}">${fmtm(e.d)} · ${p1?'within 1km':'1-2km'}</span>`;}
 // ===== HDB helpers =====
 const tcFt=f=>f==='EXECUTIVE'?'Executive':f.replace(' ROOM','-room');
 const storeyBand=s=>String(s-1).padStart(2,'0')+'–'+String(s+1).padStart(2,'0');
@@ -727,8 +796,10 @@ function aboutHDB(){
 const VIEWS={
  research(){
   const q=FILT.q.toLowerCase().trim();
+  const schoolActive=FILT.school&&SCHOOL_IDX&&SCHOOL_IDX.get(FILT.school);
   let rows=filterProjects();
-  rows=rows.slice().sort((a,b)=>{let x=a[SORT.k],y=b[SORT.k];if(typeof x==='string')return SORT.dir*x.localeCompare(y);return SORT.dir*((x??-999)-(y??-999));});
+  if(schoolActive){rows=rows.slice().sort((a,b)=>((schoolDist(a)||{}).d??9e9)-((schoolDist(b)||{}).d??9e9));}  // nearest school first
+  else rows=rows.slice().sort((a,b)=>{let x=a[SORT.k],y=b[SORT.k];if(typeof x==='string')return SORT.dir*x.localeCompare(y);return SORT.dir*((x??-999)-(y??-999));});
   const opt=(arr,cur)=>arr.map(o=>`<option value="${o[0]}" ${cur===o[0]?'selected':''}>${o[1]}</option>`).join('');
   const segOpts=opt([['','All regions'],['CCR','Prime'],['RCR','City-fringe'],['OCR','Suburban']],FILT.seg);
   const distOpts=opt([['','All districts'],...Object.keys(DISTRICTS).map(d=>[d,`D${d} · ${DISTRICTS[d]}`])],FILT.district);
@@ -739,11 +810,13 @@ const VIEWS={
   const acRows=q?rows.slice(0,8):[];
   const ac=`<div class="ac ${acRows.length?'show':''}" id="ac">${acRows.map(p=>`<div class="ac-item" data-p="${esc(p.project)}"><span class="ac-n">${tc(p.project)}</span><span class="ac-d">${p.area_name?p.area_name+' · ':''}${distName(p.district)} · $${p.psf.toLocaleString()} psf</span></div>`).join('')}</div>`;
   // one-tap popular condos (only when nothing is filtered)
-  const anyFilter=FILT.seg||FILT.district||FILT.tenure||FILT.price;
+  const anyFilter=FILT.seg||FILT.district||FILT.tenure||FILT.price||FILT.school;
   const POP=['NORMANTON PARK','THE SAIL @ MARINA BAY','PARC CLEMATIS','ONE-NORTH RESIDENCES','BISHAN PARK CONDOMINIUM','THE INTERLACE'];
   const pop=POP.map(n=>D.projects.find(p=>p.project===n)).filter(Boolean);
   const popRow=(!q&&!anyFilter&&pop.length)?`<div class="poprow"><span class="poplab">Popular:</span>${pop.map(p=>`<button class="popchip" data-p="${esc(p.project)}">${tc(p.project)}</button>`).join('')}</div>`:'';
-  const ctx=FILT.district?` in D${FILT.district} · ${DISTRICTS[FILT.district]}`:(q?` matching “${FILT.q}”`:(anyFilter?'':' · official caveats, refreshed weekly'));
+  const ctx=schoolActive?` near ${FILT.school}`:FILT.district?` in D${FILT.district} · ${DISTRICTS[FILT.district]}`:(q?` matching “${FILT.q}”`:(anyFilter?'':' · official caveats, refreshed weekly'));
+  // plain-English explainer when filtering by school
+  const schoolNote=schoolActive?`<div class="schoolnote">Homes <b>within 1km</b> of ${FILT.school} get top priority for P1 registration; <b>1-2km</b> get next priority. Showing condos ${FILT.schoolZone==='1km'?'within 1km':'within 2km'}, nearest first.</div>`:'';
   return `<div class="lede2"><h1 class="serif">Every Singapore condo, <em>by the numbers</em>.</h1>
      <p>Search any condo to see its <b>real transacted prices</b>, how they've moved, rental yield, the nearest MRT &amp; schools — and exactly how it's priced against nearby condos, its town and its district. Straight from official URA caveats. No login, no agent.</p>
      <div class="herochips"><span><b>${D.n_projects.toLocaleString()}</b> condos</span><span>Official URA data</span><span>Refreshed weekly</span><span>Free, no login</span></div></div>
@@ -753,8 +826,10 @@ const VIEWS={
      <select class="f" id="fseg" title="Region">${segOpts}</select>
      <select class="f" id="ften" title="Tenure">${tenOpts}</select>
      <select class="f" id="fprice" title="Price">${priceOpts}</select>
+     ${schoolControl()}
      <span class="sortby"><span class="sortlab">Sort</span><select class="f" id="fsort" title="Sort by">${sortOpts}</select></span>
    </div>
+   ${schoolNote}
    ${popRow}
    <div class="tbl-head"><span class="th-count">${rows.length.toLocaleString()} condo${rows.length===1?'':'s'}${ctx}</span><span class="tbl-hint">tap any row for the full breakdown →</span></div>
    <div style="overflow-x:auto"><table class="tbl"><thead><tr>
@@ -915,7 +990,7 @@ function rowHtml(p){
     :`<span class="trend flat">0%</span>`;
   const yb=!p.yield?'lo':p.yield>=4?'hi':p.yield>=3.2?'mid':'lo';
   return `<tr data-p="${esc(p.project)}">
-   <td><span class="pn">${p.project}<small>${p.area_name?p.area_name+' · ':''}${distName(p.district)}${p.fh?' · FH':''}</small></span></td>
+   <td><span class="pn">${p.project}<small>${p.area_name?p.area_name+' · ':''}${distName(p.district)}${p.fh?' · FH':''}</small></span>${schoolBadge(p)}</td>
    <td class="hide-sm"><span class="chip seg-${p.seg}">${segShort(p.seg)}</span></td>
    <td class="r"><b class="psf">$${p.psf.toLocaleString()}</b></td>
    <td class="r">${vs}</td>
@@ -1064,8 +1139,8 @@ function openDD(name){
   };
   const nearbyRow=p.value_flag
     ? `<div class="cmp3r"><span class="cl">vs nearby<small>within 1.5km</small></span><span class="cv">~$${(p.peer_ref||0).toLocaleString()}</span><span class="cd warn">hard to compare</span></div>`
-    : cmpRow('vs nearby',(p.peer_tenure?p.peer_tenure+' · ':'')+'within 1.5km',p.peer_ref);
-  const pricedBlock=`<div class="sect">How it's priced</div>
+    : cmpRow('vs nearby',(p.peer_tenure?p.peer_tenure+' · ':'')+(p.peer_n?p.peer_n+' condos within 1.5km':'within 1.5km'),p.peer_ref);
+  const pricedBlock=`<div class="sect" id="dd-priced">How it's priced</div>
      <div class="cmp3">
        <div class="cmp3r head"><span class="cl">This condo</span><span class="cv">$${p.psf.toLocaleString()} psf</span><span class="cd none"></span></div>
        ${nearbyRow}
@@ -1073,10 +1148,28 @@ function openDD(name){
        ${cmpRow('vs D'+p.district,(distArea(p.district)||'district')+' · '+(p.dist_n||0)+' condos',p.dist_psf)}
      </div>
      <div class="cmphint">Green = this condo is cheaper per sqft than that benchmark; red = pricier. “Nearby” matches tenure (freehold vs leasehold); town &amp; district are the broader median.</div>`;
+  // compact quick-facts strip — makes the report's depth visible the moment it opens
+  const qf=[];
+  qf.push(['Price / sqft','$'+p.psf.toLocaleString()]);
+  qf.push(['Typical price',fmtP(p.price)]);
+  if(p.yield>0)qf.push(['Rental yield',p.yield+'%']);
+  if(p.mom!=null)qf.push(['6-mo trend',(p.mom>0?'▲ +':p.mom<0?'▼ ':'')+p.mom+'%',p.mom>0?'pos':p.mom<0?'neg':'']);
+  qf.push(['Tenure',p.fh?'Freehold':'Leasehold']);
+  if(a.mrt)qf.push(['Nearest MRT',a.mrt.name+(a.mrt.m?`<small>${walkMin(a.mrt.m)}</small>`:'')]);
+  if(a.schools&&a.schools.length)qf.push(['Schools nearby',a.schools.length+'<small>within walking distance</small>']);
+  const qfacts=`<div class="qfacts">${qf.map(f=>`<div class="qf"><div class="qk">${f[0]}</div><div class="qv ${f[2]||''}">${f[1]}</div></div>`).join('')}</div>`;
+  // jump chips — only for sections actually rendered for this project
+  const jumps=[[!thin,'dd-priced','Prices'],[!thin&&p.spark&&p.spark.length>=2,'dd-trend','Trend'],[!!p.yield,'dd-rent','Rent'],[p.sales&&p.sales.length,'dd-sales','Recent sales'],[a.mrt||a.schools,'dd-around','Around it'],[window.RESEARCH&&window.RESEARCH.notes&&window.RESEARCH.notes[p.project],'dd-notes','Notes']].filter(j=>j[0]);
+  const jumpHTML=jumps.length>1?`<div class="jumpchips">${jumps.map(j=>`<button class="jumpchip" data-j="${j[1]}">${j[2]}</button>`).join('')}</div>`:'';
+  // cross-link into HDB resale for the matching town (or a generic fallback)
+  const hTown=condoToHdbTown(p);
+  const hdbCross=H?`<div class="dd-cross">${hTown?`Prefer HDB? <a style="color:var(--green-d);font-weight:600;cursor:pointer" onclick="gotoHDB('${hTown.replace(/'/g,"\\'")}')">See ${hTown} resale flats →</a>`:`<a style="color:var(--green-d);font-weight:600;cursor:pointer" onclick="gotoHDB('')">Explore HDB resale data →</a>`}</div>`:'';
   $('#dd').innerHTML=`<div class="dd-head"><span class="gg vchip ${thin?'warn':(p.value_flag?'warn':(p.discount>=2?'pos':p.discount<=-2?'neg':''))}">${thin?'⚠ limited data':(p.value_flag?'⚠ hard to compare':(p.discount>=2?p.discount+'% below nearby':p.discount<=-2?(-p.discount)+'% above nearby':'in line w/ nearby'))}</span>
     <div class="tt">${tc(p.project)}<small>${p.street?tc(p.street)+' · ':''}${distName(p.district)} ${distArea(p.district)} · ${segShort(p.seg)} · ${p.fh?'Freehold':'Leasehold'}</small></div>
     <span class="x" onclick="closeDD()">✕</span></div>
    <div class="dd-body">
+     ${qfacts}
+     ${jumpHTML}
      <div class="thesis">${thin?`${tc(p.project)} has had <b>${p.txns} recent sale${p.txns==1?'':'s'}</b> in the last ~${D.window_months} months, at around <b>$${p.psf.toLocaleString()} psf</b>. That's too few to chart a reliable trend or comparison — but here's what actually transacted.`:thesis(p)}</div>
      ${thin?`<div class="flag-w">⚠ <b>Limited data.</b> Only <b>${p.txns} recent sale${p.txns==1?'':'s'}</b> here, so the figures are indicative — not a reliable median. We don't show a trend or “vs nearby” comparison until there's enough trading. For a precise valuation of a specific unit, use Caveat.</div>`:(p.value_flag?`<div class="flag-w">⚠ <b>Hard to compare:</b> this condo's prices are very different from the condos around it — usually because it's a different type (much older, or much bigger / smaller units). So we don't show a "cheaper / pricier than nearby" figure for it.</div>`:'')}
      <div class="dd-cols"><div class="dd-col">
@@ -1089,19 +1182,19 @@ function openDD(name){
      </div>
      ${thin?'':pricedBlock}
 
-     ${!thin&&p.spark&&p.spark.length>=2?`<div class="sect sect-row">Price trend ${trendDelta(p.spark)}</div>
+     ${!thin&&p.spark&&p.spark.length>=2?`<div class="sect sect-row" id="dd-trend">Price trend ${trendDelta(p.spark)}</div>
      <div class="facnote">Median price per sqft from official caveats — ${D.window_months} months to ${MON[+D.as_of.slice(2)]} ’${D.as_of.slice(0,2)}.</div>
      <div class="chartbox">${sparkSVG(p.spark)}</div>`:''}
 
-     ${p.yield?`<div class="sect">What it rents for</div>
+     ${p.yield?`<div class="sect" id="dd-rent">What it rents for</div>
      <div class="rentbox"><div class="rentbig">~$${rent?rent.toLocaleString():'—'}<span>/month</span></div>
        <div class="rentnote">A typical unit rents for around this — roughly a <b>${p.yield}% gross yearly return</b> on its price${yCmp?`, <b>${yCmp}</b> the Singapore condo average of ~${MEDY}%`:''}. Before costs.</div></div>`:''}
      </div><div class="dd-col">
-     ${(p.sales&&p.sales.length)?`<div class="sect">Recent sales <span class="secthint">· actual caveats</span></div>
+     ${(p.sales&&p.sales.length)?`<div class="sect" id="dd-sales">Recent sales <span class="secthint">· actual caveats</span></div>
      <div class="saletbl"><div class="saleh"><span>When</span><span class="r">Size</span><span class="r">Price</span><span class="r">$/sqft</span></div>
        ${p.sales.slice(0,8).map(s=>`<div class="saler"><span>${ymLabel(s.ym)}</span><span class="r">${s.sqft.toLocaleString()} sqft</span><span class="r">${fmtP(s.price)}</span><span class="r">$${s.psf.toLocaleString()}</span></div>`).join('')}</div>`:''}
 
-     ${(a.mrt||a.schools)?`<div class="sect">What's around it</div>
+     ${(a.mrt||a.schools)?`<div class="sect" id="dd-around">What's around it</div>
      <div class="amgrid">
        ${a.mrt?`<div class="amc"><div class="amk">🚇 Nearest MRT</div><div class="amv">${a.mrt.name}</div><div class="ams">${walkMin(a.mrt.m)} · ${fmtm(a.mrt.m)}</div></div>`:''}
        ${a.park?`<div class="amc"><div class="amk">🌳 Nearest park</div><div class="amv">${a.park.name}</div><div class="ams">${walkMin(a.park.m)} · ${fmtm(a.park.m)}</div></div>`:''}
@@ -1112,7 +1205,7 @@ function openDD(name){
      <div class="sect">How active it is</div>
      <div class="readout"><b>${p.txns.toLocaleString()}</b> units changed hands in the last ${D.window_months} months${p.txns_recent?` (<b>${p.txns_recent}</b> in the last 6)`:''} — ${p.txns>=80?'it trades very actively':p.txns>=25?'it trades fairly actively':'it trades fairly quietly'}, which affects how easily you could resell.</div>
 
-     ${(()=>{const rn=window.RESEARCH&&window.RESEARCH.notes&&window.RESEARCH.notes[p.project];return rn?`<div class="sect">On the ground <span class="secthint">· researched · ${window.RESEARCH.asof||''}</span></div>
+     ${(()=>{const rn=window.RESEARCH&&window.RESEARCH.notes&&window.RESEARCH.notes[p.project];return rn?`<div class="sect" id="dd-notes">On the ground <span class="secthint">· researched · ${window.RESEARCH.asof||''}</span></div>
      <div class="research"><p>${rn.note}</p>${rn.sources&&rn.sources.length?`<div class="rsrc">${rn.sources.map(s=>/^https?:/.test(s)?`<a href="${s}" target="_blank">${s.replace(/^https?:\/\/(www\.)?/,'').split('/')[0]} ↗</a>`:`<span>${s}</span>`).join('')}</div>`:''}<div class="rdisc">${window.RESEARCH.disclaimer||'Researched from public sources — verify before quoting.'}</div></div>`:''})()}
      </div></div>
 
@@ -1122,8 +1215,24 @@ function openDD(name){
        <a class="actbtn" href="${tv}" target="_blank">Search online ↗</a>
      </div>
      <div class="dd-cross">Caveat values a specific unit · Thesis shows the whole condo's picture.</div>
+     ${hdbCross}
    </div>`;
   $('#ov').classList.add('show');
+}
+// map a condo's planning area to a loaded HDB town (exact area_name match, plus a few confident aliases)
+function condoToHdbTown(p){
+  if(!H)return null;
+  const towns=H.groups.map(g=>g.town),an=(p.area_name||'').toLowerCase();
+  let t=towns.find(x=>x.toLowerCase()===an); if(t)return t;
+  const ALIAS={'kallang':'Kallang-Whampoa','downtown core':'Central Area','outram':'Central Area','rochor':'Central Area','museum':'Central Area'};
+  if(ALIAS[an]&&towns.includes(ALIAS[an]))return ALIAS[an];
+  return null;
+}
+// switch to HDB mode, optionally pre-filtered to a town
+function gotoHDB(town){
+  closeDD();MODE='hdb';TAB='hdb';FILT.town=town||'';
+  $$('.modebtn').forEach(x=>x.classList.toggle('on',x.dataset.mode==='hdb'));
+  setDataTag();renderTabs();render();
 }
 function thesis(p){
   const parts=[];
@@ -1143,6 +1252,9 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDD();});
 
 // delegated events
 document.addEventListener('click',e=>{
+  const scl=e.target.closest('#schoolClear'); if(scl){FILT.school='';render();return;}
+  const zb=e.target.closest('.zonebtn'); if(zb){FILT.schoolZone=zb.dataset.zone;render();return;}
+  const jc=e.target.closest('.jumpchip'); if(jc){const el=document.getElementById(jc.dataset.j);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});return;}
   const chip=e.target.closest('.up-chip'); if(chip){FILT.upreg=chip.dataset.reg;render();return;}
   const lv=e.target.closest('.lview-btn'); if(lv){FILT.lview=lv.dataset.v;render();return;}
   const lo=e.target.closest('.lold-btn'); if(lo){FILT.lold=true;render();return;}
@@ -1158,13 +1270,17 @@ document.addEventListener('click',e=>{
   const hth=e.target.closest('.tbl thead th[data-hk]');
   if(hth){const k=hth.dataset.hk;if(HSORT.k===k)HSORT.dir*=-1;else{HSORT.k=k;HSORT.dir=(k==='town'||k==='ft')?1:-1;}render();return;}
 });
-document.addEventListener('input',e=>{if(e.target.id==='q'){FILT.q=e.target.value;const inp=e.target;const pos=inp.selectionStart;render(true);const ni=$('#q');if(ni){ni.focus();ni.setSelectionRange(pos,pos);}}});
+document.addEventListener('input',e=>{
+  if(e.target.id==='q'){FILT.q=e.target.value;const inp=e.target;const pos=inp.selectionStart;render(true);const ni=$('#q');if(ni){ni.focus();ni.setSelectionRange(pos,pos);}}
+  else if(e.target.id==='fschool'){if(SCHOOL_IDX&&SCHOOL_IDX.has(e.target.value)){FILT.school=e.target.value;FILT.schoolZone=FILT.schoolZone||'2km';render();}}
+});
 document.addEventListener('change',e=>{
   const id=e.target.id,v=e.target.value;
   if(id==='fseg'){FILT.seg=v;render();}
   else if(id==='fdist'){FILT.district=v;render();}
   else if(id==='ften'){FILT.tenure=v;render();}
   else if(id==='fprice'){FILT.price=v;render();}
+  else if(id==='fschool'){if(SCHOOL_IDX&&SCHOOL_IDX.has(v)){FILT.school=v;FILT.schoolZone=FILT.schoolZone||'2km';render();}}
   else if(id==='fsort'){const a=v.split('|');SORT={k:a[0],dir:+a[1]};render();}
   else if(id==='ftown'){FILT.town=v;render();}
   else if(id==='fft'){FILT.ft=v;render();}
