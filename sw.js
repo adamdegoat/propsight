@@ -1,7 +1,7 @@
 // PropSight hub — service worker (offline shell + installable PWA)
-const CACHE = 'propsight-v127';
+const CACHE = 'propsight-v128';
 const CORE = [
-  'index.html', 'guide/index.html',
+  'index.html', 'guide/index.html', 'listings/index.html',
   'market-pulse/index.html', 'market-pulse/your-real-property-budget-three-numbers.html',
   'tools/afford.html', 'tools/value.html', 'tools/stamp-duty.html',
   'tools/schools.html', 'tools/sell.html', 'tools/eligibility.html', 'tools/grants.html', 'install.html',
