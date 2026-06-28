@@ -1,4 +1,4 @@
-/* Caveat — interactive valuation map (Leaflet + OneMap tiles).
+/* Caveat, interactive valuation map (Leaflet + OneMap tiles).
    Plots the subject, comparable sales and nearby amenities. All free. */
 const CaveatMap = (() => {
   const maps = {};

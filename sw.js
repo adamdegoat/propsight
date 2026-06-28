@@ -1,4 +1,4 @@
-// PropSight hub — service worker (offline shell + installable PWA)
+// PropSight hub, service worker (offline shell + installable PWA)
 const CACHE = 'propsight-v135';
 const CORE = [
   'index.html', 'guide/index.html', 'listings/index.html',

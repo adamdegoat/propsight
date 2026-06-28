@@ -1,10 +1,10 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Stamp Duty Calculator — PropSight · Singapore Property</title>
-<meta name="description" content="Work out the stamp duty on a Singapore home in seconds — buyer's stamp duty plus any additional stamp duty. Free, by PropSight.">
+<title>Stamp Duty Calculator, PropSight · Singapore Property</title>
+<meta name="description" content="Work out the stamp duty on a Singapore home in seconds, buyer's stamp duty plus any additional stamp duty. Free, by PropSight.">
 <meta name="theme-color" content="#1b3a2d">
 <link rel="manifest" href="../manifest.json">
 <link rel="apple-touch-icon" href="../icons/icon-180.png">
-<meta property="og:type" content="website"><meta property="og:site_name" content="PropSight"><meta property="og:url" content="https://propsight.sg/tools/stamp-duty.html"><meta property="og:title" content="Stamp Duty Calculator — PropSight"><meta property="og:description" content="Work out the stamp duty on a Singapore home in seconds — Buyer's Stamp Duty plus any Additional Buyer's Stamp Duty (ABSD). Free, no sign-up, by PropSight."><meta property="og:image" content="https://propsight.sg/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Stamp Duty Calculator — PropSight"><meta name="twitter:description" content="Work out the stamp duty on a Singapore home in seconds — BSD plus any ABSD. Free, no sign-up."><meta name="twitter:image" content="https://propsight.sg/og.jpg">
+<meta property="og:type" content="website"><meta property="og:site_name" content="PropSight"><meta property="og:url" content="https://propsight.sg/tools/stamp-duty.html"><meta property="og:title" content="Stamp Duty Calculator, PropSight"><meta property="og:description" content="Work out the stamp duty on a Singapore home in seconds, Buyer's Stamp Duty plus any Additional Buyer's Stamp Duty (ABSD). Free, no sign-up, by PropSight."><meta property="og:image" content="https://propsight.sg/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Stamp Duty Calculator, PropSight"><meta name="twitter:description" content="Work out the stamp duty on a Singapore home in seconds, BSD plus any ABSD. Free, no sign-up."><meta name="twitter:image" content="https://propsight.sg/og.jpg">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -98,7 +98,7 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
   <div class="head">
     <span class="kick">Buyer's stamp duty</span>
     <h1>How much stamp duty will you pay?</h1><svg class="hl-i" viewBox="0 0 172 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 9 C 44 4, 128 4, 168 8"/></svg>
-    <p class="sub">Enter the price and a couple of details — we'll show you the tax you'll pay on a Singapore home — to the dollar. Updated to the latest official rates.</p>
+    <p class="sub">Enter the price and a couple of details, we'll show you the tax you'll pay on a Singapore home, to the dollar. Updated to the latest official rates.</p>
   </div>
 
   <div class="card">
@@ -115,7 +115,7 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
       </div>
     </div>
     <div class="field" style="margin-bottom:6px">
-      <label>Is this your…<small>Count every home you (and your spouse) already own or part-own — that's what decides the ABSD tier, not just homes in your name.</small></label>
+      <label>Is this your…<small>Count every home you (and your spouse) already own or part-own, that's what decides the ABSD tier, not just homes in your name.</small></label>
       <div class="opts" id="count">
         <div class="opt on" data-c="1">1st home</div>
         <div class="opt" data-c="2">2nd home</div>
@@ -138,7 +138,7 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
     <a class="btn g" href="../index.html">More free tools</a>
   </div>
 
-  <p class="disc" id="disc">Indicative estimate only — not financial advice. Stamp duty is charged on the <b>higher of the price or the home's market valuation</b>. Final duties are determined by IRAS. Figures shown are the latest official rates.</p>
+  <p class="disc" id="disc">Indicative estimate only, not financial advice. Stamp duty is charged on the <b>higher of the price or the home's market valuation</b>. Final duties are determined by IRAS. Figures shown are the latest official rates.</p>
 </div>
 <section class="more wrap">
   <div class="ask">
@@ -206,25 +206,25 @@ function calc(){
   const rows=[
     ['Buyer\'s Stamp Duty','everyone pays this', fmt(b)],
   ];
-  if(ar>0) rows.push(['Additional Stamp Duty', ar+'% — '+(who==='SC'?'2nd+ home':who==='SPR'?'PR':'foreigner'), fmt(a)]);
+  if(ar>0) rows.push(['Additional Stamp Duty', ar+'%, '+(who==='SC'?'2nd+ home':who==='SPR'?'PR':'foreigner'), fmt(a)]);
   else rows.push(['Additional Stamp Duty','none for this profile','$0']);
   $('#rows').innerHTML = price>0 ? rows.map(r=>`<div class="row"><span class="k">${r[0]}<small>${r[1]}</small></span><span class="v">${r[2]}</span></div>`).join('') : '';
-  // plain note — profile-accurate
+  // plain note, profile-accurate
   let n='';
   if(price>0){
-    n=`<b>Buyer's Stamp Duty</b> is the basic tax everyone pays when buying a home — it steps up with the price. `;
+    n=`<b>Buyer's Stamp Duty</b> is the basic tax everyone pays when buying a home, it steps up with the price. `;
     if(ar>0){
       let why = who==='SC' ? `because this isn't your first home` :
                 who==='SPR' ? `because PRs pay additional duty${count!=='1'?` (more from the second home)`:``}` :
                 `because foreign buyers pay additional duty`;
       n+=`<b>Additional Buyer's Stamp Duty (ABSD)</b> adds ${ar}% on top, ${why}. `;
-    } else n+=`There's no extra ABSD here — a Singapore Citizen's first home pays only the basic duty. `;
+    } else n+=`There's no extra ABSD here, a Singapore Citizen's first home pays only the basic duty. `;
     n+=`Both are due within 14 days of signing.`;
-    if(who==='Foreigner') n+=`<br><br><b>Note:</b> some nationalities are taxed at citizen rates under trade agreements — US citizens, and citizens &amp; PRs of Iceland, Liechtenstein, Norway and Switzerland. If that's you, message us to check.`;
-    if(who==='SC' && count!=='1') n+=`<br><br><b>Upgrading as a married couple?</b> If you're buying your next home before selling your current one, you pay this ABSD upfront — but a married couple with at least one Singapore Citizen can claim it back in full, as long as you sell the first home within 6 months of buying the second (for a completed property). Worth planning the timing with us before you commit.`;
+    if(who==='Foreigner') n+=`<br><br><b>Note:</b> some nationalities are taxed at citizen rates under trade agreements, US citizens, and citizens &amp; PRs of Iceland, Liechtenstein, Norway and Switzerland. If that's you, message us to check.`;
+    if(who==='SC' && count!=='1') n+=`<br><br><b>Upgrading as a married couple?</b> If you're buying your next home before selling your current one, you pay this ABSD upfront, but a married couple with at least one Singapore Citizen can claim it back in full, as long as you sell the first home within 6 months of buying the second (for a completed property). Worth planning the timing with us before you commit.`;
   }
   $('#note').innerHTML=n;
-  $('#disc').innerHTML='Indicative estimate only — not financial advice. Stamp duty is charged on the <b>higher of the price or the home\'s market valuation</b>. For couples with different profiles, the higher ABSD rate applies. Final duties are determined by IRAS. Rates as of '+RATES.as_of+'.';
+  $('#disc').innerHTML='Indicative estimate only, not financial advice. Stamp duty is charged on the <b>higher of the price or the home\'s market valuation</b>. For couples with different profiles, the higher ABSD rate applies. Final duties are determined by IRAS. Rates as of '+RATES.as_of+'.';
 }
 
 // thousand-separator as you type

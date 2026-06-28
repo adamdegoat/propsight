@@ -1,4 +1,4 @@
-/* Caveat — Upgrade Path Planner (HDB → condo). Sell-first vs buy-first paths. */
+/* Caveat, Upgrade Path Planner (HDB → condo). Sell-first vs buy-first paths. */
 const Upgrade = (() => {
   const C = Caveat; let RATES = null;
 
@@ -26,7 +26,7 @@ const Upgrade = (() => {
     if (loan < 0) loan = 0; if (save < 0) save = 0; if (income < 0) income = 0;
     const e = document.getElementById('u_err');
     if (!(val > 0) || !(price > 0)) { e.textContent = 'Enter a valid flat value and target condo price.'; e.style.display = 'block'; return; }
-    if (loan > val) { e.textContent = 'Your outstanding loan is larger than the flat value — please check the figures.'; e.style.display = 'block'; return; }
+    if (loan > val) { e.textContent = 'Your outstanding loan is larger than the flat value, please check the figures.'; e.style.display = 'block'; return; }
     e.style.display = 'none';
     const mopMet = document.getElementById('u_mop').checked;
     const sellCost = Math.round(val * 0.02 * 1.09 + 2500); // ~2% agent commission (+9% GST) + ~$2.5k legal
@@ -74,19 +74,19 @@ const Upgrade = (() => {
           <div class="eh-cell"><div class="ehk">Condo price</div><div class="ehv">${C.fmtK(ctx.price)}</div><div class="ehs">target</div></div>
         </div>
       </div>
-      ${!ctx.mopMet ? `<div class="ref-banner" style="margin:0 0 2px">⚠ You must complete your <b>5-year MOP</b> before you can sell your flat or buy private property — these figures assume MOP is met.</div>` : ''}
+      ${!ctx.mopMet ? `<div class="ref-banner" style="margin:0 0 2px">⚠ You must complete your <b>5-year MOP</b> before you can sell your flat or buy private property, these figures assume MOP is met.</div>` : ''}
       <div class="up-paths">
-        ${pathCard('Sell first, then buy', 'Your condo becomes your only property — no ABSD. Cleanest path, but you may need interim housing between the sale and the new place.', sell, true)}
-        ${pathCard('Buy first, keep HDB', `Pay the ${buy.absdPct}% ABSD upfront — fully refundable if you sell the flat within 6 months. Needs more cash and a smaller loan while the HDB loan is still on.`, buy, false)}
+        ${pathCard('Sell first, then buy', 'Your condo becomes your only property, no ABSD. Cleanest path, but you may need interim housing between the sale and the new place.', sell, true)}
+        ${pathCard('Buy first, keep HDB', `Pay the ${buy.absdPct}% ABSD upfront, fully refundable if you sell the flat within 6 months. Needs more cash and a smaller loan while the HDB loan is still on.`, buy, false)}
       </div>
       <div class="rules-applied" style="border-radius:0 0 var(--r-lg) var(--r-lg)">
         <h4>Good to know</h4>
         <ul style="display:block">
           <li style="display:list-item;margin-left:16px">Funds from your flat are <b>after ~2% agent commission (+GST) and ~$2,500 legal</b> on the sale.</li>
           <li style="display:list-item;margin-left:16px">The 15-month wait-out rule does <b>not</b> apply when upgrading from HDB to private.</li>
-          <li style="display:list-item;margin-left:16px">CPF used on your flat (plus accrued interest) is refunded to your CPF and can fund the condo downpayment — so it nets out of “funds available”.</li>
-          <li style="display:list-item;margin-left:16px">HDB flats have no Seller's Stamp Duty — but selling the <b>new condo within 4 years</b> triggers SSD (16/12/8/4%).</li>
-          <li style="display:list-item;margin-left:16px">Figures are indicative — Caveat drafts, you and your banker confirm the exact loan, CPF and timing.</li>
+          <li style="display:list-item;margin-left:16px">CPF used on your flat (plus accrued interest) is refunded to your CPF and can fund the condo downpayment, so it nets out of “funds available”.</li>
+          <li style="display:list-item;margin-left:16px">HDB flats have no Seller's Stamp Duty, but selling the <b>new condo within 4 years</b> triggers SSD (16/12/8/4%).</li>
+          <li style="display:list-item;margin-left:16px">Figures are indicative, Caveat drafts, you and your banker confirm the exact loan, CPF and timing.</li>
         </ul>
       </div>
       <div class="deck-disc">${RATES.disclaimer} Rates as of ${RATES.as_of}.</div>

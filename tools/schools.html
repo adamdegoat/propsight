@@ -1,10 +1,10 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Homes Near a Primary School — PropSight · Singapore Property</title>
+<title>Homes Near a Primary School, PropSight · Singapore Property</title>
 <meta name="description" content="Pick a Singapore primary school and see which condos sit within 1km (P1 priority) and 1-2km, straight-line, the same basis MOE uses. Free, by PropSight.">
 <meta name="theme-color" content="#1b3a2d">
 <link rel="manifest" href="../manifest.json">
 <link rel="apple-touch-icon" href="../icons/icon-180.png">
-<meta property="og:type" content="website"><meta property="og:site_name" content="PropSight"><meta property="og:url" content="https://propsight.sg/tools/schools.html"><meta property="og:title" content="Homes Near a Primary School — PropSight"><meta property="og:description" content="Pick a Singapore primary school and see which condos sit within 1km (P1 priority) and 1-2km, straight-line, the same basis MOE uses. Free, by PropSight."><meta property="og:image" content="https://propsight.sg/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Homes Near a Primary School — PropSight"><meta name="twitter:description" content="See which condos sit within 1km and 1-2km of any Singapore primary school. Free, no sign-up."><meta name="twitter:image" content="https://propsight.sg/og.jpg">
+<meta property="og:type" content="website"><meta property="og:site_name" content="PropSight"><meta property="og:url" content="https://propsight.sg/tools/schools.html"><meta property="og:title" content="Homes Near a Primary School, PropSight"><meta property="og:description" content="Pick a Singapore primary school and see which condos sit within 1km (P1 priority) and 1-2km, straight-line, the same basis MOE uses. Free, by PropSight."><meta property="og:image" content="https://propsight.sg/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Homes Near a Primary School, PropSight"><meta name="twitter:description" content="See which condos sit within 1km and 1-2km of any Singapore primary school. Free, no sign-up."><meta name="twitter:image" content="https://propsight.sg/og.jpg">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -101,7 +101,7 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
   <div class="head">
     <span class="kick">School proximity</span>
     <h1>Homes near a primary school</h1><svg class="hl-i" viewBox="0 0 172 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 9 C 44 4, 128 4, 168 8"/></svg>
-    <p class="sub">Buying with P1 registration in mind? Pick a school and see which condos sit within <b>1km</b> (top priority) and <b>1–2km</b> (next in line) — measured straight-line, the same way MOE does.</p>
+    <p class="sub">Buying with P1 registration in mind? Pick a school and see which condos sit within <b>1km</b> (top priority) and <b>1-2km</b> (next in line), measured straight-line, the same way MOE does.</p>
   </div>
 
   <div class="card">
@@ -129,8 +129,8 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
   </div>
 
   <div class="expl">
-    <p><b>How the 1km / 2km rule works.</b> When a school has more applicants than places, children are ranked by how close home is: those <b>within 1km</b> come first, then <b>1–2km</b>, then beyond 2km — applied within each group (Singapore Citizens first, then PRs). Distance is the straight-line (“as the crow flies”) distance from your home to the school’s main gate, using SLA’s OneMap.</p>
-    <p>Living in the zone is a <b>priority, not a guarantee</b> — popular schools still ballot. And to keep the priority you must <b>live at that address for at least 30 months</b> from the start of the registration exercise.</p>
+    <p><b>How the 1km / 2km rule works.</b> When a school has more applicants than places, children are ranked by how close home is: those <b>within 1km</b> come first, then <b>1-2km</b>, then beyond 2km, applied within each group (Singapore Citizens first, then PRs). Distance is the straight-line (“as the crow flies”) distance from your home to the school’s main gate, using SLA’s OneMap.</p>
+    <p>Living in the zone is a <b>priority, not a guarantee</b>, popular schools still ballot. And to keep the priority you must <b>live at that address for at least 30 months</b> from the start of the registration exercise.</p>
   </div>
 
   <div class="cta">
@@ -138,7 +138,7 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
     <a class="btn g" href="afford.html">What can I afford?</a>
   </div>
 
-  <p class="disc">Distances are <b>indicative</b>, measured straight-line from each condo to an approximate school location — close to, but not identical to, MOE’s official figure (which uses the exact main gate). Always confirm the exact distance with the <b>official MOE / OneMap School Query</b> before deciding. This list shows <b>private condos only</b> (landed homes and HDB flats can also qualify and aren’t listed here). Some smaller or newer projects may be missing. Built on URA caveat data — not affiliated with MOE.</p>
+  <p class="disc">Distances are <b>indicative</b>, measured straight-line from each condo to an approximate school location, close to, but not identical to, MOE’s official figure (which uses the exact main gate). Always confirm the exact distance with the <b>official MOE / OneMap School Query</b> before deciding. This list shows <b>private condos only</b> (landed homes and HDB flats can also qualify and aren’t listed here). Some smaller or newer projects may be missing. Built on URA caveat data, not affiliated with MOE.</p>
 </div>
 <section class="more wrap">
   <div class="ask">
@@ -178,7 +178,7 @@ fetch('school-homes.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{
     const s=DATA.find(x=>x.n===n)||DATA.find(x=>x.n.toLowerCase().startsWith(n.split(' ')[0].toLowerCase()));
     if(s){const c=document.createElement('span');c.className='chip';c.textContent=s.n.replace(/ Primary School$/,'').replace(/ School$/,'');c.onclick=()=>pick(s);box.appendChild(c);}
   });
-}).catch(()=>{ $('#chips').innerHTML='<span class="cl">Couldn’t load school data — please refresh.</span>'; });
+}).catch(()=>{ $('#chips').innerHTML='<span class="cl">Couldn’t load school data, please refresh.</span>'; });
 
 function render(list){
   const ac=$('#ac');
@@ -207,18 +207,18 @@ function fill(ul,arr,total,near){
   const el=$(ul);
   if(!arr.length){el.innerHTML=`<li class="empty">No condos ${near} of this school.</li>`;return;}
   let h=arr.map(li).join('');
-  if(total>arr.length) h+=`<li class="more">+ ${total-arr.length} more ${near} — message us for the full list</li>`;
+  if(total>arr.length) h+=`<li class="more">+ ${total-arr.length} more ${near}, message us for the full list</li>`;
   el.innerHTML=h;
 }
 function pick(s){
   if(!s)return;
   $('#q').value=s.n;$('#ac').classList.remove('on');matches=[];cur=-1;
   $('#sname').textContent=s.n;
-  $('#scount').textContent=`${s.p1n} condo${s.p1n===1?'':'s'} within 1km · ${s.p2n} between 1–2km`;
+  $('#scount').textContent=`${s.p1n} condo${s.p1n===1?'':'s'} within 1km · ${s.p2n} between 1-2km`;
   $('#seeall').href=`/research/?school=${encodeURIComponent(s.n)}&zone=2km`;
   $('#seeall-n').textContent=s.n.replace(/ Primary School$/,'').replace(/ School$/,'');
   fill('#l1',s.p1,s.p1n,'within 1km');
-  fill('#l2',s.p2,s.p2n,'within 1–2km');
+  fill('#l2',s.p2,s.p2n,'within 1-2km');
   $('#res').classList.add('on');
   $('#res').scrollIntoView({behavior:'smooth',block:'start'});
 }

@@ -1,4 +1,4 @@
-/* PropSight shared navigation — one consistent header on every sub-page.
+/* PropSight shared navigation, one consistent header on every sub-page.
    Drop <script src="/nav.js" defer></script> on any page; it replaces that
    page's own <header> with the standard PropSight nav (absolute links, active
    state, mobile menu). The homepage keeps its own hero-integrated nav. */
@@ -47,7 +47,7 @@
     '.psnav-signin{margin-left:4px;background:none;border:0;font-family:inherit;font-size:13.5px;font-weight:600;color:#5a5248;cursor:pointer;padding:8px 2px;white-space:nowrap;transition:color .2s}.psnav-signin:hover{color:#191512}' +
     '.psnav-join{margin-left:0;flex:none;background:linear-gradient(135deg,#e3c98f,#b08d57);color:#241a0d;font-weight:800;font-size:13.5px;font-family:inherit;border:1px solid #b08d57;border-radius:40px;padding:9px 16px;cursor:pointer;white-space:nowrap;box-shadow:0 8px 22px rgba(176,141,87,.34);transition:transform .2s,box-shadow .2s}' +
     '.psnav-join:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(176,141,87,.44)}' +
-    /* the "doorway" into the Listing Platform — set apart from the menu, reads as a separate place */
+    /* the "doorway" into the Listing Platform, set apart from the menu, reads as a separate place */
     '.psnav-door{display:flex;flex-direction:column;gap:2px;text-decoration:none;margin-left:6px;padding:7px 13px;border:1px solid #cdd9d0;border-radius:12px;background:linear-gradient(180deg,#fff,#f1f5f1);position:relative;flex:none;transition:transform .2s,border-color .2s,box-shadow .2s}' +
     '.psnav-door::before{content:"";position:absolute;left:-9px;top:50%;transform:translateY(-50%);width:1px;height:28px;background:#e2dac9}' +
     '.psnav-door:hover{transform:translateY(-1px);border-color:#27513f;box-shadow:0 9px 22px rgba(39,81,63,.15)}' +
@@ -76,7 +76,7 @@
     '.psnav-menu a.psm-door .psm-arr{flex:none;width:34px;height:34px;border-radius:50%;background:#27513f;display:flex;align-items:center;justify-content:center}' +
     '.psnav-menu a.psm-door .psm-arr svg{width:15px;height:15px;stroke:#f3efe6}' +
     '@media(max-width:1200px){.psnav-links{display:none}.psnav-door{display:none}.psnav-burger{display:flex}}@media(max-width:560px){.psnav-in{padding:0 20px}.psnav-brand b{font-size:20px}.psnav-brand .pm{width:34px;height:34px}}' +
-    /* shared site footer — legal links + the global "information only" disclaimer */
+    /* shared site footer, legal links + the global "information only" disclaimer */
     '.psftr{background:#f1ece1;border-top:1px solid #e7e0d2;font-family:"Schibsted Grotesk",system-ui,sans-serif;padding:26px 0 calc(28px + env(safe-area-inset-bottom))}' +
     '.psftr-in{max-width:1120px;margin:0 auto;padding:0 32px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}' +
     '.psftr-links{display:flex;flex-wrap:wrap;gap:14px;align-items:center}' +
@@ -114,7 +114,7 @@
     '<button class="psnav-msignin ps-signin-cta" type="button" onclick="window.PS&&PS.login(\'menu\')">Already a member? Sign in</button>' +
     LINKS.map(function (l) { return linkHtml(l, true); }).join('') +
     '<a class="psm-door' + (active(LISTINGS) ? ' cur' : '') + '" href="' + LISTINGS + '">' +
-      '<span><span class="psm-door-t">Listing Platform</span><span class="psm-door-d">Coming soon — step into the platform</span></span>' +
+      '<span><span class="psm-door-t">Listing Platform</span><span class="psm-door-d">Coming soon, step into the platform</span></span>' +
       '<span class="psm-arr">' + ARROW + '</span>' +
     '</a>' + '</div>';
 
@@ -127,7 +127,7 @@
       '<a href="' + BASE + '/terms/">Terms</a>' +
       '<a href="mailto:propsightsg@gmail.com">Contact</a>' +
     '</nav>' +
-    '<p class="psftr-disc">PropSight is information only — not financial or property advice. Figures are estimates; verify before acting.</p>' +
+    '<p class="psftr-disc">PropSight is information only, not financial or property advice. Figures are estimates; verify before acting.</p>' +
   '</div></footer>';
 
   // self-referential canonical → https://propsight.sg + pathname (index.html stripped)
@@ -141,7 +141,7 @@
   }
 
   function init() {
-    // the Join button opens the shared signup modal — make sure member.js is present
+    // the Join button opens the shared signup modal, make sure member.js is present
     if (!window.PS && !document.querySelector('script[src*="member.js"]')) {
       var ms = document.createElement('script'); ms.src = BASE + '/member.js'; document.head.appendChild(ms);
     }
@@ -156,7 +156,7 @@
     var b = document.getElementById('psBurger');
     b.addEventListener('click', function () { menu.classList.toggle('open'); });
     menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { menu.classList.remove('open'); }); });
-    // shared footer (legal links + global disclaimer) — append once, only if the page hasn't got one
+    // shared footer (legal links + global disclaimer), append once, only if the page hasn't got one
     if (!document.getElementById('psFtr')) {
       var fh = document.createElement('div'); fh.innerHTML = footerHTML;
       document.body.appendChild(fh.firstChild);
@@ -167,12 +167,12 @@
   else init();
 })();
 
-/* ── Analytics: cookieless, privacy-first (PDPA-friendly — no cookies, no PII). ──
+/* ── Analytics: cookieless, privacy-first (PDPA-friendly, no cookies, no PII). ──
    Paste your free GoatCounter site code below to switch it on. Sign up (2 min, free)
    at https://www.goatcounter.com/signup → pick a code e.g. "propsight" → it becomes
    https://propsight.goatcounter.com . Set GC_CODE to that code and re-sync. Until then
    this is a no-op, so it can never slow or break the site. (Swap to Cloudflare/Plausible
-   here later if you prefer — same one place.) */
+   here later if you prefer, same one place.) */
 (function () {
   var GC_CODE = "propsight"; // https://propsight.goatcounter.com
   if (!GC_CODE) return;

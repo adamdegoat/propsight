@@ -1,10 +1,10 @@
-/* PropSight membership — shared client state + the signup UI used everywhere
+/* PropSight membership, shared client state + the signup UI used everywhere
    (Research wall, homepage modal, hero). One card design, one place to maintain.
    <script src="/member.js"></script>  (sync rewrites the path on propsight.sg) */
 (function () {
   var API = 'https://web-production-07326.up.railway.app';
   var KEY = 'ps_member';
-  var TG = 'https://t.me/propsightsg';   // members-only channel — link is gated behind sign-in
+  var TG = 'https://t.me/propsightsg';   // members-only channel, link is gated behind sign-in
 
   function get() { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; } }
   function isMember() { var m = get(); return !!(m && m.token); }
@@ -79,7 +79,7 @@
   function cardHTML(opts) {
     opts = opts || {};
     var h = opts.heading || 'See the full picture.';
-    var sub = opts.sub || 'Join PropSight free — see every condo &amp; HDB in full, plus the weekly insights and live Telegram signals.';
+    var sub = opts.sub || 'Join PropSight free, see every condo &amp; HDB in full, plus the weekly insights and live Telegram signals.';
     var x = opts.modal ? '<button class="psj-x" data-psj-close aria-label="Close">×</button>' : '';
     return '<div class="psj-card">' + x
       + '<div class="psj-join">'
@@ -87,10 +87,10 @@
       +   '<h3 class="psj-h">' + h + '</h3>'
       +   '<p class="psj-sub">' + sub + '</p>'
       +   '<ul class="psj-perks">'
-      +   '<li>' + TICK + '<span><b>Full research</b> — every condo &amp; HDB, ranked, compared &amp; tracked.</span></li>'
-      +   '<li>' + TICK + '<span><b>More of Aillie</b> — a higher chat limit with your property assistant.</span></li>'
-      +   '<li>' + TICK + '<span><b>Weekly newsletter</b> — the moves that matter.</span></li>'
-      +   '<li>' + TICK + '<span><b>Telegram channel</b> — live property signals as they happen.</span></li>'
+      +   '<li>' + TICK + '<span><b>Full research</b>, every condo &amp; HDB, ranked, compared &amp; tracked.</span></li>'
+      +   '<li>' + TICK + '<span><b>More of Aillie</b>, a higher chat limit with your property assistant.</span></li>'
+      +   '<li>' + TICK + '<span><b>Weekly newsletter</b>, the moves that matter.</span></li>'
+      +   '<li>' + TICK + '<span><b>Telegram channel</b>, live property signals as they happen.</span></li>'
       +   '</ul>'
       +   '<form class="psj-form" novalidate>'
       +   '<div class="psj-row"><input name="name" placeholder="First name" autocomplete="given-name">'
@@ -103,7 +103,7 @@
       + '<div class="psj-signin" style="display:none">'
       +   '<div class="psj-ey">Welcome back</div>'
       +   '<h3 class="psj-h">Sign in to PropSight.</h3>'
-      +   '<p class="psj-sub">No password needed — just enter the email you joined with and you’re straight back in.</p>'
+      +   '<p class="psj-sub">No password needed, just enter the email you joined with and you’re straight back in.</p>'
       +   '<form class="psj-siform" novalidate>'
       +   '<input name="email" type="email" placeholder="you@email.com" autocomplete="email">'
       +   '<button type="submit">Sign in →</button></form>'
@@ -135,9 +135,9 @@
           if (onDone) onDone(get());
         } else {
           btn.disabled = false; btn.textContent = 'Join free →';
-          msg.className = 'psj-msg err'; msg.textContent = (r && r.error) || 'Something went wrong — please try again.';
+          msg.className = 'psj-msg err'; msg.textContent = (r && r.error) || 'Something went wrong, please try again.';
         }
-      }).catch(function () { btn.disabled = false; btn.textContent = 'Join free →'; msg.className = 'psj-msg err'; msg.textContent = 'Network error — please try again.'; });
+      }).catch(function () { btn.disabled = false; btn.textContent = 'Join free →'; msg.className = 'psj-msg err'; msg.textContent = 'Network error, please try again.'; });
     });
     // ── toggle between join / sign-in ──
     var toSi = root.querySelector('[data-psj-tosignin]'), toJoin = root.querySelector('[data-psj-tojoin]');
@@ -167,9 +167,9 @@
             setTimeout(function () { try { location.reload(); } catch (e) {} }, 750);
           } else {
             sib.disabled = false; sib.textContent = 'Sign in →';
-            simsg.className = 'psj-msg psj-simsg err'; simsg.textContent = (r && r.error) || 'Couldn’t sign you in — please try again.';
+            simsg.className = 'psj-msg psj-simsg err'; simsg.textContent = (r && r.error) || 'Couldn’t sign you in, please try again.';
           }
-        }).catch(function () { sib.disabled = false; sib.textContent = 'Sign in →'; simsg.className = 'psj-msg psj-simsg err'; simsg.textContent = 'Network error — please try again.'; });
+        }).catch(function () { sib.disabled = false; sib.textContent = 'Sign in →'; simsg.className = 'psj-msg psj-simsg err'; simsg.textContent = 'Network error, please try again.'; });
       });
     }
   }
@@ -233,10 +233,10 @@
         el.textContent = el.dataset.joinlabel; el.classList.remove('ps-member');
       }
     }
-    // "Sign in" entries only make sense for guests — hide them once signed in
+    // "Sign in" entries only make sense for guests, hide them once signed in
     var si = document.querySelectorAll('.ps-signin-cta');
     for (var j = 0; j < si.length; j++) si[j].style.display = member ? 'none' : '';
-    // Telegram link is a member-only perk — reveal it only once signed in
+    // Telegram link is a member-only perk, reveal it only once signed in
     var tg = document.querySelectorAll('.ps-tg-only');
     for (var k = 0; k < tg.length; k++) tg[k].style.display = member ? '' : 'none';
   }

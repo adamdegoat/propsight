@@ -179,7 +179,7 @@ function send(testOnly){
   msg.className='msg';msg.textContent='Sending…';
   fetch(API+'/api/member-admin/newsletter',{method:'POST',headers:H(),body:JSON.stringify(payload)})
     .then(function(r){return r.json();}).then(function(d){
-      if(d&&d.ok){msg.className='msg ok';msg.textContent=(testOnly?'Test sent':'Sent')+' — '+d.sent+'/'+d.total+(d.failed?(' ('+d.failed+' failed)'):'')+'.';}
+      if(d&&d.ok){msg.className='msg ok';msg.textContent=(testOnly?'Test sent':'Sent')+', '+d.sent+'/'+d.total+(d.failed?(' ('+d.failed+' failed)'):'')+'.';}
       else{msg.className='msg err';msg.textContent=(d&&d.error)||'Failed.';}
     }).catch(function(){msg.className='msg err';msg.textContent='Network error.';});
 }

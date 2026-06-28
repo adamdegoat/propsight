@@ -1,10 +1,10 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>What Housing Grants Can I Get? — PropSight · Singapore Property</title>
-<meta name="description" content="See which Singapore housing grants you could get — EHG, CPF Housing/Family Grant, Proximity Grant, EC grant — and roughly how much. Free, by PropSight.">
+<title>What Housing Grants Can I Get?, PropSight · Singapore Property</title>
+<meta name="description" content="See which Singapore housing grants you could get, EHG, CPF Housing/Family Grant, Proximity Grant, EC grant, and roughly how much. Free, by PropSight.">
 <meta name="theme-color" content="#1b3a2d">
 <link rel="manifest" href="../manifest.json">
 <link rel="apple-touch-icon" href="../icons/icon-180.png">
-<meta property="og:type" content="website"><meta property="og:site_name" content="PropSight"><meta property="og:url" content="https://propsight.sg/tools/grants.html"><meta property="og:title" content="What Housing Grants Can I Get? — PropSight"><meta property="og:description" content="See which Singapore housing grants you could qualify for — EHG, CPF Housing/Family Grant, Proximity Grant, EC grant — and roughly how much. Free, by PropSight."><meta property="og:image" content="https://propsight.sg/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="What Housing Grants Can I Get? — PropSight"><meta name="twitter:description" content="See which Singapore housing grants you could get and roughly how much. Free, no sign-up."><meta name="twitter:image" content="https://propsight.sg/og.jpg">
+<meta property="og:type" content="website"><meta property="og:site_name" content="PropSight"><meta property="og:url" content="https://propsight.sg/tools/grants.html"><meta property="og:title" content="What Housing Grants Can I Get?, PropSight"><meta property="og:description" content="See which Singapore housing grants you could qualify for, EHG, CPF Housing/Family Grant, Proximity Grant, EC grant, and roughly how much. Free, by PropSight."><meta property="og:image" content="https://propsight.sg/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="What Housing Grants Can I Get?, PropSight"><meta name="twitter:description" content="See which Singapore housing grants you could get and roughly how much. Free, no sign-up."><meta name="twitter:image" content="https://propsight.sg/og.jpg">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -96,7 +96,7 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
   <div class="head">
     <span class="kick">Housing grants</span>
     <h1>What grants can you get?</h1><svg class="hl-i" viewBox="0 0 172 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 9 C 44 4, 128 4, 168 8"/></svg>
-    <p class="sub">First-time buyers can get tens of thousands in CPF housing grants — most people have no idea how much. Answer a few things and see your likely total.</p>
+    <p class="sub">First-time buyers can get tens of thousands in CPF housing grants, most people have no idea how much. Answer a few things and see your likely total.</p>
   </div>
 
   <div class="card">
@@ -112,7 +112,7 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
       <div class="opts" id="size"><div class="opt on" data-v="small">4-room or smaller</div><div class="opt" data-v="big">5-room or bigger</div></div></div>
     <div class="field" id="proxF"><label>Buying near family?<small>Living with, or within 4km of, your parents' or kids' home (resale only).</small></label>
       <div class="opts" id="prox"><div class="opt on" data-v="none">No</div><div class="opt" data-v="near">Within 4km</div><div class="opt" data-v="with">Living together</div></div></div>
-    <div class="field money"><label>Average monthly household income<small>Gross, before CPF — combine both incomes.</small></label><span class="pre">$</span><input type="text" id="income" inputmode="numeric" value="6,000"></div>
+    <div class="field money"><label>Average monthly household income<small>Gross, before CPF, combine both incomes.</small></label><span class="pre">$</span><input type="text" id="income" inputmode="numeric" value="6,000"></div>
   </div>
 
   <div class="res" id="res">
@@ -127,7 +127,7 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
     <a class="btn g" href="https://wa.me/6583219747">Ask us to confirm →</a>
   </div>
 
-  <p class="disc">An estimate of the main grants (EHG, CPF Housing/Family Grant, Proximity, EC) — not an official confirmation. Grants are <b>credited to your CPF and used to pay for the flat</b> (not cash). EHG also needs <b>12 months' continuous work</b>; "first-timer" means no prior housing subsidy. Other rules apply (age, occupier, ownership, citizenship), and second-timers may get the <b>$15k Step-Up Grant</b> in some cases. Always confirm your exact grants with <b>HDB</b>. Figures as of <b>2026</b>.</p>
+  <p class="disc">An estimate of the main grants (EHG, CPF Housing/Family Grant, Proximity, EC), not an official confirmation. Grants are <b>credited to your CPF and used to pay for the flat</b> (not cash). EHG also needs <b>12 months' continuous work</b>; "first-timer" means no prior housing subsidy. Other rules apply (age, occupier, ownership, citizenship), and second-timers may get the <b>$15k Step-Up Grant</b> in some cases. Always confirm your exact grants with <b>HDB</b>. Figures as of <b>2026</b>.</p>
 </div>
 <section class="more wrap">
   <div class="ask">
@@ -159,9 +159,9 @@ const $=s=>document.querySelector(s);
 const num=id=>parseFloat(($('#'+id).value||'').replace(/[^0-9.]/g,''))||0;
 const money=n=>'$'+Math.round(n).toLocaleString('en-US');
 let timer='first',house='couple',buy='resale',size='small',prox='none',firstFlat='3room';
-// HDB resale levy — fixed amounts, first subsidised flat sold on/after 3 Mar 2006
+// HDB resale levy, fixed amounts, first subsidised flat sold on/after 3 Mar 2006
 const LEVY={'2room':15000,'3room':30000,'4room':40000,'5room':45000,'exec':50000};
-// verified 2026 EHG tables — [income upper bound, grant]
+// verified 2026 EHG tables, [income upper bound, grant]
 const EHG_FAM=[[1500,120000],[2000,110000],[2500,105000],[3000,95000],[3500,90000],[4000,80000],[4500,70000],[5000,65000],[5500,55000],[6000,50000],[6500,40000],[7000,30000],[7500,25000],[8000,20000],[8500,10000],[9000,5000]];
 const EHG_SIN=[[750,60000],[1000,55000],[1250,52500],[1500,47500],[1750,45000],[2000,40000],[2250,35000],[2500,32500],[2750,27500],[3000,25000],[3250,20000],[3500,15000],[3750,12500],[4000,10000],[4250,5000],[4500,2500]];
 const ehg=(income,single)=>{const t=single?EHG_SIN:EHG_FAM;for(const[b,a]of t)if(income<=b)return a;return 0;};
@@ -169,7 +169,7 @@ const ehg=(income,single)=>{const t=single?EHG_SIN:EHG_FAM;for(const[b,a]of t)if
 function compute(){
   const income=num('income'), single=house==='single';
   const out=[], notes=[]; let total=0;
-  // EHG — HDB (BTO/resale), first-timers
+  // EHG, HDB (BTO/resale), first-timers
   if(buy!=='ec'){
     if(timer==='first'){
       const ceil=single?4500:9000;
@@ -177,8 +177,8 @@ function compute(){
       else notes.push('Your income is above the EHG ceiling ('+money(ceil)+'/mo), so no EHG.');
     } else notes.push('EHG is for first-timers only.');
   }
-  if(buy==='resale') notes.push('On an older resale flat, grants can be <b>pro-rated</b> if the remaining lease won\'t cover the youngest buyer to age 95 — so a short-lease flat may give you less than the figure above. Send us the exact unit and we\'ll check.');
-  // Family Grant — resale only, first-timers
+  if(buy==='resale') notes.push('On an older resale flat, grants can be <b>pro-rated</b> if the remaining lease won\'t cover the youngest buyer to age 95, so a short-lease flat may give you less than the figure above. Send us the exact unit and we\'ll check.');
+  // Family Grant, resale only, first-timers
   if(buy==='resale' && timer==='first'){
     const ceil=single?7000:14000;
     if(income<=ceil){
@@ -187,27 +187,27 @@ function compute(){
       out.push(['CPF Housing Grant (Family)',fg]); total+=fg;
     } else notes.push('Your income is above the Family Grant ceiling ('+money(ceil)+'/mo).');
   }
-  // Proximity Grant — resale only, any timer, no income ceiling
+  // Proximity Grant, resale only, any timer, no income ceiling
   if(buy==='resale' && prox!=='none'){
     const phg = single ? (prox==='with'?15000:10000) : (prox==='with'?30000:20000);
     out.push(['Proximity Housing Grant',phg]); total+=phg;
   }
-  // EC grant — new EC, first-timers, family nucleus
+  // EC grant, new EC, first-timers, family nucleus
   if(buy==='ec'){
-    if(single) notes.push('Singles can’t buy a new EC — it needs a family nucleus.');
+    if(single) notes.push('Singles can’t buy a new EC, it needs a family nucleus.');
     else if(timer==='first'){
       let ec = house==='scpr'
         ? (income<=10000?20000 : income<=11000?10000 : 0)
         : (income<=10000?30000 : income<=11000?20000 : income<=12000?10000 : 0);
       if(ec>0){out.push(['EC Family Grant',ec]); total+=ec;}
       else notes.push(income<=16000
-        ? 'The EC grant tapers to $0 above $12,000 income — you can still buy an EC (ceiling $16,000), just no grant.'
+        ? 'The EC grant tapers to $0 above $12,000 income, you can still buy an EC (ceiling $16,000), just no grant.'
         : 'Income above the EC income ceiling ($16,000).');
     } else notes.push('The EC grant is for first-timers.');
   }
-  if(timer==='second' && buy!=='ec') notes.push('Upgrading from a subsidised 2- or 3-room flat? You may also qualify for the $15k Step-Up Grant (income ≤ $7,000) — ask us to check.');
+  if(timer==='second' && buy!=='ec') notes.push('Upgrading from a subsidised 2- or 3-room flat? You may also qualify for the $15k Step-Up Grant (income ≤ $7,000), ask us to check.');
   if(buy==='bto' && (prox!=='none')) notes.push('Proximity & Family grants are for resale flats, not BTO.');
-  // resale levy — owed by second-timers buying another SUBSIDISED flat
+  // resale levy, owed by second-timers buying another SUBSIDISED flat
   let levy=0, levyWhy='';
   if(timer==='second'){
     if(buy==='bto'){ levy=LEVY[firstFlat]||0; levyWhy='on a new BTO flat'; }
@@ -225,7 +225,7 @@ function render(){
   $('#firstFlatF').classList.toggle('hide', timer!=='second');
   const r=compute();
   $('#totV').textContent = r.total>0 ? '~'+money(r.total) : '$0';
-  $('#totS').textContent = r.total>0 ? 'into your CPF, to help pay for the home' : 'no grants for this combination — see the notes';
+  $('#totS').textContent = r.total>0 ? 'into your CPF, to help pay for the home' : 'no grants for this combination, see the notes';
   $('#rows').innerHTML = r.out.length
     ? r.out.map(g=>`<div class="r"><span class="n">${g[0]}</span><span class="v">${money(g[1])}</span></div>`).join('')
     : '<div class="none">No grants apply to these answers.</div>';
@@ -235,9 +235,9 @@ function render(){
     let net = r.total - r.levy;
     let netLine = r.total>0
       ? `Net picture: <b>${money(r.total)}</b> of grants into your CPF, minus a <b>${money(r.levy)}</b> levy = <b>${net>=0?'+':'−'}${money(Math.abs(net))}</b> overall.`
-      : `This is a cash cost on top of the flat — it can be paid from your sale proceeds, not borrowed.`;
+      : `This is a cash cost on top of the flat, it can be paid from your sale proceeds, not borrowed.`;
     lb.innerHTML = `<div class="lt"><span>Resale levy you'll owe</span><span>−${money(r.levy)}</span></div>`
-      +`<div>As a second-timer, you pay a resale levy ${r.levyWhy} — based on your first ${firstFlat.replace('room','-room').replace('exec','Executive')} flat. It's <b>not a grant and not financeable</b>.</div>`
+      +`<div>As a second-timer, you pay a resale levy ${r.levyWhy}, based on your first ${firstFlat.replace('room','-room').replace('exec','Executive')} flat. It's <b>not a grant and not financeable</b>.</div>`
       +`<div class="lnet">${netLine}</div>`;
     lb.classList.remove('hide');
   } else lb.classList.add('hide');

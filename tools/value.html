@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>What's My Home Worth? — PropSight · Singapore Property</title>
-<meta property="og:type" content="website"><meta property="og:site_name" content="PropSight"><meta property="og:url" content="https://propsight.sg/tools/value.html"><meta property="og:title" content="What's My Home Worth? — PropSight"><meta property="og:description" content="Value any HDB or condo on real recent sales. Free and instant."><meta property="og:image" content="https://propsight.sg/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://propsight.sg/og.jpg">
-<meta name="description" content="Free home valuation for any Singapore HDB flat or condo — estimated from real, recent URA & HDB transactions, with an honest confidence range. By PropSight.">
+<title>What's My Home Worth?, PropSight · Singapore Property</title>
+<meta property="og:type" content="website"><meta property="og:site_name" content="PropSight"><meta property="og:url" content="https://propsight.sg/tools/value.html"><meta property="og:title" content="What's My Home Worth?, PropSight"><meta property="og:description" content="Value any HDB or condo on real recent sales. Free and instant."><meta property="og:image" content="https://propsight.sg/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://propsight.sg/og.jpg">
+<meta name="description" content="Free home valuation for any Singapore HDB flat or condo, estimated from real, recent URA & HDB transactions, with an honest confidence range. By PropSight.">
 <meta name="theme-color" content="#1b3a2d">
 <link rel="manifest" href="../manifest.json">
 <link rel="apple-touch-icon" href="../icons/icon-180.png">
@@ -70,7 +70,7 @@ input:focus,select:focus{border-color:var(--green2);box-shadow:0 0 0 3px rgba(39
 .err{margin-top:18px;background:#fff8e9;border:1px solid #ecdcb4;border-radius:12px;padding:14px 16px;font-size:14px;color:#6b5526;line-height:1.55;display:none}
 .err.on{display:block}
 .note{font-size:13px;color:var(--ink2);margin-top:18px;line-height:1.6}.note b{color:var(--ink)}
-/* comparables table — the real recent sales behind the estimate */
+/* comparables table, the real recent sales behind the estimate */
 .comps-wrap{margin-top:18px}.comps-wrap:empty{display:none}
 .comps-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:11px}
 .comps-h b{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:18.5px;color:var(--ink)}
@@ -129,7 +129,7 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
   <div class="head">
     <span class="kick">Home valuation</span>
     <h1>What's your home worth?</h1><svg class="hl-i" viewBox="0 0 172 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 9 C 44 4, 128 4, 168 8"/></svg>
-    <p class="sub">A real estimate for any HDB flat or condo — built from actual, recent transactions, with an honest range. No sign-up, no agent calling you after.</p>
+    <p class="sub">A real estimate for any HDB flat or condo, built from actual, recent transactions, with an honest range. No sign-up, no agent calling you after.</p>
   </div>
 
   <div class="card">
@@ -142,12 +142,12 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
         <div class="ac" id="addrac"></div>
       </div>
       <div class="two">
-        <div class="field"><label>Block <span style="font-weight:500;color:var(--ink3)">— optional</span><small>Values your exact block.</small></label><input type="text" id="block" placeholder="e.g. 314"></div>
+        <div class="field"><label>Block <span style="font-weight:500;color:var(--ink3)">(optional)</span><small>Values your exact block.</small></label><input type="text" id="block" placeholder="e.g. 314"></div>
         <div class="field"><label>Flat type</label><select id="ftype"><option value="">Pick your street first…</option></select></div>
       </div>
       <div class="two">
-        <div class="field"><label>Floor area <span style="font-weight:500;color:var(--ink3)">— optional</span><small>In sqft. Leave blank for a typical unit.</small></label><input type="text" id="hsize" inputmode="numeric" placeholder="e.g. 990"></div>
-        <div class="field"><label>Storey <span style="font-weight:500;color:var(--ink3)">— optional</span><small>Roughly which floor</small></label><input type="text" id="storey" inputmode="numeric" placeholder="e.g. 10"></div>
+        <div class="field"><label>Floor area <span style="font-weight:500;color:var(--ink3)">(optional)</span><small>In sqft. Leave blank for a typical unit.</small></label><input type="text" id="hsize" inputmode="numeric" placeholder="e.g. 990"></div>
+        <div class="field"><label>Storey <span style="font-weight:500;color:var(--ink3)">(optional)</span><small>Roughly which floor</small></label><input type="text" id="storey" inputmode="numeric" placeholder="e.g. 10"></div>
       </div>
     </div>
 
@@ -158,8 +158,8 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
         <div class="ac" id="projac"></div>
       </div>
       <div class="two">
-        <div class="field"><label>Floor area <span style="font-weight:500;color:var(--ink3)">— optional</span><small>In sqft. Leave blank for a typical unit.</small></label><input type="text" id="csize" inputmode="numeric" placeholder="e.g. 750"></div>
-        <div class="field"><label>Floor <span style="font-weight:500;color:var(--ink3)">— optional</span><small>Roughly which level</small></label><input type="text" id="floor" inputmode="numeric" placeholder="e.g. 15"></div>
+        <div class="field"><label>Floor area <span style="font-weight:500;color:var(--ink3)">(optional)</span><small>In sqft. Leave blank for a typical unit.</small></label><input type="text" id="csize" inputmode="numeric" placeholder="e.g. 750"></div>
+        <div class="field"><label>Floor <span style="font-weight:500;color:var(--ink3)">(optional)</span><small>Roughly which level</small></label><input type="text" id="floor" inputmode="numeric" placeholder="e.g. 15"></div>
       </div>
     </div>
 
@@ -182,7 +182,7 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
     <a class="btn g" href="afford.html">What can I afford?</a>
   </div>
 
-  <p class="disc">This is an <b>estimate from recent comparable sales</b> (URA caveats for private homes, HDB resale records) — not a formal bank or licensed valuation. A bank's valuation, your unit's condition, view, renovation and exact stack can move the real number. <b>Important:</b> your bank loan and CPF only stretch up to the bank's valuation — if you agree to pay <b>above</b> it, that gap comes entirely out of your own cash. Newer or thinly-traded projects may have few comparables. Treat the range as a guide, and message us for a proper, address-specific valuation. Data refreshed regularly from official sources.</p>
+  <p class="disc">This is an <b>estimate from recent comparable sales</b> (URA caveats for private homes, HDB resale records), not a formal bank or licensed valuation. A bank's valuation, your unit's condition, view, renovation and exact stack can move the real number. <b>Important:</b> your bank loan and CPF only stretch up to the bank's valuation, if you agree to pay <b>above</b> it, that gap comes entirely out of your own cash. Newer or thinly-traded projects may have few comparables. Treat the range as a guide, and message us for a proper, address-specific valuation. Data refreshed regularly from official sources.</p>
 </div>
 <section class="more wrap">
   <div class="ask">
@@ -241,13 +241,13 @@ const SEGP={CCR:'Prime',RCR:'City fringe',OCR:'Suburbs'};
 const segPlain=s=>SEGP[s]||s;
 
 // graceful guard if the engine failed to load
-if(typeof Engines==='undefined'){ $('#go').disabled=true; $('#err').classList.add('on'); $('#err').textContent='Valuation engine is loading — please refresh in a moment.'; }
+if(typeof Engines==='undefined'){ $('#go').disabled=true; $('#err').classList.add('on'); $('#err').textContent='Valuation engine is loading, please refresh in a moment.'; }
 
-Caveat.index().then(d=>{ IDX=d; }).catch(()=>{ $('#err').classList.add('on'); $('#err').textContent='Couldn’t load property data — please refresh.'; });
+Caveat.index().then(d=>{ IDX=d; }).catch(()=>{ $('#err').classList.add('on'); $('#err').textContent='Couldn’t load property data, please refresh.'; });
 // flat street list for the address search (street → town behind the scenes)
 Caveat.getJSON('hdb_streets.json').then(t=>{ t.rows.forEach(([st,tn])=>{ STREET_LIST.push({s:st,t:tn}); (STREETS[tn]=STREETS[tn]||[]).push(st); }); }).catch(()=>{});
 
-// Prefill + auto-run from URL params (so a valuation started in the Aillie chat carries over here — no re-keying)
+// Prefill + auto-run from URL params (so a valuation started in the Aillie chat carries over here, no re-keying)
 (async function prefillFromURL(){
   const P=new URLSearchParams(location.search);
   if(!P.get('t'))return;
@@ -291,7 +291,7 @@ $('#addr').addEventListener('input',e=>{
 });
 function renderAddrAc(){
   const ac=$('#addrac');
-  if(!addrList.length){ac.innerHTML='<div class="meta" style="cursor:default">No matching street — try fewer words.</div>';ac.classList.add('on');return;}
+  if(!addrList.length){ac.innerHTML='<div class="meta" style="cursor:default">No matching street, try fewer words.</div>';ac.classList.add('on');return;}
   ac.innerHTML=addrList.map((o,i)=>`<div data-i="${i}" class="${i===acur?'hl':''}">${title(o.s)} <span class="meta">· ${title(o.t)}</span></div>`).join('');
   ac.classList.add('on');
   ac.querySelectorAll('div[data-i]').forEach(el=>el.onclick=()=>pickAddr(addrList[+el.dataset.i]));
@@ -359,30 +359,30 @@ async function run(){
     }
     if(!r.ok){throw new Error(plainReason(r.reason));}
     render(r,label,subj);
-  }catch(err){ $('#err').classList.add('on'); $('#err').textContent=err.message||'Something went wrong — try again.'; }
+  }catch(err){ $('#err').classList.add('on'); $('#err').textContent=err.message||'Something went wrong, try again.'; }
   $('#go').disabled=false;$('#go').textContent='Value this home →';
 }
 
 function plainReason(s){return s;} // engine reasons are already plain enough
 
 function render(r,label,subj){
-  $('#tot').textContent=`${fmtM(r.low)} – ${fmtM(r.high)}`;
+  $('#tot').textContent=`${fmtM(r.low)}, ${fmtM(r.high)}`;
   const rough = r.confidence==='Lower' || (r.n_comps||99) < 4;
   $('#totsub').innerHTML = rough
     ? `<b style="color:#b4452f">Limited recent sales for this one.</b> Treat the range above as a rough guide only, not a reliable valuation. For an accurate figure, <a href="https://wa.me/6583219747" style="color:var(--green2);font-weight:700">get a proper valuation</a>.`
-    : `<b>${label}</b> — the likely range, from real recent comparable sales${r.area_assumed?' (typical unit size — add yours to sharpen)':''}.`;
+    : `<b>${label}</b>, the likely range, from real recent comparable sales${r.area_assumed?' (typical unit size, add yours to sharpen)':''}.`;
   const cm={High:'High confidence',Medium:'Fair confidence',Lower:'Indicative'}[r.confidence]||r.confidence;
   $('#conf').className='chip '+r.confidence;$('#conftxt').textContent=cm;
   const html=[
     rowHTML('Price per sqft','what comparable homes fetch',fmt(r.estimate_psf)+' psf'),
-    rowHTML('Floor area',r.area_assumed?'typical size assumed — add yours to sharpen':'as you entered',`${r.area_sqf.toLocaleString()} sqft`),
-    rowHTML('Recent sales ranged','actual transacted prices, low to high',`${fmtM(r.obs_low)}–${fmtM(r.obs_high)}`),
+    rowHTML('Floor area',r.area_assumed?'typical size assumed, add yours to sharpen':'as you entered',`${r.area_sqf.toLocaleString()} sqft`),
+    rowHTML('Recent sales ranged','actual transacted prices, low to high',`${fmtM(r.obs_low)}-${fmtM(r.obs_high)}`),
     rowHTML('Based on',`${r.n_comps} recent sale${r.n_comps===1?'':'s'} · ${title(r.scope||'')}`,''),
   ].join('');
   $('#rows').innerHTML=html;
   renderComps(mode,r.comps);
-  const cTxt={High:'lots of recent, similar sales nearby — this is a solid estimate',
-    Medium:'a fair number of comparable sales — a reasonable guide',
+  const cTxt={High:'lots of recent, similar sales nearby, this is a solid estimate',
+    Medium:'a fair number of comparable sales, a reasonable guide',
     Lower:'fewer or more varied sales, so treat this as a rough guide'}[r.confidence]||'';
   $('#note').innerHTML=`<b>${cm}:</b> ${cTxt}.${r.area_assumed?' Add your floor area above for a tighter number.':''} Want it pinned to your exact unit, floor and condition? <a href="https://wa.me/6583219747" style="color:var(--green2);font-weight:700">Message us</a>.`;
   $('#res').classList.add('on');$('#res').scrollIntoView({behavior:'smooth',block:'start'});
