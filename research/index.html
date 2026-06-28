@@ -529,6 +529,13 @@ select.f{padding:13px 13px;border-radius:13px}
 
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const _amsw='fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"';
+const AMICON={
+  mrt:`<svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" ${_amsw}><rect x="5" y="3" width="14" height="13" rx="3"/><path d="M5 10h14"/><path d="M8.5 19l-1.5 2.5M15.5 19l1.5 2.5"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/></svg>`,
+  park:`<svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" ${_amsw}><path d="M12 22v-6"/><path d="M12 16a5 5 0 0 0 5-5 4 4 0 0 0-1-2.5A4.5 4.5 0 0 0 12 3a4.5 4.5 0 0 0-4 3.5A4 4 0 0 0 7 11a5 5 0 0 0 5 5z"/></svg>`,
+  hawker:`<svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" ${_amsw}><path d="M3 11h18a9 9 0 0 1-18 0z"/><path d="M12 11V8M9 8c0-1.5 1-2 1.5-2.5M15 8c0-1.5-1-2-1.5-2.5"/><path d="M4 20h16"/></svg>`,
+  school:`<svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" ${_amsw}><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1 3 2.5 6 2.5s6-1.5 6-2.5v-5"/></svg>`,
+};
 let D=null,H=null,MODE='condo',TAB='research',SORT={k:'project',dir:1},HSORT={k:'town',dir:1},FILT={q:'',seg:'',district:'',tenure:'',price:'',town:'',ft:'',mature:'',grade:'',upreg:'',lview:'feed',lold:false,school:'',schoolZone:'2km'},CMP=[];
 // school → primary-school proximity index (built on load from /tools/school-homes.json); null if it fails to load
 let SCHOOL_IDX=null,SCHOOL_NAMES=[];
@@ -690,7 +697,7 @@ function schoolControl(){
   if(FILT.school){const z=FILT.schoolZone||'2km';
     return `<span class="schoolctl"><button class="schoolchip" id="schoolClear" title="Clear school filter">✕ ${esc(FILT.school)}</button>
       <span class="zoneseg"><button class="zonebtn ${z!=='1km'?'on':''}" data-zone="2km">Within 2km</button><button class="zonebtn ${z==='1km'?'on':''}" data-zone="1km">1km only</button></span></span>`;}
-  return `<span class="schoolctl"><input class="schoolinput" id="fschool" list="schoolList" autocomplete="off" placeholder="🏫 Near a primary school…">
+  return `<span class="schoolctl"><input class="schoolinput" id="fschool" list="schoolList" autocomplete="off" placeholder="Near a primary school…">
     <datalist id="schoolList">${SCHOOL_NAMES.map(n=>`<option value="${esc(n)}">`).join('')}</datalist></span>`;
 }
 function schoolBadge(p){const e=schoolDist(p);if(!e)return '';const p1=e.band==='p1';
@@ -821,7 +828,7 @@ const VIEWS={
      <p>Search any condo to see its <b>real transacted prices</b>, how they've moved, rental yield, the nearest MRT &amp; schools, and exactly how it's priced against nearby condos, its town and its district. Straight from official URA caveats. No login, no agent.</p>
      <div class="herochips"><span><b>${D.n_projects.toLocaleString()}</b> condos</span><span>Official URA data</span><span>Refreshed weekly</span><span>Free, no login</span></div></div>
    <div class="ctrls">
-     <div class="search"><span class="si">🔍</span><input id="q" autocomplete="off" placeholder="Search a condo…" value="${FILT.q}">${ac}</div>
+     <div class="search"><span class="si"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:middle" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span><input id="q" autocomplete="off" placeholder="Search a condo…" value="${FILT.q}">${ac}</div>
      <select class="f" id="fdist" title="District">${distOpts}</select>
      <select class="f" id="fseg" title="Region">${segOpts}</select>
      <select class="f" id="ften" title="Tenure">${tenOpts}</select>
@@ -931,7 +938,7 @@ const VIEWS={
      <p>Search a town to see <b>real resale prices</b>, typical <b>remaining lease</b>, rental yield, recent sales block by block, and how it's priced against the islandwide median for the same flat type. Straight from official HDB data.</p>
      <div class="herochips"><span><b>${H.n_towns}</b> towns</span><span><b>${(H.n_txns/1000).toFixed(0)}k</b> resales</span><span>Official HDB data</span><span>Refreshed weekly</span></div></div>
    <div class="ctrls">
-     <div class="search"><span class="si">🔍</span><input id="q" autocomplete="off" placeholder="Search a town, e.g. Bishan, Punggol…" value="${FILT.q}">${ac}</div>
+     <div class="search"><span class="si"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:middle" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span><input id="q" autocomplete="off" placeholder="Search a town, e.g. Bishan, Punggol…" value="${FILT.q}">${ac}</div>
      <select class="f" id="ftown" title="Town">${townOpts}</select>
      <select class="f" id="fft" title="Flat type">${ftOpts}</select>
      <select class="f" id="fmature" title="Estate">${matOpts}</select>
@@ -1053,7 +1060,7 @@ function bestHook(p){
 function bestBlock(){
   const best=D.projects.filter(p=>!p.value_flag&&p.discount>=2).sort((a,b)=>b.discount-a.discount).slice(0,3);
   if(best.length<3)return '';
-  return `<div class="bestrow"><div class="best-h">📉 Priced furthest below nearby comparables <span>projects trading at the biggest discount to similar condos around them, click any for the breakdown</span></div>
+  return `<div class="bestrow"><div class="best-h"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5v14h18"/><path d="M19 8l-6 6-3-3-4 4"/><path d="M19 13V8h-5"/></svg> Priced furthest below nearby comparables <span>projects trading at the biggest discount to similar condos around them, click any for the breakdown</span></div>
    <div class="best-cards">${best.map(p=>`<div class="best-c" data-p="${esc(p.project)}">
      <div class="best-top">${valChip(p)}<span class="best-n">${tc(p.project)}</span></div>
      <div class="best-sub">${p.street?tc(p.street)+', ':''}${distName(p.district)} · ${p.seg}</div>
@@ -1196,11 +1203,11 @@ function openDD(name){
 
      ${(a.mrt||a.schools)?`<div class="sect" id="dd-around">What's around it</div>
      <div class="amgrid">
-       ${a.mrt?`<div class="amc"><div class="amk">🚇 Nearest MRT</div><div class="amv">${a.mrt.name}</div><div class="ams">${walkMin(a.mrt.m)} · ${fmtm(a.mrt.m)}</div></div>`:''}
-       ${a.park?`<div class="amc"><div class="amk">🌳 Nearest park</div><div class="amv">${a.park.name}</div><div class="ams">${walkMin(a.park.m)} · ${fmtm(a.park.m)}</div></div>`:''}
-       ${a.hawker?`<div class="amc"><div class="amk">🍜 Hawker / food</div><div class="amv">${a.hawker.name}</div><div class="ams">${fmtm(a.hawker.m)} away</div></div>`:''}
+       ${a.mrt?`<div class="amc"><div class="amk">${AMICON.mrt} Nearest MRT</div><div class="amv">${a.mrt.name}</div><div class="ams">${walkMin(a.mrt.m)} · ${fmtm(a.mrt.m)}</div></div>`:''}
+       ${a.park?`<div class="amc"><div class="amk">${AMICON.park} Nearest park</div><div class="amv">${a.park.name}</div><div class="ams">${walkMin(a.park.m)} · ${fmtm(a.park.m)}</div></div>`:''}
+       ${a.hawker?`<div class="amc"><div class="amk">${AMICON.hawker} Hawker / food</div><div class="amv">${a.hawker.name}</div><div class="ams">${fmtm(a.hawker.m)} away</div></div>`:''}
      </div>
-     ${a.schools&&a.schools.length?`<div class="amschools"><div class="amk" style="margin-bottom:7px">🏫 Schools nearby</div>${a.schools.map(s=>`<span class="schip">${s.name} <b>${fmtm(s.m)}</b></span>`).join('')}</div>`:''}`:''}
+     ${a.schools&&a.schools.length?`<div class="amschools"><div class="amk" style="margin-bottom:7px">${AMICON.school} Schools nearby</div>${a.schools.map(s=>`<span class="schip">${s.name} <b>${fmtm(s.m)}</b></span>`).join('')}</div>`:''}`:''}
 
      <div class="sect">How active it is</div>
      <div class="readout"><b>${p.txns.toLocaleString()}</b> units changed hands in the last ${D.window_months} months${p.txns_recent?` (<b>${p.txns_recent}</b> in the last 6)`:''}, ${p.txns>=80?'it trades very actively':p.txns>=25?'it trades fairly actively':'it trades fairly quietly'}, which affects how easily you could resell.</div>
@@ -1299,23 +1306,23 @@ function esc(s){return String(s).replace(/"/g,'&quot;');}
       <p>Install once, pull up any project's numbers and the live launch feed in seconds.</p>
     </div>
     <div class="th-feats">
-      <div class="th-feat"><div class="fi">📊</div><b>The numbers on every project</b><span>From official caveats</span></div>
-      <div class="th-feat"><div class="fi">📈</div><b>Live launch feed</b><span>How each launch is priced &amp; selling</span></div>
-      <div class="th-feat"><div class="fi">📶</div><b>Opens like an app</b><span>Fullscreen, no browser bars</span></div>
-      <div class="th-feat"><div class="fi">🆓</div><b>Free · official data</b><span>URA caveats · no login</span></div>
+      <div class="th-feat"><div class="fi"><svg viewBox="0 0 24 24" width="1.3em" height="1.3em" style="vertical-align:middle" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M6 21v-7M12 21V5M18 21v-9"/></svg></div><b>The numbers on every project</b><span>From official caveats</span></div>
+      <div class="th-feat"><div class="fi"><svg viewBox="0 0 24 24" width="1.3em" height="1.3em" style="vertical-align:middle" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 7-7"/><path d="M20 8V3.5M20 8h-4.5"/></svg></div><b>Live launch feed</b><span>How each launch is priced &amp; selling</span></div>
+      <div class="th-feat"><div class="fi"><svg viewBox="0 0 24 24" width="1.3em" height="1.3em" style="vertical-align:middle" fill="currentColor"><rect x="3" y="14" width="3.4" height="6" rx="1"/><rect x="8.5" y="10" width="3.4" height="10" rx="1"/><rect x="14" y="6" width="3.4" height="14" rx="1"/><rect x="19.5" y="2" width="3.4" height="18" rx="1"/></svg></div><b>Opens like an app</b><span>Fullscreen, no browser bars</span></div>
+      <div class="th-feat"><div class="fi"><svg viewBox="0 0 24 24" width="1.3em" height="1.3em" style="vertical-align:middle" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 11 4h7a2 2 0 0 1 2 2v7l-8 8a1.5 1.5 0 0 1-2 0l-7-7a1.5 1.5 0 0 1 0-2z"/><circle cx="16" cy="8" r="1.3"/></svg></div><b>Free · official data</b><span>URA caveats · no login</span></div>
     </div>
     <div class="th-seg"><button data-os="ios" class="on">iPhone</button><button data-os="and">Android</button></div>
     <ol class="th-steps" id="thIos">
       <li>Open this page in <b>Safari</b> (not Chrome).</li>
       <li>Tap the <b>Share</b> button, the square with an ↑ arrow.</li>
       <li>Scroll down and tap <b>"Add to Home Screen"</b>.</li>
-      <li>Tap <b>Add</b>, the Thesis icon appears on your home screen. 🎉</li>
+      <li>Tap <b>Add</b>, the Thesis icon appears on your home screen.</li>
     </ol>
     <ol class="th-steps th-hidden" id="thAnd">
       <li>Open this page in <b>Chrome</b>.</li>
       <li>Tap the <b>⋮</b> menu (top-right).</li>
       <li>Tap <b>"Add to Home screen"</b> / <b>"Install app"</b>.</li>
-      <li>Tap <b>Add</b>, the Thesis app icon appears. 🎉</li>
+      <li>Tap <b>Add</b>, the Thesis app icon appears.</li>
     </ol>
     <button class="th-got" onclick="thCloseGuide()">Got it</button>
   </div>

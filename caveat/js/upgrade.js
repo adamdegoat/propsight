@@ -15,7 +15,7 @@ const Upgrade = (() => {
       <div class="field"><label>Target price</label><input id="u_price" type="number" inputmode="numeric" placeholder="1600000"><span class="suffix">SGD</span></div>
       <div class="field"><label>Combined monthly income</label><input id="u_income" type="number" inputmode="numeric" placeholder="14000"><span class="suffix">SGD</span></div>
       <button class="btn-primary" id="u_go">Map my upgrade</button>
-      <button class="rates-link" id="u_rates" type="button">📋 View all rates &amp; rules</button>
+      <button class="rates-link" id="u_rates" type="button"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 4v1H9z"/><path d="M9 10h6M9 14h6M9 18h4"/></svg> View all rates &amp; rules</button>
       <p class="err" id="u_err" style="display:none;margin-top:12px"></p>`;
     document.getElementById('u_go').onclick = calc;
     document.getElementById('u_rates').onclick = () => Eligibility.openRates();

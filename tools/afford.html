@@ -281,7 +281,7 @@ function calc(){
               : (age+r.yearsEff>65) ? `the loan would run past age 65`
               : `the loan is longer than ${r.maxTen} years`;
     const extra = r.leaseShort ? ` On a short lease your usable CPF is also pro-rated down, so the real budget is lower.` : ` A shorter loan, or buying younger, lifts this.`;
-    $('#flag').innerHTML=`⚠️ Because ${why}, banks cap your loan at <b>${Math.round(r.ltv*100)}%</b> (not 75%), so you need a much bigger down payment.${extra}`;
+    $('#flag').innerHTML=`<svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg> Because ${why}, banks cap your loan at <b>${Math.round(r.ltv*100)}%</b> (not 75%), so you need a much bigger down payment.${extra}`;
   } else $('#flag').style.display='none';
   // binding constraint
   let L='';

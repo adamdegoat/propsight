@@ -88,7 +88,7 @@ const Eligibility = (() => {
         ${li(`Min. cash ${r.minCashPct}%`, 'minimum cash downpayment')}
         ${li(`TDSR ${RATES.financing.tdsr_pct}%${ctx.isHDB ? ` + MSR ${RATES.financing.msr_pct}%` : ''}`, `tested at ${RATES.financing.stress_rate_pct}% over 25 yrs`)}
       </ul>
-      <button class="rates-link" type="button" onclick="Eligibility.openRates()">📋 See full rates &amp; rules →</button>
+      <button class="rates-link" type="button" onclick="Eligibility.openRates()"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 4v1H9z"/><path d="M9 10h6M9 14h6M9 18h4"/></svg> See full rates &amp; rules →</button>
     </div>`;
   }
 
@@ -123,7 +123,7 @@ const Eligibility = (() => {
       <label style="display:flex;gap:9px;align-items:center;margin:4px 0 16px;font-size:13.5px;font-weight:600;color:var(--ink-2)">
         <input type="checkbox" id="e_hdb" style="width:auto"> HDB flat (applies MSR 30%)</label>
       <button class="btn-primary" id="e_go">Calculate</button>
-      <button class="rates-link" id="ratesRefBtn" type="button">📋 View all rates &amp; rules</button>
+      <button class="rates-link" id="ratesRefBtn" type="button"><svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 4v1H9z"/><path d="M9 10h6M9 14h6M9 18h4"/></svg> View all rates &amp; rules</button>
       <p class="err" id="e_err" style="display:none;margin-top:12px"></p>`;
     const prof = document.getElementById('e_profile'), ftaWrap = document.getElementById('e_ftaWrap'),
       fta = document.getElementById('e_fta');

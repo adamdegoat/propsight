@@ -48,6 +48,8 @@ input:focus{border-color:var(--green2);box-shadow:0 0 0 3px rgba(39,81,63,.1)}
 .res.on{display:block}
 .schoolname{font-family:var(--serif);font-weight:600;font-size:26px;letter-spacing:-.02em}
 .count{font-size:14px;color:var(--ink2);margin-top:4px}
+.seclabel{font-family:var(--serif);font-weight:600;font-size:20px;color:var(--green);margin-top:26px;letter-spacing:-.01em}
+.hdblabel{margin-top:38px;padding-top:28px;border-top:2px solid var(--line2)}
 .grp{margin-top:22px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fffefc}
 .grp .gh{padding:15px 20px;display:flex;align-items:center;gap:11px;border-bottom:1px solid var(--line)}
 .grp.p1 .gh{background:linear-gradient(150deg,var(--green2),var(--green3));color:#f3efe6;border-bottom:0}
@@ -115,9 +117,11 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
 
   <div class="res" id="res">
     <div class="schoolname" id="sname"></div>
+    <div class="bandnote">Both groups below get registration priority over homes more than 2km away. The 1km group is first, then 1-2km.</div>
+
+    <div class="seclabel">Private condos</div>
     <div class="count" id="scount"></div>
-    <div class="bandnote">Both groups below get registration priority over homes more than 2km away. The 1km group is first, then 1-2km. Tap any home to see its prices, value and yield.</div>
-    <a class="seeall" id="seeall" href="#"><span>See all <b id="seeall-n"></b> homes in Research</span><span class="sa-go" aria-hidden="true">→</span></a>
+    <a class="seeall" id="seeall" href="#"><span>See all <b id="seeall-n"></b> condos in Research</span><span class="sa-go" aria-hidden="true">→</span></a>
     <div class="grp p1" id="g1">
       <div class="gh"><span class="badge">1 km</span><span class="gt">Within 1km, top priority for P1 registration<small>Highest priority in the ballot for Singapore Citizens</small></span></div>
       <ul id="l1"></ul>
@@ -125,6 +129,18 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
     <div class="grp p2" id="g2">
       <div class="gh"><span class="badge">1-2 km</span><span class="gt">1-2km, next priority<small>Comes after the 1km group, ahead of homes beyond 2km</small></span></div>
       <ul id="l2"></ul>
+    </div>
+
+    <div class="seclabel hdblabel" id="hdblabel">HDB flats</div>
+    <div class="count" id="hcount"></div>
+    <a class="seeall" id="hseeall" href="#"><span>See <b id="hseeall-n"></b> HDB resale data in Research</span><span class="sa-go" aria-hidden="true">→</span></a>
+    <div class="grp p1" id="hg1">
+      <div class="gh"><span class="badge">1 km</span><span class="gt">HDB streets within 1km<small>Top priority distance for P1 registration</small></span></div>
+      <ul id="hl1"></ul>
+    </div>
+    <div class="grp p2" id="hg2">
+      <div class="gh"><span class="badge">1-2 km</span><span class="gt">HDB streets 1-2km<small>Next priority after the 1km group</small></span></div>
+      <ul id="hl2"></ul>
     </div>
   </div>
 
@@ -147,7 +163,7 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
       <h3 class="ask-h">Get a straight answer from our team.<svg class="hl-i" viewBox="0 0 172 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 9 C 44 4, 128 4, 168 8"/></svg></h3>
       <p>Every number here is a guide. For your exact case &mdash; financing, timing, the smartest move &mdash; have a quick chat. No pressure, no sales script.</p>
     </div>
-    <a class="ask-btn" target="_blank" rel="noopener" href="https://wa.me/6583219747?text=Hi%20PropSight%2C%20I%20was%20using%20your%20tools%20and%20have%20a%20question.">&#128172; WhatsApp us &rarr;</a>
+    <a class="ask-btn" target="_blank" rel="noopener" href="https://wa.me/6583219747?text=Hi%20PropSight%2C%20I%20was%20using%20your%20tools%20and%20have%20a%20question.">WhatsApp us &rarr;</a>
   </div>
   <div class="mtools">
     <div class="mt-lbl">More free tools</div>
@@ -180,6 +196,10 @@ fetch('school-homes.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{
   });
 }).catch(()=>{ $('#chips').innerHTML='<span class="cl">Couldn’t load school data, please refresh.</span>'; });
 
+// HDB streets near each school (separate dataset, street-level)
+let HDB={};
+fetch('school-hdb.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{ (d.schools||[]).forEach(x=>{HDB[x.n]=x;}); }).catch(()=>{});
+
 function render(list){
   const ac=$('#ac');
   if(!list.length){ac.innerHTML='<div class="none">No primary school matches that.</div>';ac.classList.add('on');return;}
@@ -210,6 +230,14 @@ function fill(ul,arr,total,near){
   if(total>arr.length) h+=`<li class="more">+ ${total-arr.length} more ${near}, message us for the full list</li>`;
   el.innerHTML=h;
 }
+function hli(x){return `<li><a href="/research/?town=${encodeURIComponent(x.t)}"><span class="nm">${x.s}</span><span class="r"><span class="d">${x.d} m</span><span class="go" aria-hidden="true">→</span></span></a></li>`;}
+function hfill(ul,arr,total,near){
+  const el=$(ul);
+  if(!arr.length){el.innerHTML=`<li class="empty">No HDB streets ${near} of this school.</li>`;return;}
+  let h=arr.map(hli).join('');
+  if(total>arr.length) h+=`<li class="more">+ ${total-arr.length} more ${near}</li>`;
+  el.innerHTML=h;
+}
 function pick(s){
   if(!s)return;
   $('#q').value=s.n;$('#ac').classList.remove('on');matches=[];cur=-1;
@@ -219,6 +247,19 @@ function pick(s){
   $('#seeall-n').textContent=s.n.replace(/ Primary School$/,'').replace(/ School$/,'');
   fill('#l1',s.p1,s.p1n,'within 1km');
   fill('#l2',s.p2,s.p2n,'within 1-2km');
+  // HDB flats section (separate, street-level, links to that town's HDB resale data)
+  const h=HDB[s.n], hsec=['#hdblabel','#hcount','#hseeall','#hg1','#hg2'].map(id=>$(id));
+  if(h && (h.p1n||h.p2n)){
+    hsec.forEach(e=>{if(e)e.style.display='';});
+    $('#hcount').textContent=`${h.p1n} HDB street${h.p1n===1?'':'s'} within 1km · ${h.p2n} between 1-2km`;
+    const town=((h.p1[0]||h.p2[0]||{}).t)||'';
+    $('#hseeall').href=`/research/?town=${encodeURIComponent(town)}`;
+    $('#hseeall-n').textContent=town;
+    hfill('#hl1',h.p1,h.p1n,'within 1km');
+    hfill('#hl2',h.p2,h.p2n,'within 1-2km');
+  } else {
+    hsec.forEach(e=>{if(e)e.style.display='none';});
+  }
   $('#res').classList.add('on');
   $('#res').scrollIntoView({behavior:'smooth',block:'start'});
 }

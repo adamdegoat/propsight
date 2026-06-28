@@ -528,7 +528,14 @@ const CMA = (() => {
       <p class="hint" style="margin-top:10px">Showing the ${Math.min(comps.length, SHOWN)} closest of ${comps.length} comparable${comps.length === 1 ? '' : 's'} used (last ${win} months), ranked by recency, size &amp; floor. “Adj psf” normalises each to the subject for time, ${kind === 'hdb' ? 'storey &amp; lease' : 'floor &amp; tenure'}. #floor is the band mid-point.</p>`;
   }
 
-  const amenIcon = { mrt: '🚇', lrt: '🚈', school: '🎓', hawker: '🍜', park: '🌳' };
+  const _aw = 'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"';
+  const _train = `<svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" ${_aw}><rect x="5" y="3" width="14" height="13" rx="3"/><path d="M5 10h14"/><path d="M8.5 19l-1.5 2.5M15.5 19l1.5 2.5"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/></svg>`;
+  const amenIcon = {
+    mrt: _train, lrt: _train,
+    school: `<svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" ${_aw}><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1 3 2.5 6 2.5s6-1.5 6-2.5v-5"/></svg>`,
+    hawker: `<svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" ${_aw}><path d="M3 11h18a9 9 0 0 1-18 0z"/><path d="M12 11V8M9 8c0-1.5 1-2 1.5-2.5M15 8c0-1.5-1-2-1.5-2.5"/><path d="M4 20h16"/></svg>`,
+    park: `<svg viewBox="0 0 24 24" width="1em" height="1em" style="vertical-align:-0.15em" ${_aw}><path d="M12 22v-6"/><path d="M12 16a5 5 0 0 0 5-5 4 4 0 0 0-1-2.5A4.5 4.5 0 0 0 12 3a4.5 4.5 0 0 0-4 3.5A4 4 0 0 0 7 11a5 5 0 0 0 5 5z"/></svg>`,
+  };
   const amenLabel = { mrt: 'MRT', lrt: 'LRT', school: 'School', hawker: 'Hawker', park: 'Park' };
   function amenRow(amen) {
     const order = ['mrt', 'lrt', 'school', 'hawker', 'park'];

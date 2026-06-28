@@ -1243,6 +1243,8 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
       if(key.length>=4)SCHOOLKEYS.push({key,name:s.n.toLowerCase()}); });
     SCHOOLKEYS.sort((a,b)=>b.key.length-a.key.length);
   }).catch(()=>{});
+  let SCHOOLS_HDB={};
+  fetch('/tools/school-hdb.json',{cache:'force-cache'}).then(r=>r.json()).then(d=>{ (((d&&d.schools))||[]).forEach(s=>{ if(s&&s.n)SCHOOLS_HDB[s.n.toLowerCase()]=s; }); }).catch(()=>{});
   const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const scroll=()=>{body.scrollTop=body.scrollHeight;};
   function add(who,html){const d=document.createElement('div');d.className='cmsg '+who;d.innerHTML=html;body.appendChild(d);scroll();return d;}
@@ -1301,14 +1303,24 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
   function removeSchoolList(){ inp.removeAttribute('list'); }
   function renderSchoolHomes(s){ removeSchoolList(); const enc=encodeURIComponent, e=esc;
     const fmt=m=> m>=1000?(m/1000).toFixed(1).replace(/\.0$/,'')+'km':m+'m';
-    const link=c=>'<a href="/research/?p='+enc(c.n)+'" style="display:flex;justify-content:space-between;gap:10px;padding:7px 11px;margin:4px 0;border:1px solid #e7e0d2;border-radius:10px;color:#191512;text-decoration:none;font-size:13.5px"><span>'+e(c.n)+'</span><span style="color:#27513f;font-weight:600;white-space:nowrap">'+fmt(c.d)+' &rarr;</span></a>';
-    const grp=(arr,lbl)=> (arr&&arr.length)?'<div style="margin-top:8px"><div style="font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#6b6253;margin-bottom:2px">'+lbl+'</div>'+arr.slice(0,6).map(link).join('')+'</div>':'';
+    const row=(href,nm,d)=>'<a href="'+href+'" style="display:flex;justify-content:space-between;gap:10px;padding:7px 11px;margin:4px 0;border:1px solid #e7e0d2;border-radius:10px;color:#191512;text-decoration:none;font-size:13.5px"><span>'+e(nm)+'</span><span style="color:#27513f;font-weight:600;white-space:nowrap">'+fmt(d)+' &rarr;</span></a>';
+    const seclbl=t=>'<div style="font-family:Fraunces,Georgia,serif;font-weight:600;font-size:15px;color:#1b3a2d;margin:14px 0 2px">'+t+'</div>';
+    const grp=(arr,lbl,mk)=> (arr&&arr.length)?'<div style="margin-top:6px"><div style="font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#6b6253;margin-bottom:2px">'+lbl+'</div>'+arr.slice(0,6).map(mk).join('')+'</div>':'';
+    const clink=c=>row('/research/?p='+enc(c.n),c.n,c.d);
+    const hlink=x=>row('/research/?town='+enc(x.t),x.s,x.d);
     const p1=s.p1||[],p2=s.p2||[];
     let html='<b>Homes near '+e(s.n)+'</b>';
     if(!p1.length&&!p2.length){ html+='<br>I could not find any condos within 2km of this school in our data. It may be a newer or less central area.'; add('bot',html); return; }
-    html+=grp(p1,'Within 1km · top P1 priority')+grp(p2,'1-2km · next priority');
+    html+=seclbl('Private condos')+grp(p1,'Within 1km · top P1 priority',clink)+grp(p2,'1-2km · next priority',clink);
     const total=(s.p1n||p1.length)+(s.p2n||p2.length);
-    html+='<a class="cbtnlink" href="/research/?school='+enc(s.n)+'&zone=2km" style="margin-top:8px">See all '+total+' homes in Research <i>&rarr;</i></a>';
+    html+='<a class="cbtnlink" href="/research/?school='+enc(s.n)+'&zone=2km" style="margin-top:6px">See all '+total+' condos in Research <i>&rarr;</i></a>';
+    const h=SCHOOLS_HDB[s.n.toLowerCase()];
+    if(h && (h.p1n||h.p2n)){
+      const hp1=h.p1||[],hp2=h.p2||[];
+      html+=seclbl('HDB flats')+grp(hp1,'Streets within 1km',hlink)+grp(hp2,'Streets 1-2km',hlink);
+      const town=((hp1[0]||hp2[0]||{}).t)||'';
+      if(town) html+='<a class="cbtnlink" href="/research/?town='+enc(town)+'" style="margin-top:6px">See '+e(town)+' HDB resale data <i>&rarr;</i></a>';
+    }
     html+='<div style="font-size:11.5px;color:#6b6253;margin-top:7px">Tap any home for its real price, value and yield. Distances are indicative; confirm on MOE OneMap before deciding.</div>';
     add('bot',html); }
   function schoolHomesMsg(s){ const t=typing(); setTimeout(()=>{t.remove();renderSchoolHomes(s);showFollowups();},420); }
