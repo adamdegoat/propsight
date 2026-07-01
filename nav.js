@@ -179,7 +179,7 @@
       _fl(BASE + '/tools/value.html', 'Value a home') + _fl(BASE + '/tools/afford.html', 'What you can afford') +
       _fl(BASE + '/tools/stamp-duty.html', 'Stamp duty') + _fl(BASE + '/tools/grants.html', 'Grants') +
       _fl(BASE + '/tools/schools.html', 'Schools nearby') + _fl(BASE + '/tools/sell.html', 'Selling') +
-      _fl(BASE + '/tools/eligibility.html', 'Eligibility') +
+      _fl(BASE + '/tools/eligibility.html', 'Eligibility') + _fl(BASE + '/tools/mortgage.html', 'Mortgage') +
     '</div>' +
     '<div class="psf-col"><h4>' + t('Explore') + '</h4>' +
       _fl(BASE + '/research/', 'Research') + _fl(BASE + '/market-pulse/', 'Market Pulse') + _fl(BASE + '/news/', 'News') +
