@@ -94,7 +94,7 @@
     '.psnav-menu a.psm-door .psm-arr svg{width:15px;height:15px;stroke:#e6f3f0}' +
     '@media(max-width:1200px){.psnav-links{display:none}.psnav-door{display:none}.psnav-burger{display:flex}}@media(max-width:560px){.psnav-in{padding:0 13px;gap:8px}.psnav-brand b{font-size:18px}.psnav-brand .pm{width:31px;height:31px}.psnav-back{width:34px;height:34px}.psnav-signin{font-size:12.5px}.psnav-join{font-size:12.5px;padding:8px 12px}}@media(max-width:400px){.psnav-in{padding:0 10px;gap:6px}.psnav-brand b{font-size:16px}.psnav-brand .pm{width:27px;height:27px}.psnav-back{width:30px;height:30px}.psnav-signin{font-size:11.5px}.psnav-join{font-size:11.5px;padding:8px 10px}}' +
     /* shared site footer, legal links + the global "information only" disclaimer */
-    '.psf{background:linear-gradient(180deg,#0f231a,#0a1712);color:#cfe4dc;padding:60px 0 0;font-family:"Schibsted Grotesk",system-ui,sans-serif}' +
+    '.psftr{background:linear-gradient(180deg,#0f231a,#0a1712);color:#cfe4dc;padding:60px 0 0;font-family:"Schibsted Grotesk",system-ui,sans-serif}' +
     '.psf-in{max-width:1120px;margin:0 auto;padding:0 32px}' +
     '.psf-cols{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr;gap:44px;padding-bottom:44px}' +
     '.psf-logo{display:flex;align-items:center;gap:11px}' +
@@ -115,7 +115,7 @@
     '.psf-disc{font-size:12.5px;color:rgba(207,228,220,.55);flex:1;min-width:240px;line-height:1.5}' +
     '.psf-lang{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#cfe4dc;font-size:13px;font-weight:600;padding:8px 16px;border-radius:9px;cursor:pointer;font-family:inherit}.psf-lang:hover{background:rgba(255,255,255,.14)}' +
     '@media(max-width:820px){.psf-cols{grid-template-columns:1fr 1fr;gap:36px 24px}.psf-brand{grid-column:1/-1}}' +
-    '@media(max-width:520px){.psf{padding-top:44px}.psf-in{padding:0 20px}}' +
+    '@media(max-width:520px){.psftr{padding-top:44px}.psf-in{padding:0 20px}}' +
     /* language toggle (desktop pill + mobile menu button) */
     '.psnav-lang{display:inline-flex;align-items:center;gap:6px;margin-left:8px;flex:none;background:#eaf6f4;border:1.5px solid #27513f;border-radius:30px;font-family:inherit;font-size:13px;font-weight:800;color:#1b3a2d;cursor:pointer;padding:8px 14px;white-space:nowrap;transition:background .2s,color .2s,transform .2s}' +
     '.psnav-lang svg{width:15px;height:15px;flex:none;stroke:currentColor;fill:none;stroke-width:1.7}' +
@@ -167,7 +167,7 @@
   var _IG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>';
   var _PHN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10.5 18.5h3"/></svg>';
   function _fl(href, label) { return '<a href="' + href + '">' + t(label) + '</a>'; }
-  var footerHTML = '<footer class="psf" id="psFtr"><div class="psf-in"><div class="psf-cols">' +
+  var footerHTML = '<footer class="psftr" id="psFtr"><div class="psf-in"><div class="psf-cols">' +
     '<div class="psf-brand">' +
       '<div class="psf-logo">' + _MK + '<span class="psf-bw"><b>PropSight</b><span>' + t('Singapore') + '</span></span></div>' +
       '<p class="psf-tag">' + t('Singapore property, decoded. Every value, grant and guide, free.') + '</p>' +
