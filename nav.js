@@ -44,6 +44,12 @@
     '<path d="M40.5 40.5 L53 53" fill="none" stroke="#15a0a0" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   var css = '' +
+    /* ── site-wide de-AI refresh: Fraunces -> Schibsted, kill the hand-drawn swash ── */
+    ':root{--serif:"Schibsted Grotesk",system-ui,sans-serif}' +
+    '.hl,.hl-i,.uline{display:none!important}' +
+    'em,.serif em,h1 em,h2 em,h3 em{font-style:normal!important}' +
+    /* flatten the decorative stock-photo header bands -> clean brand green (no photo) */
+    '.newshero,.nh-bg,.mast-bg,.ghero-bg,.ph-bg{background:linear-gradient(120deg,#123b2a,#0d2418)!important}' +
     ":root{--gtex:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='gn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.06 0 0 0 0 0.05 0 0 0 0 0.02 0 0 0 0.22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23gn)'/%3E%3C/svg%3E\")}" +
     '.psnav{position:sticky;top:0;z-index:300;background:rgba(236,247,245,.97);border-bottom:1px solid #d2e7e3;font-family:"Schibsted Grotesk",system-ui,sans-serif;padding-top:env(safe-area-inset-top)}' +
     '.psnav-in{max-width:1280px;margin:0 auto;padding:0 32px;height:76px;display:flex;align-items:center;gap:16px}@media(min-width:1201px){.psnav-in{height:84px}}' +

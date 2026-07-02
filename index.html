@@ -771,6 +771,96 @@ html.menu-open .cteaser{opacity:0;visibility:hidden}
 </script>
 </head>
 <body>
+<style id="ps-refresh">
+/* ---- de-AI: Fraunces -> Schibsted, kill the swash ---- */
+.hero h1,.sec-h h2,.foot h2,.newsband h2,.serif,h2.serif,.rcard h3,.tool h4,.note h3,#notes .note .chn{font-family:"Schibsted Grotesk",system-ui,sans-serif!important;font-style:normal!important;letter-spacing:-.02em!important}
+.hero h1,.sec-h h2,.foot h2,.newsband h2{font-weight:900!important;letter-spacing:-.03em!important}
+.hero h1 .ln i,em,.hero h1 em,.hero h1 i{font-style:normal!important}
+em{color:var(--brass)}
+.hl{display:none!important}
+/* ---- hero: drop the photo, clean on-brand, text dark ---- */
+.hero-bg,.hero-grad,.herosun{display:none!important}
+.hero{background:var(--bg)!important}
+.hero h1{color:var(--green3)!important}
+.hero .lead{color:var(--ink2)!important}
+.herotop .eyebrow{color:var(--brass)!important}
+.heroclock{color:var(--ink3)!important;border-left-color:var(--line2)!important}
+.heroclock time{color:var(--ink2)!important}.heroclock .hcz{color:var(--brass)!important}
+.hperks b,.hperks .hperks-star,.fresh{color:var(--green2)!important}
+.fresh{color:var(--ink3)!important}
+/* ---- hero market board (replaces the chat in the hero-right) ---- */
+.hboard{background:#fcfffe;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 22px 60px rgba(25,21,18,.1);align-self:center}
+.hboard .bh{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 14px;border-bottom:1px solid var(--line)}
+.hboard .bh b{font-weight:800;font-size:16px}
+.hboard .bh .lv{font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--green2);display:inline-flex;align-items:center;gap:7px}
+.hboard .bh .lv .d{width:8px;height:8px;border-radius:50%;background:#2e9e6b}
+.hboard .br{display:flex;justify-content:space-between;align-items:baseline;padding:14px 20px;border-bottom:1px solid var(--line2)}
+.hboard .br .k{font-size:12.5px;font-weight:600;color:var(--ink2);text-transform:uppercase;letter-spacing:.03em}
+.hboard .br .v{font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}
+.hboard .br .v.up{color:#2e9e6b}.hboard .br .v.dn{color:#c0392b}
+.hboard .mv{padding:15px 20px;background:linear-gradient(180deg,#f4fbf9,#e9f5f1);display:flex;justify-content:space-between;align-items:center}
+.hboard .mv .k{font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+.hboard .mv .nm{font-weight:800;font-size:15px;margin-top:2px}
+.hboard .mv .v{font-weight:800;color:#2e9e6b;font-size:16px}
+.hboard .bf{display:block;padding:13px 20px;text-align:center;font-size:12.5px;font-weight:700;color:var(--brass)}
+/* ---- Aillie band (relocated chat, in-brand) ---- */
+.aillieband{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2)}
+.aillieband .abw{max-width:1200px;margin:0 auto;padding:44px 36px;display:grid;grid-template-columns:.82fr 1.18fr;gap:48px;align-items:center}
+.aillieband .al-lbl{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);display:inline-flex;align-items:center;gap:9px}
+.aillieband .al-lbl .dot{width:7px;height:7px;border-radius:50%;background:var(--brass2)}
+.aillieband h3{font-family:"Schibsted Grotesk",sans-serif;font-weight:900;font-size:30px;letter-spacing:-.02em;color:var(--green3);margin:13px 0 11px}
+.aillieband p{font-size:16px;color:var(--ink2);max-width:36ch}
+.aillieband .allink{display:inline-block;margin-top:14px;font-size:14px;font-weight:700;color:var(--green2);box-shadow:inset 0 -2px 0 var(--brass3)}
+.aillieband #heroChatMount{margin:0;min-height:0}
+/* restyle the Aillie panel to match (no glass) */
+.cpanel.inhero{background:#fcfffe!important;box-shadow:0 18px 48px rgba(25,21,18,.1)!important;height:440px!important;min-height:0!important;max-height:none!important;border:1px solid var(--line)!important}
+.cpanel.inhero .chead{background:linear-gradient(180deg,#f4fbf9,#eaf5f1)!important;color:var(--ink)!important;border-bottom:1px solid var(--line)!important}
+.cpanel.inhero .chead .ct b{color:var(--ink)!important}
+.cpanel.inhero .chead .ct span,.cpanel.inhero .chead .cstat #cliveTxt{color:var(--ink3)!important}
+.cpanel.inhero .cmark{background:var(--green)!important}
+.cpanel.inhero .cmsg.bot{background:var(--bg2)!important;border:1px solid var(--line)!important;color:var(--ink)!important}
+.cpanel.inhero .cfoot{background:transparent!important;border-top:1px solid var(--line)!important}
+.cpanel.inhero .chatcue,.chatcue{display:none!important}
+/* ---- hero no longer dark: darken all the text that was light-for-photo ---- */
+.hero h1{text-shadow:none!important}
+.hero .hperks,.hero .covers{color:var(--ink2)!important}
+.hero .hperks b,.hero .hperks .hperks-star{color:var(--green2)!important}
+.hessentials{color:var(--green2)!important;border-color:var(--line2)!important}
+.hero .btn.brass-out{color:var(--brass)!important;border-color:var(--brass2)!important;background:rgba(15,122,130,.08)!important}
+.hero .btn.btn-ghost{color:var(--ink)!important;border-color:var(--line2)!important;background:rgba(255,255,255,.55)!important}
+/* nav: force the "scrolled" dark-text look (hero is light now) */
+.nav .links a{color:var(--ink2)!important}
+.nav .navsignin{color:var(--ink2)!important}
+.nav .navdoor{border-color:var(--line2)!important;background:rgba(255,255,255,.5)!important}
+.nav .navdoor .nd-top{color:var(--green)!important}
+.nav .navdoor .nd-sub{color:var(--ink3)!important}
+.nav .navdoor .nd-dot{background:#3aa76d!important}
+.nav .nav-install{color:var(--ink)!important;background:rgba(255,255,255,.55)!important;border-color:var(--line2)!important}
+/* ---- Pass 2: cards -> clean rows / index ---- */
+/* "What brings you here" router cards -> editorial rows */
+.router{grid-template-columns:1fr!important;gap:0!important;border-top:2px solid var(--green)}
+.rcard{display:grid!important;grid-template-columns:52px 1fr auto!important;grid-template-rows:auto auto!important;column-gap:20px!important;row-gap:2px!important;align-items:center!important;background:transparent!important;border:0!important;border-bottom:1px solid var(--line)!important;border-radius:0!important;padding:20px 6px!important;box-shadow:none!important;overflow:visible!important}
+.rcard::after{display:none!important}
+.rcard:hover{transform:none!important;box-shadow:none!important;background:var(--bg2)!important;border-color:var(--line)!important}
+.rcard .ic{grid-column:1!important;grid-row:1/3!important;margin:0!important;align-self:center!important}
+.rcard:hover .ic{transform:none!important;box-shadow:none!important}
+.rcard h3{grid-column:2!important;grid-row:1!important;align-self:end!important;margin:0!important}
+.rcard p{grid-column:2!important;grid-row:2!important;align-self:start!important;font-size:14px!important}
+.rcard .go{grid-column:3!important;grid-row:1/3!important;align-self:center!important;margin:0!important}
+/* "The toolkit" grid -> clean 2-col index */
+.tools{grid-template-columns:1fr 1fr!important;gap:0 40px!important}
+.tool{display:grid!important;grid-template-columns:46px 1fr auto!important;grid-template-rows:auto auto!important;column-gap:15px!important;align-items:center!important;text-align:left!important;background:transparent!important;border:0!important;border-bottom:1px solid var(--line)!important;border-radius:0!important;padding:16px 4px!important;box-shadow:none!important}
+.tool:hover{transform:none!important;background:var(--bg2)!important;border-color:var(--green2)!important}
+.tool .ti2{grid-column:1!important;grid-row:1/3!important;align-self:center!important;margin:0!important;width:46px!important;height:46px!important}
+.tool h4{grid-column:2!important;grid-row:1!important;align-self:end!important;text-align:left!important;font-size:16.5px!important}
+.tool p{grid-column:2!important;grid-row:2!important;align-self:start!important;text-align:left!important;font-size:12.5px!important;margin:0!important}
+.tool .free{grid-column:3!important;grid-row:1/3!important;align-self:center!important;position:static!important}
+.tool .badge,.tool .badge2{display:none!important}
+.tool.feat{background:transparent!important}
+.tool.feat .ti2{background:linear-gradient(140deg,var(--green2),var(--green3))!important}
+@media(max-width:880px){.aillieband .abw{grid-template-columns:1fr;gap:22px}.aillieband #heroChatMount{display:none}}
+@media(max-width:720px){.tools{grid-template-columns:1fr!important}}
+</style>
 <script src="/i18n.js"></script>
 <script src="/member.js" defer></script>
 <div class="prog" id="prog"></div>
@@ -832,8 +922,27 @@ if(sa){var e=document.getElementById('navInstall');if(e)e.style.display='none';}
     <div class="fresh rv"><span class="dot"></span>Live · built on official URA data · refreshed weekly</div>
     <a class="hinstall rv" href="install.html">Add this hub to your phone, one tap to every tool</a>
   </div>
-  <aside class="hero-chat-mount" id="heroChatMount" aria-label="Ask Aillie"><div class="chatcue" aria-hidden="true"><b data-i18n="chatcue.t">Ask Aillie anything</b><span data-i18n="chatcue.s">real numbers · free</span></div></aside>
+  <aside class="hboard">
+    <div class="bh"><b>The market today</b><span class="lv"><span class="d"></span>Live</span></div>
+    <div class="br"><span class="k" data-i18n="Private resale">Private resale</span><span class="v up">+0.5%</span></div>
+    <div class="br"><span class="k" data-i18n="HDB resale">HDB resale</span><span class="v dn">&minus;0.3%</span></div>
+    <div class="br"><span class="k" data-i18n="Median condo psf">Median condo psf</span><span class="v">$1,646</span></div>
+    <div class="br"><span class="k" data-i18n="Rental yield">Rental yield</span><span class="v">3.3%</span></div>
+    <div class="br"><span class="k" data-i18n="Condos on record">Condos on record</span><span class="v">2,354</span></div>
+    <div class="mv"><div><div class="k" data-i18n="Biggest mover this quarter">Biggest mover this quarter</div><div class="nm">Parc Clematis · Clementi</div></div><div class="v">↑ 20.9%</div></div>
+    <a class="bf" href="market-pulse/" data-i18n="See the full Market Pulse →">See the full Market Pulse →</a>
+  </aside>
   </div></section>
+
+<section class="aillieband"><div class="abw">
+  <div>
+    <span class="al-lbl"><span class="dot"></span><span data-i18n="Meet Aillie">Meet Aillie</span></span>
+    <h3 data-i18n="Not sure where to start? Just ask.">Not sure where to start? Just ask.</h3>
+    <p data-i18n="Tell Aillie what you're trying to do, in plain English. She answers with the real numbers behind it.">Tell Aillie what you're trying to do, in plain English. She answers with the real numbers behind it.</p>
+    <a class="allink" href="#talk" onclick="if(window.askAillie){event.preventDefault();window.askAillie();}" data-i18n="Open a full conversation →">Open a full conversation →</a>
+  </div>
+  <aside class="hero-chat-mount" id="heroChatMount" aria-label="Ask Aillie"></aside>
+</div></section>
 
 <section class="sec"><div class="wrap">
   <div class="sec-h"><div><span class="eyebrow rv">Start here</span><h2 class="rv">What brings you here?</h2></div>
