@@ -55,7 +55,7 @@
     '.psnav-in{max-width:1280px;margin:0 auto;padding:0 32px;height:76px;display:flex;align-items:center;gap:16px}@media(min-width:1201px){.psnav-in{height:84px}}' +
     '.psnav-brand{display:flex;align-items:center;gap:11px;text-decoration:none}.psnav-brand .pm{width:38px;height:38px;flex:none;color:#1b3a2d}' +
     '.psnav-brand .bw{display:flex;flex-direction:column;line-height:1}.psnav-brand .bw span{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:#758a86;font-weight:700;margin-top:4px}' +
-    '.psnav-brand b{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:22px;color:#191512;letter-spacing:.01em}' +
+    '.psnav-brand b{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;font-size:22px;color:#191512;letter-spacing:.01em}' +
     '.psnav-links{display:flex;gap:19px;margin:0 auto;align-items:center}' +
     '.psnav-links a{font-size:13.5px;font-weight:600;color:#485a56;text-decoration:none;white-space:nowrap;transition:color .2s}' +
     '.psnav-links a:hover{color:#191512}.psnav-links a.cur{color:#1b3a2d}' +
@@ -94,7 +94,7 @@
     '.psnav-msignin{width:100%;background:none;border:0;font-family:"Schibsted Grotesk",system-ui,sans-serif;font-size:14px;font-weight:600;color:#27513f;padding:6px;margin-bottom:8px;cursor:pointer}' +
     /* mobile menu: the door becomes a distinct card pinned at the very end */
     '.psnav-menu a.psm-door{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;padding:18px 18px;border:1px solid #cdd9d0;border-bottom:1px solid #cdd9d0;border-radius:15px;background:linear-gradient(180deg,#fff,#eef4ef)}' +
-    '.psnav-menu a.psm-door .psm-door-t{display:block;font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:21px;color:#1b3a2d;line-height:1.1}' +
+    '.psnav-menu a.psm-door .psm-door-t{display:block;font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;font-size:21px;color:#1b3a2d;line-height:1.1}' +
     '.psnav-menu a.psm-door .psm-door-d{display:block;font-family:"Schibsted Grotesk",system-ui,sans-serif;font-size:13px;color:#576b67;margin-top:4px}' +
     '.psnav-menu a.psm-door .psm-arr{flex:none;width:34px;height:34px;border-radius:50%;background:#27513f;display:flex;align-items:center;justify-content:center}' +
     '.psnav-menu a.psm-door .psm-arr svg{width:15px;height:15px;stroke:#e6f3f0}' +
@@ -106,7 +106,7 @@
     '.psf-logo{display:flex;align-items:center;gap:11px}' +
     '.psf-mark{width:42px;height:42px;flex:none;color:#cfe4dc}' +
     '.psf-bw{display:flex;flex-direction:column;line-height:1}' +
-    '.psf-bw b{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:25px;color:#fff;letter-spacing:.01em}' +
+    '.psf-bw b{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;font-size:25px;color:#fff;letter-spacing:.01em}' +
     '.psf-bw span{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:rgba(207,228,220,.7);font-weight:700;margin-top:5px}' +
     '.psf-tag{margin:16px 0 20px;font-size:14.5px;line-height:1.6;color:rgba(207,228,220,.72);max-width:310px}' +
     '.psf-soc{display:flex;align-items:center;gap:11px;margin-bottom:16px}' +
