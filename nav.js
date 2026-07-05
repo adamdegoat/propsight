@@ -8,7 +8,7 @@
     ['Tools', BASE + '/#tools', ''],
     ['Research', BASE + '/research/', 'feat'],
     ['New Launches', BASE + '/launches/', ''],
-    ['Market Pulse', BASE + '/market-pulse/', ''],
+    ['Market Analysis', BASE + '/market-analysis/', ''],
     ['News', BASE + '/news/', 'smart'],
     ['Guide', BASE + '/guide/', ''],
     ['About us', BASE + '/about/', ''],
@@ -188,7 +188,7 @@
       _fl(BASE + '/tools/eligibility.html', 'Eligibility') + _fl(BASE + '/tools/mortgage.html', 'Mortgage') +
     '</div>' +
     '<div class="psf-col"><h4>' + t('Explore') + '</h4>' +
-      _fl(BASE + '/research/', 'Research') + _fl(BASE + '/market-pulse/', 'Market Pulse') + _fl(BASE + '/news/', 'News') +
+      _fl(BASE + '/research/', 'Research') + _fl(BASE + '/market-analysis/', 'Market Analysis') + _fl(BASE + '/news/', 'News') +
       _fl(BASE + '/guide/', 'Guide') + _fl(BASE + '/launches/', 'New Launches') +
     '</div>' +
     '<div class="psf-col"><h4>' + t('Company') + '</h4>' +
