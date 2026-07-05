@@ -147,8 +147,8 @@ html.menu-open,html.menu-open body{overflow:hidden}
 .hessentials:hover{border-color:var(--brass);transform:translateY(-1px)}
 /* hero doorways: the two prominent entries (PropWorld + Listings) */
 .hdoors{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
-.hdoor{flex:1 1 240px;max-width:335px;display:flex;align-items:center;gap:13px;text-decoration:none;padding:14px 17px;border-radius:18px;position:relative;overflow:hidden;background:linear-gradient(158deg,rgba(20,44,32,.6),rgba(11,26,19,.52));border:1px solid rgba(127,208,187,.34);box-shadow:0 16px 36px -16px rgba(5,14,10,.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:transform .25s var(--ease),box-shadow .25s,border-color .25s}
-.hdoor:hover{transform:translateY(-3px);border-color:var(--brass3);box-shadow:0 24px 48px -18px rgba(5,14,10,.72)}
+.hdoor{flex:1 1 240px;max-width:335px;display:flex;align-items:center;gap:13px;text-decoration:none;padding:15px 18px;border-radius:18px;position:relative;overflow:hidden;background:var(--gtex,none),#1b3a2d;border:1px solid var(--brass2);box-shadow:0 14px 30px -10px rgba(15,35,26,.42);transition:transform .25s var(--ease),box-shadow .25s,border-color .25s}
+.hdoor:hover{transform:translateY(-3px);border-color:var(--brass3);box-shadow:0 22px 44px -14px rgba(15,35,26,.52)}
 .hdoor .hd-ic{flex:none;width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(127,208,187,.15);color:var(--brass3)}
 .hdoor .hd-ic svg{width:23px;height:23px}
 .hdoor .hd-tx{display:flex;flex-direction:column;line-height:1.14;min-width:0}
@@ -159,8 +159,8 @@ html.menu-open,html.menu-open body{overflow:hidden}
 .hdoor .hd-ar{margin-left:auto;flex:none;color:var(--brass3);transition:transform .25s var(--ease)}
 .hdoor .hd-ar svg{width:18px;height:18px}
 .hdoor:hover .hd-ar{transform:translateX(4px)}
-.hdoor.hd-world{background:linear-gradient(158deg,rgba(21,128,127,.46),rgba(13,52,41,.6));border-color:rgba(127,208,187,.5)}
-.hdoor.hd-world .hd-ic{background:rgba(127,208,187,.22)}
+.hdoor.hd-world{background:var(--gtex,none),linear-gradient(155deg,#15807f 0%,#123a30 92%);border-color:var(--brass2)}
+.hdoor.hd-world .hd-ic{background:rgba(127,208,187,.26)}
 .hdoor-sec{display:flex;gap:12px;margin-top:15px;flex-wrap:wrap}
 @media(max-width:560px){.hdoor{flex:1 1 100%;max-width:none}}
 .fresh{display:inline-flex;align-items:center;gap:9px;margin-top:14px;font-size:12.5px;color:var(--ink3);font-weight:600}
@@ -893,7 +893,7 @@ em{color:var(--brass)}
     <span class="bw"><b>PropSight</b><span data-i18n="Singapore">Singapore</span></span>
   </div>
   <nav class="links"><a href="#tools" data-i18n>Tools</a><a href="/research/" class="navfeat" data-i18n>Research</a><a href="launches/" data-i18n>New Launches</a><a href="market-analysis/" data-i18n>Market Analysis</a><a href="news/" class="navsmart" data-i18n>News</a><a href="guide/" data-i18n>Guide</a><a href="about/" data-i18n>About us</a><a href="#talk" data-i18n>Contact</a></nav>
-  <a class="navdoor" href="listings/"><span class="nd-top"><span data-i18n="Listing Platform">Listing Platform</span><svg class="nd-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span><span class="nd-sub"><span class="nd-dot"></span><span data-i18n="Coming soon">Coming soon</span></span></a>
+  <a class="navdoor" href="https://listings.propsight.sg"><span class="nd-top"><span data-i18n="Listing Platform">Listing Platform</span><svg class="nd-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span><span class="nd-sub"><span class="nd-dot"></span><span data-i18n="Buy and rent">Buy and rent</span></span></a>
   <button class="navlang" data-ps-langtoggle type="button" aria-label="Switch language">中文</button>
   <button class="navsignin ps-signin-cta" type="button" onclick="window.PS&&PS.login('nav')" data-i18n="Sign in">Sign in</button>
   <button class="navjoin ps-join-cta" type="button" onclick="window.PS&&PS.cta('nav')">Join&nbsp;<span class="njfree">Telegram</span></button>
@@ -914,7 +914,7 @@ em{color:var(--brass)}
   <div class="mm-sep"></div>
   <a class="mm" href="about/"><span class="mm-t">About</span></a>
   <a class="mm" href="#talk"><span class="mm-t">Contact</span></a>
-  <a class="mm-door" href="listings/"><span><span class="mmd-t">Listing Platform</span><span class="mmd-d">Coming soon, step into the platform</span></span><span class="mmd-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></a>
+  <a class="mm-door" href="https://listings.propsight.sg"><span><span class="mmd-t">Listing Platform</span><span class="mmd-d">Browse homes for sale and rent</span></span><span class="mmd-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></a>
   <div class="mm-foot">
     <button class="mm-cta ps-join-cta" type="button" style="border:0;font-family:inherit;cursor:pointer;width:100%" onclick="document.getElementById('menuToggle').click();window.PS&&PS.cta('menu')">Join our Telegram →</button>
     <button class="mm-signin ps-signin-cta" type="button" style="border:0;background:none;font-family:inherit;cursor:pointer;width:100%;font-size:14px;font-weight:600;color:var(--green2);padding:4px" onclick="document.getElementById('menuToggle').click();window.PS&&PS.login('menu')">Already a member? Sign in</button>
@@ -942,9 +942,9 @@ if(sa){var e=document.getElementById('navInstall');if(e)e.style.display='none';}
         <span class="hd-tx"><b data-i18n="Enter PropWorld">Enter PropWorld</b><span class="hd-s" data-i18n="A living map of Singapore property">A living map of Singapore property</span></span>
         <span class="hd-ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
-      <a class="hdoor hd-list" href="listings/">
+      <a class="hdoor hd-list" href="https://listings.propsight.sg">
         <span class="hd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9h14v-9"/><path d="M10 19v-5h4v5"/></svg></span>
-        <span class="hd-tx"><b data-i18n="PropSight Listings">PropSight Listings</b><span class="hd-s hd-soon"><i></i><span data-i18n="Marketplace, coming soon">Marketplace, coming soon</span></span></span>
+        <span class="hd-tx"><b data-i18n="PropSight Listings">PropSight Listings</b><span class="hd-s" data-i18n="Homes for sale and rent">Homes for sale and rent</span></span>
         <span class="hd-ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
     </div>
