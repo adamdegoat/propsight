@@ -1899,9 +1899,9 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
     // sell / net-proceeds intent takes priority over valuation (e.g. "how much will i get if i sell"). A pure "what's it worth / sell for" stays valuation.
     if(/(net proceed|proceeds|\bssd\b|seller.?s stamp|walk away|pocket|take home|sell my|selling|if i sell)/.test(t) && !/(worth|valuation|sell.*for|value of)/.test(t))
       return {text:"I'll show what you'd actually walk away with after loan, CPF refund and costs, plus any Seller's Stamp Duty.",link:{href:'tools/sell.html',label:'See your net proceeds'}};
-    if(/(worth|valuation|how much.*(home|flat|condo|house|hdb)|sell.*for|price of my|^value$)/.test(t))
+    if(/(worth|valuation|how much.*(home|flat|condo|house|hdb)|sell.*for|price of my|going for|price my|value my|^value$)/.test(t))
       return {text:"I can value any HDB or condo on real recent transactions, with an honest confidence range and the comparable sales behind it.",link:{href:'tools/value.html',label:'Value a home'}};
-    if(/(afford|budget|how much.*(can i|loan|borrow)|^afford$|downpayment|down payment)/.test(t))
+    if(/(afford|budget|how much.*(can i|loan|borrow)|^afford$|downpayment|down payment|what can i buy|what can i get for|price range i)/.test(t))
       return {text:"Let's work out your real budget from your income and savings, using the actual lending rules (TDSR, MSR, LTV).",link:{href:'tools/afford.html',label:'See what you can afford'}};
     if(/(research|project|condo.*(data|number|psf|yield)|rental yield|tenure|^research$)/.test(t))
       return {text:"Our Research covers every Singapore condo and HDB: price psf, the price trend over time, rental yield, tenure, and how it's priced against comparable homes nearby, plus the new and upcoming launches pipeline.",link:{href:'/research/',label:'Open Research'}};
@@ -2036,7 +2036,12 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
         t.remove();
         const reply=(d&&d.reply)||"Let me get our team on that. Want to message us on WhatsApp?";
         HIST.push({role:'user',content:q},{role:'assistant',content:reply});
-        botReply(reply,(tool&&tool.link)?tool.link:null);showFollowups();
+        // Prefer the button Aillie herself chose (backend d.tool) so the link always matches
+        // what she actually recommended; fall back to the local keyword route only if absent.
+        let link=null;
+        if(d&&d.tool&&d.tool.href){link={href:d.tool.href,label:d.tool.label,blank:/wa\.me|whatsapp/i.test(d.tool.href)};}
+        else if(tool&&tool.link){link=tool.link;}
+        botReply(reply,link);showFollowups();
       }).catch(()=>{
         t.remove();
         if(tool){botReply(tool.text,tool.link);}
