@@ -112,7 +112,13 @@ html.menu-open,html.menu-open body{overflow:hidden}
 .fcard-img .status .dot{width:8px;height:8px;border-radius:50%;background:#eafffb;animation:pulse 1.8s ease-in-out infinite}
 @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.55);opacity:.5}}
 .fcard-img .kick{position:absolute;top:15px;right:15px;z-index:3;font-size:9.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.85);text-shadow:0 1px 6px rgba(0,0,0,.55)}
+.fcard-img .crest-wm{position:absolute;top:13px;right:14px;left:auto;bottom:auto;z-index:3;width:30px;height:auto;object-fit:contain;opacity:.92;filter:drop-shadow(0 1px 6px rgba(0,0,0,.5))}
 .card-hit{position:absolute;inset:0;z-index:1;border-radius:20px}
+.peek{margin-top:18px}
+.peek-lbl{font-size:10px;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:#6a7563;margin-bottom:8px}
+.peek-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.peek-row img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:9px;border:1px solid var(--line2);transition:transform .3s var(--ease)}
+.fcard:hover .peek-row img{transform:scale(1.03)}
 .fbody{position:relative;padding:22px 22px 24px;color:var(--ink);display:flex;flex-direction:column;flex:1}
 .fbody .place{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
 .fbody h3{font-family:var(--serif);font-weight:700;font-size:clamp(23px,2.8vw,28px);line-height:1.04;letter-spacing:-.02em;margin:8px 0 0;color:var(--ink)}
@@ -218,9 +224,13 @@ window.PS_I18N_ZH = Object.assign(window.PS_I18N_ZH || {}, {
   "New launches worth a look": "值得一看的新盘",
   "Back to the PropSight hub": "返回 PropSight 平台",
   "Preview October 2026": "2026 年 10 月预览", "Featured launch": "精选新盘",
+  "New Launch": "全新楼盘", "Upper Thomson · District 20": "Upper Thomson · 20 区",
+  "towers": "座塔楼", "A look inside": "抢先一览", "Register interest": "登记意向",
+  "Leave your details for updates and first access.": "留下资料，获取更新与优先入场。",
+  "Thomson Reserve · Register interest": "Thomson Reserve · 登记意向",
   "Upper Thomson (District 20)": "Upper Thomson（20 区）",
-  "A 1,268-home sanctuary embraced by MacRitchie and Windsor Nature Park, a two-minute walk to Upper Thomson MRT. By UOL, Singapore Land Group and CapitaLand Development.":
-    "拥 1,268 户的静谧住宅，为 MacRitchie 与 Windsor 自然公园环抱，步行两分钟即达 Upper Thomson 地铁站。由 UOL、Singapore Land Group 与 CapitaLand Development 联合开发。",
+  "A 1,268-home sanctuary across six towers, embraced by MacRitchie and Windsor Nature Park, a two-minute walk to Upper Thomson MRT. By UOL, Singapore Land Group and CapitaLand Development.":
+    "拥 1,268 户、六座塔楼的静谧住宅，为 MacRitchie 与 Windsor 自然公园环抱，步行两分钟即达 Upper Thomson 地铁站。由 UOL、Singapore Land Group 与 CapitaLand Development 联合开发。",
   "Developer": "开发商", "homes": "户", "99-year leasehold": "99 年地契",
   "walk to Upper Thomson MRT": "步行至 Upper Thomson 地铁站",
   "2 to 5 Bedroom": "2 至 5 房", "Preview": "预览", "October 2026": "2026 年 10 月",
@@ -294,23 +304,32 @@ window.PS_I18N_ZH = Object.assign(window.PS_I18N_ZH || {}, {
     <div class="fcard-img">
       <img src="../img/launch-thomson-reserve.jpg" alt="Thomson Reserve, new launch at Upper Thomson (District 20)" loading="eager" decoding="async">
       <div class="fcard-scrim" aria-hidden="true"></div>
-      <span class="status"><span class="dot"></span>Preview October 2026</span>
-      <span class="kick">Featured launch</span>
+      <span class="status"><span class="dot"></span>New Launch</span>
+      <img class="crest-wm" src="thomson-reserve/img/crest-white.png" alt="" aria-hidden="true">
     </div>
     <div class="fbody">
-      <div class="place">Upper Thomson (District 20)</div>
+      <div class="place">Upper Thomson · District 20</div>
       <h3>Thomson Reserve</h3>
-      <p class="blurb">A 1,268-home sanctuary embraced by MacRitchie and Windsor Nature Park, a two-minute walk to Upper Thomson MRT. By UOL, Singapore Land Group and CapitaLand Development.</p>
+      <p class="blurb">A 1,268-home sanctuary across six towers, embraced by MacRitchie and Windsor Nature Park, a two-minute walk to Upper Thomson MRT. By UOL, Singapore Land Group and CapitaLand Development.</p>
       <div class="ftags">
         <span class="ftag"><b>2-min</b> walk to Upper Thomson MRT</span>
         <span class="ftag"><b>1,268</b> homes</span>
+        <span class="ftag"><b>6</b> towers</span>
         <span class="ftag">2 to 5 Bedroom</span>
         <span class="ftag">99-year leasehold</span>
+      </div>
+      <div class="peek">
+        <div class="peek-lbl">A look inside</div>
+        <div class="peek-row">
+          <img src="thomson-reserve/img/map-connectivity.jpg" alt="Connectivity map inside the Thomson Reserve microsite" loading="lazy" decoding="async">
+          <img src="thomson-reserve/img/map-greenspaces.jpg" alt="Green spaces map inside the Thomson Reserve microsite" loading="lazy" decoding="async">
+          <img src="thomson-reserve/img/reservoir-panel.jpg" alt="Reservoir near Thomson Reserve" loading="lazy" decoding="async">
+        </div>
       </div>
       <div class="fcta">
         <button class="reg-pill" type="button" data-open-reg data-project="Thomson Reserve">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.2 5.6L20 9l-4.4 3.9L17 19l-5-3-5 3 1.4-6.1L4 9l5.8-.4z"/></svg>
-          Register early for VVIP preview
+          Register interest
         </button>
         <a class="pri-link" href="thomson-reserve/">View the project <i>&rsaquo;</i></a>
       </div>
@@ -344,9 +363,9 @@ window.PS_I18N_ZH = Object.assign(window.PS_I18N_ZH || {}, {
   <div class="rm-card" role="dialog" aria-modal="true" aria-labelledby="rmTitle">
     <button class="rm-x" type="button" data-close-reg aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     <div class="rm-head">
-      <span class="rm-eyebrow">Thomson Reserve · VVIP Preview</span>
-      <h3 id="rmTitle">Register early for VVIP preview</h3>
-      <p>Leave your details for first access, ahead of the public launch.</p>
+      <span class="rm-eyebrow">Thomson Reserve · Register interest</span>
+      <h3 id="rmTitle">Register interest</h3>
+      <p>Leave your details for updates and first access.</p>
     </div>
     <form class="rm-form" id="regModalForm" action="https://formsubmit.co/ajax/propsightsg@gmail.com" method="POST">
       <input type="text" name="Name" placeholder="Your name" required autocomplete="name">
@@ -361,12 +380,12 @@ window.PS_I18N_ZH = Object.assign(window.PS_I18N_ZH || {}, {
         <option>5 Bedroom Suite</option>
       </select>
       <textarea name="Message" rows="3" placeholder="Anything you would like to know? (optional)"></textarea>
-      <input type="hidden" name="_subject" value="Thomson Reserve, VVIP preview registration">
+      <input type="hidden" name="_subject" value="Thomson Reserve, interest registration">
       <input type="hidden" name="Project" value="Thomson Reserve">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_captcha" value="false">
       <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
-      <button type="submit" class="rm-btn">Register early for VVIP preview <span>&rsaquo;</span></button>
+      <button type="submit" class="rm-btn">Register interest <span>&rsaquo;</span></button>
       <p class="rm-fine">We will only use your details to follow up on Thomson Reserve.</p>
     </form>
     <div class="rm-done" id="regModalDone" hidden>
