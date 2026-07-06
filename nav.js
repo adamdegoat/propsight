@@ -248,8 +248,13 @@
     b.addEventListener('click', function () { menu.classList.toggle('open'); });
     var back = document.getElementById('psBack');
     if (back) back.addEventListener('click', function () {
-      // go back within the app if there's history, otherwise home
-      if (history.length > 1) history.back(); else location.href = BASE + '/';
+      // go UP one level in the site tree, not blindly to the referrer (which could be a
+      // deeper page, e.g. arriving at /launches/ from /launches/thomson-reserve/).
+      var path = location.pathname.replace(/index\.html$/, '').replace(/\/$/, '');
+      var last = path.split('/').pop() || '';
+      // a file page (e.g. tools/value.html) has no directory index to land on -> go home
+      var parent = last.indexOf('.') > -1 ? '/' : (path.slice(0, path.lastIndexOf('/') + 1) || '/');
+      location.href = BASE + parent;
     });
     menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { menu.classList.remove('open'); }); });
     // shared footer (legal links + global disclaimer), append once, only if the page hasn't got one
