@@ -3,7 +3,7 @@
   "url": "https://propsight.sg/market-analysis/june-2026-market-analysis.html",
   "hub": "https://propsight.sg/market-analysis/",
   "built": "2026-07-04",
-  "headline": "The heartland is outrunning the prime districts, with suburban and city-fringe homes still climbing while the most expensive addresses in the core give ground.",
+  "headline": "The mass market is leading. Suburbs and city-fringe are rising and central HDB towns are up sharply, while prime is the only segment falling.",
   "board": [
     {
       "v": "$1,753",
@@ -38,10 +38,10 @@
     "Chuan Park went en bloc for $890m."
   ],
   "persona": {
-    "buyer": "Hunt in the OCR suburbs near the $1,523 psf resale benchmark where momentum is strongest, and do not overpay in prime CCR while it is still sliding 2.4%.",
-    "seller": "List into strength now, with private resale up 3.8% on the year and HDB towns like Marine Parade and Toa Payoh firming, before the MOP supply wave broadens buyers' choices.",
-    "landlord": "Favour HDB for its 6.1% yield over private's 3.6%, and price to fill quickly because rents have come off the boil and empty months cost more than a lower rent.",
-    "upgrader": "Sell the flat into a firm market and buy your private replacement on the value tiers, but line up the timing so you are not caught paying the 20% second-home ABSD."
+    "buyer": "Buy in the firm suburbs without overpaying, and negotiate hard in prime CCR, down 2.4% over three months.",
+    "seller": "Price to today's market and sell suburban or city-fringe stock into the strength. Do not wait out the prime CCR fall.",
+    "landlord": "The cash return is in HDB at 6.1%, not a condo at 3.6%. Weigh yield, and expect tenants to negotiate the rent down.",
+    "upgrader": "Sell your flat while towns like Marine Parade are up 11.0%, then buy into the firmer suburbs rather than prime."
   },
   "stations": {
     "board": {
@@ -49,7 +49,7 @@
       "title": "June 2026: the market now",
       "stat": "$1,753",
       "label": "Private median psf",
-      "say": "The heartland is outrunning the prime districts, with suburban and city-fringe homes still climbing while the most expensive addresses in the core give ground.",
+      "say": "The mass market is leading. Suburbs and city-fringe are rising and central HDB towns are up sharply, while prime is the only segment falling.",
       "cta": "buyer"
     },
     "prices": {
@@ -57,7 +57,7 @@
       "title": "Where prices are moving",
       "stat": "+1.4%",
       "label": "Suburbs (OCR) three-month momentum",
-      "say": "Private resale prices are flattening out. The median now sits at $1,753 psf, up just 0.6% over the month and 3.8% over the year, with the typical deal closing at about $1.65m. Across the past 18 months the market has logged 22,196 transactions, so this is a broad reading, not a thin one swinging on a handful of sales. The latest month is still preliminary, but the headline is calm.",
+      "say": "Private resale has flattened. The median is $1,753 psf, up 0.6% on the month and 3.8% over the year, with a typical deal near $1.65m. Across 22,196 transactions over the past 18 months, prices are still rising but the pace has slowed. The latest month is preliminary, so treat it lightly, but the direction is clear.",
       "cta": "buyer"
     },
     "rental": {
@@ -65,7 +65,7 @@
       "title": "Rents off the boil, HDB the yield play",
       "stat": "6.1%",
       "label": "HDB gross yield, versus 3.6% private",
-      "say": "The heat has come out of the rental market. Private homes now let for a median $4,300 a month, and at today's prices that works out to a gross yield of 3.6%. After the surge of the past few years, tenants have some footing back: more completed units, more choice, and less willingness to chase asking rents higher. Landlords who bought at recent prices are finding the sums tighter, and holding out for a top rent increasingly means holding out for an empty flat.",
+      "say": "Private yields are low. Private homes rent at a median $4,300 a month, a gross yield of 3.6%. At today's prices, that is thin once you count interest, maintenance and vacant months between tenants.",
       "cta": "landlord"
     },
     "hot": {
@@ -73,7 +73,7 @@
       "title": "What is moving this month",
       "stat": "$2,361",
       "label": "Parktown Residence, top-selling launch psf",
-      "say": "New launches are selling at prices that make resale look cheap. In the suburbs, where existing homes trade around $1,523 psf, buyers are paying $2,113 psf at Tengah Garden Residences, $2,169 at Springleaf Residence, $2,361 at Parktown Residence and $2,598 at Chuan Park. Move to the city fringe and the numbers climb again, to $2,723 psf at The Orie and $2,957 at One Marina Gardens. These are the best sellers, so this is not a few overpriced units sitting unsold.",
+      "say": "New launches cost far more than resale. Suburban resale is $1,523 psf, while the OCR best sellers are well above it: Tengah Garden Residences $2,113 psf, Springleaf Residence $2,169 psf, Parktown Residence $2,361 psf and Chuan Park $2,598 psf. In the city-fringe they are higher, The Orie at $2,723 psf and One Marina Gardens at $2,957 psf. You pay a premium for a new unit in the same districts where resale is cheaper.",
       "cta": "buyer"
     }
   }
