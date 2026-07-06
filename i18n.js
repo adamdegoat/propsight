@@ -52,6 +52,7 @@
     'hero.leadSm': '免费看懂新加坡房产。真实估值、深入研究、你负担得起的预算，还有真正重要的房产新闻，全部用大白话。再加上 Aillie，让你买卖都心里有数。',
     'cta.join': '加入我们的 Telegram', 'cta.askAillie': '问 Aillie', 'cta.value': '估算房价',
     'Enter PropWorld': '走进 PropWorld', 'Singapore property, brought to life': '让新加坡房产活起来',
+    'PropWorld': 'PropWorld', 'Brought to life': '让房产活起来',
     'PropSight Listings': 'PropSight 房源平台', 'Homes for sale and rent': '在售与出租房源',
     'Buy and rent': '买房与租房', 'Browse homes for sale and rent': '浏览在售与出租房源',
     'chatcue.t': '有问题尽管问 Aillie', 'chatcue.s': '真实数据 · 免费',

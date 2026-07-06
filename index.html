@@ -80,7 +80,10 @@ em{font-style:italic;color:var(--brass)}
 /* mobile: keep the 中文/EN text (that's what tells people the language); drop the globe to save width */
 @media(max-width:880px){.navlang{gap:0;padding:7px 12px;font-size:13px}.navlang svg{display:none}}
 /* the "doorway" into the Listing Platform, a separate destination, set apart from the menu + the Join button */
-.navdoor{display:flex;flex-direction:column;gap:2px;text-decoration:none;margin-left:6px;padding:7px 13px;border:1px solid rgba(231,246,243,.42);border-radius:12px;background:rgba(255,255,255,.1);position:relative;flex:none;transition:.25s var(--ease)}
+.navdoor{display:flex;align-items:stretch;text-decoration:none;margin-left:6px;border:1px solid rgba(231,246,243,.42);border-radius:12px;background:rgba(255,255,255,.1);position:relative;flex:none;overflow:hidden;transition:.25s var(--ease)}
+.navdoor .nd-half{display:flex;flex-direction:column;gap:2px;text-decoration:none;padding:7px 13px;transition:background .2s}
+.navdoor .nd-half+.nd-half{border-left:1px solid rgba(231,246,243,.3)}
+.navdoor .nd-half:hover{background:rgba(255,255,255,.12)}
 .navdoor::before{content:"";position:absolute;left:-9px;top:50%;transform:translateY(-50%);width:1px;height:28px;background:rgba(231,246,243,.3)}
 .navdoor .nd-top{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:#e7f6f3;line-height:1.05;white-space:nowrap}
 .navdoor .nd-ar{width:12px;height:12px;flex:none}
@@ -113,6 +116,10 @@ em{font-style:italic;color:var(--brass)}
 .mobile-menu .mm-door .mmd-d{display:block;font-size:13px;color:#576b67;margin-top:4px}
 .mobile-menu .mm-door .mmd-arr{flex:none;width:34px;height:34px;border-radius:50%;background:var(--green2);display:flex;align-items:center;justify-content:center}
 .mobile-menu .mm-door .mmd-arr svg{width:15px;height:15px;stroke:#e6f3f0}
+.mobile-menu .mm-door+.mm-door{margin-top:11px}
+.mobile-menu .mm-door.mm-world{background:linear-gradient(180deg,#f1fbfa,#e3f5f1);border-color:#bfe6e0}
+.mobile-menu .mm-door.mm-world .mmd-t{color:#0f7a82}
+.mobile-menu .mm-door.mm-world .mmd-arr{background:#15a0a0}
 .mobile-menu .mm-door:active{transform:translateY(-1px)}
 .mobile-menu .mm-foot{margin-top:auto;padding-top:26px;display:flex;flex-direction:column;gap:14px}
 .mobile-menu .mm-install{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:700;color:var(--green2);opacity:0;transform:translateY(12px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
@@ -159,8 +166,12 @@ html.menu-open,html.menu-open body{overflow:hidden}
 .hdoor .hd-ar{margin-left:auto;flex:none;color:var(--brass3);transition:transform .25s var(--ease)}
 .hdoor .hd-ar svg{width:18px;height:18px}
 .hdoor:hover .hd-ar{transform:translateX(4px)}
-.hdoor.hd-world{background:var(--gtex,none),linear-gradient(155deg,#15807f 0%,#123a30 92%);border-color:var(--brass2)}
+.hdoor.hd-world{background:var(--gtex,none),linear-gradient(155deg,#15807f 0%,#123a30 92%);border-color:var(--brass2);animation:hdWorldGlow 3.4s ease-in-out infinite}
 .hdoor.hd-world .hd-ic{background:rgba(127,208,187,.26)}
+.hdoor.hd-world::after{content:"";position:absolute;top:0;left:-65%;width:48%;height:100%;background:linear-gradient(100deg,rgba(191,240,232,0) 0%,rgba(191,240,232,.32) 50%,rgba(191,240,232,0) 100%);transform:skewX(-18deg);pointer-events:none;animation:hdWorldSheen 5.6s ease-in-out infinite}
+@keyframes hdWorldGlow{0%,100%{box-shadow:0 14px 30px -10px rgba(15,35,26,.42),0 0 0 0 rgba(46,196,182,0)}50%{box-shadow:0 16px 34px -10px rgba(15,35,26,.46),0 0 22px 1px rgba(46,196,182,.42)}}
+@keyframes hdWorldSheen{0%,74%{left:-65%}88%,100%{left:135%}}
+@media(prefers-reduced-motion:reduce){.hdoor.hd-world{animation:none}.hdoor.hd-world::after{display:none}}
 .hdoor-sec{display:flex;gap:12px;margin-top:15px;flex-wrap:wrap}
 @media(max-width:560px){.hdoor{flex:1 1 100%;max-width:none}}
 .fresh{display:inline-flex;align-items:center;gap:9px;margin-top:14px;font-size:12.5px;color:var(--ink3);font-weight:600}
@@ -856,6 +867,12 @@ em{color:var(--brass)}
 .nav .navdoor .nd-top{color:var(--green)!important}
 .nav .navdoor .nd-sub{color:var(--ink3)!important}
 .nav .navdoor .nd-dot{background:#3aa76d!important}
+.nav .navdoor .nd-half+.nd-half{border-left-color:#d7e2db!important}
+.nav .navdoor .nd-half:hover{background:rgba(39,81,63,.06)!important}
+.nav .navdoor .nd-world{background:linear-gradient(180deg,#f1fbfa,#e3f5f1)!important}
+.nav .navdoor .nd-world .nd-top{color:#0f7a82!important}
+.nav .navdoor .nd-world .nd-ar{color:#15a0a0!important}
+.nav .navdoor .nd-world:hover{background:rgba(21,160,160,.1)!important}
 .nav .nav-install{color:var(--ink)!important;background:rgba(255,255,255,.55)!important;border-color:var(--line2)!important}
 /* ---- Pass 2: cards -> clean rows / index ---- */
 /* "What brings you here" router cards -> editorial rows */
@@ -893,7 +910,7 @@ em{color:var(--brass)}
     <span class="bw"><b>PropSight</b><span data-i18n="Singapore">Singapore</span></span>
   </div>
   <nav class="links"><a href="#tools" data-i18n>Tools</a><a href="/research/" class="navfeat" data-i18n>Research</a><a href="launches/" data-i18n>New Launches</a><a href="market-analysis/" data-i18n>Market Analysis</a><a href="news/" class="navsmart" data-i18n>News</a><a href="guide/" data-i18n>Guide</a><a href="about/" data-i18n>About us</a><a href="#talk" data-i18n>Contact</a></nav>
-  <a class="navdoor" href="https://listings.propsight.sg"><span class="nd-top"><span data-i18n="Listing Platform">Listing Platform</span><svg class="nd-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span><span class="nd-sub"><span class="nd-dot"></span><span data-i18n="Buy and rent">Buy and rent</span></span></a>
+  <div class="navdoor"><a class="nd-half" href="https://listings.propsight.sg"><span class="nd-top"><span data-i18n="Listing Platform">Listing Platform</span><svg class="nd-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span><span class="nd-sub"><span class="nd-dot"></span><span data-i18n="Buy and rent">Buy and rent</span></span></a><a class="nd-half nd-world" href="https://listings.propsight.sg/propworld.html"><span class="nd-top"><span data-i18n="PropWorld">PropWorld</span><svg class="nd-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span><span class="nd-sub"><span data-i18n="Brought to life">Brought to life</span></span></a></div>
   <button class="navlang" data-ps-langtoggle type="button" aria-label="Switch language">中文</button>
   <button class="navsignin ps-signin-cta" type="button" onclick="window.PS&&PS.login('nav')" data-i18n="Sign in">Sign in</button>
   <button class="navjoin ps-join-cta" type="button" onclick="window.PS&&PS.cta('nav')">Join&nbsp;<span class="njfree">Telegram</span></button>
@@ -915,6 +932,7 @@ em{color:var(--brass)}
   <a class="mm" href="about/"><span class="mm-t">About</span></a>
   <a class="mm" href="#talk"><span class="mm-t">Contact</span></a>
   <a class="mm-door" href="https://listings.propsight.sg"><span><span class="mmd-t">Listing Platform</span><span class="mmd-d">Browse homes for sale and rent</span></span><span class="mmd-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></a>
+  <a class="mm-door mm-world" href="https://listings.propsight.sg/propworld.html"><span><span class="mmd-t" data-i18n="PropWorld">PropWorld</span><span class="mmd-d" data-i18n="Singapore property, brought to life">Singapore property, brought to life</span></span><span class="mmd-arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></a>
   <div class="mm-foot">
     <button class="mm-cta ps-join-cta" type="button" style="border:0;font-family:inherit;cursor:pointer;width:100%" onclick="document.getElementById('menuToggle').click();window.PS&&PS.cta('menu')">Join our Telegram →</button>
     <button class="mm-signin ps-signin-cta" type="button" style="border:0;background:none;font-family:inherit;cursor:pointer;width:100%;font-size:14px;font-weight:600;color:var(--green2);padding:4px" onclick="document.getElementById('menuToggle').click();window.PS&&PS.login('menu')">Already a member? Sign in</button>
