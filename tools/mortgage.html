@@ -189,7 +189,7 @@ body::after{content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opac
 
 <script>
 // rate defaults mirror caveat/data/rates.json financing block (single source of truth)
-let R={bank:3.5,hdb:2.6,as_of:"14 Jun 2026"};
+let R={bank:3.5,hdb:2.6,as_of:"7 Jul 2026"};
 fetch('/caveat/data/rates.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{
   if(d.financing){const f=d.financing;
     if(f.typical_bank_rate_pct!=null)R.bank=f.typical_bank_rate_pct;
