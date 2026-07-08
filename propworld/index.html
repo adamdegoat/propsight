@@ -909,6 +909,7 @@ function init(){
   if(_ov){ orbit.tr=orbit.r=lim.rMax; orbit.phi=phiForZoom(lim.rMax); orbit.theta=0.16; needsRender=true; applyCamera(); updatePins(); }
   const _go=q.get("go"); if(_go){ const p=POIS.find(x=>x.id===_go); if(p) flyTo(p); }   // test hook: ?go=<id>
   const _op=q.get("open"); if(_op){ const p=POIS.find(x=>x.id===_op); if(p) openFor(p); } // test hook: ?open=<id>
+  if(q.get("dbg")) window.PW={ get orbit(){return orbit;} };   // test hook: ?dbg=1 exposes camera state
   requestAnimationFrame(loop);
 }
 
@@ -917,16 +918,25 @@ function applyCamera(){ orbit.phi=THREE.MathUtils.clamp(orbit.phi,lim.phiMin,lim
   camera.lookAt(0,66,54); }   // aim above the bay so the skyline has clear sky headroom
 
 function bindControls(){
-  const down=(x,y)=>{if(paused)return;dragging=true;moved=0;lastX=x;lastY=y;vT=vP=0;idleT=0;phiEase=false;tour.on=false;closeMenu();needsRender=true;};
-  const move=(x,y)=>{if(!dragging)return;const dx=x-lastX,dy=y-lastY;lastX=x;lastY=y;moved+=Math.abs(dx)+Math.abs(dy);
-    vT=-dx*0.005;vP=-dy*0.005;orbit.theta+=vT;orbit.phi+=vP;idleT=0;needsRender=true;document.getElementById("hint")?.classList.add("gone");};
-  const up=()=>dragging=false;
-  host.addEventListener("pointerdown",e=>{host.setPointerCapture(e.pointerId);down(e.clientX,e.clientY);});
-  host.addEventListener("pointermove",e=>move(e.clientX,e.clientY));
-  host.addEventListener("pointerup",up);host.addEventListener("pointercancel",up);
+  // one unified pointer system: 1 finger = rotate, 2 fingers = pinch-zoom ONLY (no rotation jitter)
+  const pts=new Map(); let pinchD=0, pinching=false;
+  const dist=()=>{ const p=[...pts.values()]; return Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y); };
+  const down=(e)=>{ if(paused)return; try{host.setPointerCapture(e.pointerId);}catch(_){}
+    pts.set(e.pointerId,{x:e.clientX,y:e.clientY}); tour.on=false; closeMenu(); needsRender=true;
+    if(pts.size>=2){ dragging=false; pinching=true; pinchD=dist(); vT=vP=0; }               // second finger down -> enter pinch, stop rotating
+    else { dragging=true; moved=0; lastX=e.clientX; lastY=e.clientY; vT=vP=0; idleT=0; phiEase=false; } };
+  const move=(e)=>{ if(!pts.has(e.pointerId))return; pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pinching){ if(pts.size<2)return; const d=dist(); if(pinchD)zoomTo(orbit.tr+(pinchD-d)*2.2); pinchD=d; needsRender=true; return; }
+    if(!dragging)return; const dx=e.clientX-lastX,dy=e.clientY-lastY; lastX=e.clientX; lastY=e.clientY; moved+=Math.abs(dx)+Math.abs(dy);
+    vT=-dx*0.005; vP=-dy*0.005; orbit.theta+=vT; orbit.phi+=vP; idleT=0; needsRender=true; document.getElementById("hint")?.classList.add("gone"); };
+  const up=(e)=>{ pts.delete(e.pointerId);
+    if(pts.size<2){ pinching=false; pinchD=0; }
+    if(pts.size===1){ const p=[...pts.values()][0]; lastX=p.x; lastY=p.y; dragging=true; vT=vP=0; }  // lift 1 of 2 fingers: resume drag from the other, no jump
+    else if(pts.size===0){ dragging=false; } };
+  host.addEventListener("pointerdown",down);
+  host.addEventListener("pointermove",move);
+  host.addEventListener("pointerup",up); host.addEventListener("pointercancel",up);
   host.addEventListener("wheel",e=>{if(paused)return;e.preventDefault();zoomTo(orbit.tr+e.deltaY*0.8);},{passive:false});
-  let pd=0; host.addEventListener("touchmove",e=>{if(e.touches.length===2){const a=e.touches[0],b=e.touches[1];const d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);if(pd)zoomTo(orbit.tr+(pd-d)*2.0);pd=d;}},{passive:true});
-  host.addEventListener("touchend",()=>pd=0);
 }
 function onResize(){ camera.aspect=innerWidth/innerHeight; const portrait=innerWidth/innerHeight<0.85;
   camera.fov=portrait?48:40;
