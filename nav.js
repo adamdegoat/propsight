@@ -267,7 +267,7 @@
     '</div></header>';
 
   /* ── mobile menu ── */
-  var mobileShort = { 'What you can afford':'Afford', 'Schools nearby':'Schools', 'Market Analysis':'Analysis' };
+  var mobileShort = { 'What you can afford':'Afford', 'Schools nearby':'Schools' };
   function mlabel(s){ return mobileShort[s] || s; }
   function chip(label, href, icon, cls){ return '<a class="psm-chip'+(cls?' '+cls:'')+'" href="'+href+'">'+ic(icon)+'<b>'+t(mlabel(label))+'</b></a>'; }
   var PW = ITEMS[0], NL = ITEMS[1], TOOLS = ITEMS[2], INS = ITEMS[3], AREAS = ITEMS[4], BG = ITEMS[5];
