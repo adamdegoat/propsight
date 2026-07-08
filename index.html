@@ -1039,16 +1039,25 @@ if(sa){var e=document.getElementById('navInstall');if(e)e.style.display='none';}
   <script>(function(){
     var wrap=document.getElementById('heroCaro'); if(!wrap)return;
     var track=document.getElementById('hcTrack'), dotsEl=document.getElementById('hcDots');
-    var n=track.children.length, i=0, timer=null, x0=null, moved=false;
+    var n=track.children.length, pos=0, timer=null, x0=null, moved=false, snapping=false;
+    /* clone the first slide onto the end so the loop keeps sliding one way, then snaps back silently */
+    var clone=track.children[0].cloneNode(true); clone.setAttribute('aria-hidden','true'); clone.removeAttribute('id'); track.appendChild(clone);
     for(var d=0;d<n;d++){var b=document.createElement('button');b.className='hc-dot'+(d?'':' on');b.type='button';b.setAttribute('aria-label','Slide '+(d+1));(function(k){b.onclick=function(){go(k);reset();};})(d);dotsEl.appendChild(b);}
     var dots=dotsEl.children;
-    function go(k){i=(k+n)%n;track.style.transform='translateX(-'+(i*100)+'%)';for(var j=0;j<n;j++)dots[j].classList.toggle('on',j===i);}
-    function next(){go(i+1);} function start(){timer=setInterval(next,3000);} function reset(){clearInterval(timer);start();}
+    function setDots(idx){idx=((idx%n)+n)%n;for(var j=0;j<n;j++)dots[j].classList.toggle('on',j===idx);}
+    function slideTo(p,anim){track.style.transition=anim?'':'none';track.style.transform='translateX(-'+(p*100)+'%)';}
+    function go(k){pos=((k%n)+n)%n;slideTo(pos,true);setDots(pos);}
+    function next(){
+      if(snapping)return;
+      pos++; slideTo(pos,true); setDots(pos);
+      if(pos===n){snapping=true;setTimeout(function(){slideTo(0,false);void track.offsetWidth;track.style.transition='';pos=0;snapping=false;},580);}
+    }
+    function start(){timer=setInterval(next,3500);} function reset(){clearInterval(timer);start();}
     start();
     wrap.addEventListener('mouseenter',function(){clearInterval(timer);}); wrap.addEventListener('mouseleave',start);
     track.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;moved=false;},{passive:true});
     track.addEventListener('touchmove',function(){moved=true;},{passive:true});
-    track.addEventListener('touchend',function(e){if(x0!==null&&moved){var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40){dx<0?next():go(i-1);reset();}}x0=null;});
+    track.addEventListener('touchend',function(e){if(x0!==null&&moved){var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40){if(dx<0){next();}else{go(pos-1);}reset();}}x0=null;});
     track.addEventListener('click',function(e){if(moved){e.preventDefault();e.stopPropagation();moved=false;}},true);
   })();</script>
   </div></section>
