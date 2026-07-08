@@ -12,6 +12,7 @@
   /* nav model. k: world|menu|link. kids = dropdown items [label, href, icon, sub?]. */
   var ITEMS = [
     { k:'world', t:'PropWorld', href: BASE + '/propworld/' },
+    { k:'link',  t:'Upcoming Launches', feat:true, href: BASE + '/launches/' },
     { k:'menu',  t:'Tools', href: BASE + '/#tools', kids:[
         ['Value a home',        BASE + '/tools/value.html',      'calc'],
         ['What you can afford',  BASE + '/tools/afford.html',     'calc'],
@@ -25,7 +26,6 @@
         ['Research',        BASE + '/research/',               'spark', 'Side by side, every condo and HDB'],
         ['Market Analysis', BASE + '/market-analysis/', 'chart', 'Monthly analyst report'],
         ['News',            BASE + '/news/',            'news',  'Daily Singapore property news'] ] },
-    { k:'link',  t:'Upcoming Launches', href: BASE + '/launches/' },
     { k:'link',  t:'Area Guides',  href: BASE + '/areaguides/' },
     { k:'link',  t:'Beginners Guide', href: BASE + '/guide/' }
   ];
@@ -110,6 +110,11 @@
     .psnav-a.smart:hover{background:linear-gradient(180deg,#eaf4ef,#dcece4)}
     .psnav-a.smart::before{content:"Smart";background:#27513f;box-shadow:0 2px 6px rgba(27,58,45,.35)}
     html.lang-zh .psnav-a.smart::before{content:"智能"}
+    /* Upcoming Launches featured (mint) */
+    .psnav-a.feat{color:#0f5a4a;font-weight:700;background:linear-gradient(180deg,#effbf5,#dbf4e9);border:1px solid #a9e3cd;padding:8px 12px}
+    .psnav-a.feat:hover{background:linear-gradient(180deg,#e6f9ef,#cfefe1)}
+    .psnav-a.feat::before{position:absolute;left:50%;bottom:calc(100% - 4px);transform:translateX(-50%);content:"New";background:#0f7a82;box-shadow:0 2px 6px rgba(15,122,130,.4);font:800 7.5px/1 "Schibsted Grotesk",system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#eef6f1;padding:2px 7px;border-radius:20px;white-space:nowrap}
+    html.lang-zh .psnav-a.feat::before{content:"新盘"}
     .psnav-a .wic svg{width:100%;height:100%}
 
     /* dropdown panel */
@@ -176,6 +181,11 @@
     .psm-chip b{font-size:12.5px;font-weight:600}
     .psm-chip.wide{grid-column:1/-1}
     .psm-chip.acc{background:linear-gradient(180deg,#f1f7f3,#e7f1ec);border-color:#cfe3d8}
+    .psm-chip.feat{background:linear-gradient(180deg,#effbf5,#dbf4e9);border:1.5px solid #7fd0bb;padding:13px 14px}
+    .psm-chip.feat b{font-size:14px;font-weight:700;color:#0f5a4a}
+    .psm-chip.feat svg{width:17px;height:17px;color:#0f7a82}
+    .psm-chip.feat::after{content:"New";margin-left:auto;font:800 8px/1 "Schibsted Grotesk",system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#eef6f1;background:#0f7a82;padding:3px 8px;border-radius:20px}
+    html.lang-zh .psm-chip.feat::after{content:"新盘"}
     .psm-door{display:flex;align-items:center;gap:11px;text-decoration:none;margin-top:14px;padding:14px 15px;border:1px solid #cdd9d0;border-radius:14px;background:linear-gradient(180deg,#fff,#eef4ef)}
     .psm-door.cur{background:linear-gradient(180deg,#27513f,#1b3a2d);border-color:#1b3a2d}
     .psm-door .md{flex:1}
@@ -228,7 +238,7 @@
       return '<div class="psnav-item"><a class="psnav-a world'+(cur?' cur':'')+'" href="'+it.href+'"><span class="wic">'+ic('orb')+'</span>'+t(it.t)+'</a></div>';
     }
     if (it.k === 'link') {
-      return '<div class="psnav-item"><a class="psnav-a'+(cur?' cur':'')+'" href="'+it.href+'">'+t(it.t)+'</a></div>';
+      return '<div class="psnav-item"><a class="psnav-a'+(it.feat?' feat':'')+(cur?' cur':'')+'" href="'+it.href+'">'+t(it.t)+'</a></div>';
     }
     // menu
     var smart = it.smart ? ' smart' : '';
@@ -257,16 +267,17 @@
     '</div></header>';
 
   /* ── mobile menu ── */
-  var mobileShort = { 'What you can afford':'Afford', 'Schools nearby':'Schools', 'Market Analysis':'Market' };
+  var mobileShort = { 'What you can afford':'Afford', 'Schools nearby':'Schools', 'Market Analysis':'Analysis' };
   function mlabel(s){ return mobileShort[s] || s; }
   function chip(label, href, icon, cls){ return '<a class="psm-chip'+(cls?' '+cls:'')+'" href="'+href+'">'+ic(icon)+'<b>'+t(mlabel(label))+'</b></a>'; }
-  var PW = ITEMS[0], TOOLS = ITEMS[1], INS = ITEMS[2], NL = ITEMS[3], AREAS = ITEMS[4], BG = ITEMS[5];
+  var PW = ITEMS[0], NL = ITEMS[1], TOOLS = ITEMS[2], INS = ITEMS[3], AREAS = ITEMS[4], BG = ITEMS[5];
 
   var TG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3l-3.3 15.6c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.2L18.5 6c.4-.3-.1-.5-.6-.2L7.4 12.6l-4.8-1.5c-1-.3-1-1 .2-1.5l18.7-7.2c.9-.3 1.6.2 1.4 1.9z"/></svg>';
   var PHN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10.5 18.5h3"/></svg>';
 
   var menuHTML = '<div class="psnav-menu" id="psMenu">' +
     '<a class="psm-world" href="'+PW.href+'"><span class="wl"><span class="badge">'+t('Featured')+'</span><b>PropWorld</b><span class="s">'+t('Singapore property, brought to life')+'</span></span><svg class="worb" viewBox="0 0 24 24">'+IC.orb+'</svg></a>' +
+    '<div class="psm-grp"><div class="psm-chips">' + chip('Upcoming Launches', NL.href, 'build', 'wide feat') + '</div></div>' +
     '<div class="psm-grp"><div class="psm-glbl">'+t('Tools')+'</div><div class="psm-chips">' +
       TOOLS.kids.map(function(k){ return chip(k[0], k[1], k[2]); }).join('') +
     '</div></div>' +
@@ -274,9 +285,8 @@
       INS.kids.map(function(k){ return chip(k[0], k[1], k[2], 'acc'); }).join('') +
     '</div></div>' +
     '<div class="psm-grp"><div class="psm-chips">' +
-      chip('Upcoming Launches', NL.href, 'build') + chip('Area Guides', AREAS.href, 'pin') +
+      chip('Area Guides', AREAS.href, 'pin') + chip('Beginners Guide', BG.href, 'book') +
     '</div></div>' +
-    '<div class="psm-grp"><div class="psm-chips">' + chip('Beginners Guide', BG.href, 'book', 'wide') + '</div></div>' +
     '<a class="psm-door'+(listingsActive()?' cur':'')+'" href="'+LISTINGS+'"><span class="md"><b>'+t('Listing Platform')+'</b><span>'+t('Browse homes for sale and rent')+'</span></span><span class="arr">'+ARROW+'</span></a>' +
     '<div class="psm-util"><div class="psm-util-in">' +
       '<div class="psm-urow">' +

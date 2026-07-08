@@ -16,7 +16,7 @@
   var DICT = {
     // ── shared chrome (nav + footer + badges), keyed by the English string ──
     'Tools': '工具', 'Research': '楼盘研究', 'New Launches': '新盘', 'Market Pulse': '市场动态', 'Market Analysis': '市场分析',
-    'News': '房产新闻', 'Guide': '购房指南', 'About us': '关于我们', 'Contact': '联系我们',
+    'News': '房产新闻', 'Guide': '购房指南', 'About us': '关于我们', 'Contact': '联系我们', 'Analysis': '分析',
     'Listing Platform': '房源平台', 'Coming soon': '即将推出',
     // ── new nav (2026-07): PropWorld + Area Guides + Insights grouping ──
     'Area Guides': '区域指南', 'Insights': '洞察', 'Beginners Guide': '新手指南',
