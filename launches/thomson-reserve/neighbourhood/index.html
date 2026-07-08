@@ -36,7 +36,12 @@ em{font-style:italic;color:var(--brass)}
 
 /* nav */
 .nav{position:sticky;top:0;z-index:60;transition:.35s var(--ease);border-bottom:1px solid var(--line);background:rgba(211,236,231,.86);backdrop-filter:blur(8px) saturate(1.1)}
-.nav-in{display:flex;align-items:center;gap:30px;height:72px}
+.nav-in{display:flex;align-items:center;gap:26px;height:72px}
+.nav-left{display:flex;align-items:center;gap:12px}
+.backbtn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;flex:none;border-radius:11px;
+ background:rgba(255,255,255,.62);border:1px solid var(--line2);color:var(--ink);transition:.22s var(--ease);-webkit-tap-highlight-color:transparent}
+.backbtn:hover{background:#fff;transform:translateX(-2px);box-shadow:var(--sh1)}
+.backbtn svg{width:20px;height:20px}
 .brand{display:flex;align-items:center;gap:11px}
 .brand .mark{width:36px;height:36px;flex:none;filter:drop-shadow(0 4px 10px rgba(15,35,26,.18));color:var(--green)}
 .brand .bw{display:flex;flex-direction:row;align-items:baseline;gap:6px;line-height:1}
@@ -283,10 +288,15 @@ html.menu-open,html.menu-open body{overflow:hidden}
 <div class="topo" aria-hidden="true"></div>
 
 <header class="nav" id="nav"><div class="wrap nav-in">
+  <div class="nav-left">
+    <a class="backbtn" href="../../index.html" id="backBtn" aria-label="Go back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
   <a class="brand" href="../../../index.html" aria-label="PropSight home">
     <svg class="mark" aria-hidden="true" viewBox="0 0 64 64"><circle cx="27" cy="27" r="19" fill="none" stroke="currentColor" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.5 32.5 L27 21.5 L36.5 32.5" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.5 37 L33.5 37" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><circle cx="27" cy="33.4" r="2" fill="#15a0a0"/><path d="M40.5 40.5 L53.5 53.5" fill="none" stroke="#15a0a0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <span class="bw"><b>PropSight</b><span>Singapore</span></span>
   </a>
+  </div>
   <nav class="links">
     <a href="../../index.html">New Launches</a>
     <a href="../index.html">Thomson Reserve</a>
@@ -529,6 +539,14 @@ html.menu-open,html.menu-open body{overflow:hidden}
 </section>
 
 <script>
+// back button: return to previous page if we came from within the site, else fall back to the launches list
+(function(){
+  var bb=document.getElementById('backBtn');
+  if(!bb)return;
+  bb.addEventListener('click',function(e){
+    try{ if(history.length>1 && document.referrer && new URL(document.referrer).origin===location.origin){ e.preventDefault(); history.back(); } }catch(err){}
+  });
+})();
 // mobile menu
 (function(){
   const mt=document.getElementById('menuToggle'),mm=document.getElementById('mobileMenu');
