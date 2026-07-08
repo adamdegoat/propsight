@@ -216,7 +216,8 @@ const PAL = {
   land:  "#c5d9ac", edge:"#c3ad82", edgeLo:"#a88f63",
   water: "#4fbdd4", waterD:"#3fbcd0",
   park:  ["#8fb673","#7ea867","#a0c483"],
-  hdb:   ["#e7b98c","#dd9f6c","#e9ca9c","#d98f60","#efd7b4"],
+  hdb:   ["#eee1c6","#e8c39b","#e0a877","#ecd3a2","#ddc7a4","#eee1c6",
+          "#8fb6aa","#a4c1cf","#a8bd8d","#e0a58c","#cf9f9a","#b4c2c1","#c1b3c6"],  // mixed muted estate colours
   condo: ["#cfe6e6","#bcdcdc","#dbeeee"],
   cbd:   ["#e6eef0","#d7e6e8","#eef4f4","#c9dede"],
   glass: "#a9d3d6", roof:"#b06a4a",
@@ -519,9 +520,9 @@ function addBuildings(g){
     // podium base on taller towers
     if(b.tall){ const pg=facadeBox(b.w*1.28,14,b.d*1.28,b.col); pg.rotateY(b.rot); pg.translate(b.x,0.8,b.z);
       geos.push(pg); }
-    // HDB flat-roof parapet + terracotta cap
+    // HDB flat-roof parapet, a slightly darker shade of the block's own colour
     if(b.slab && b.rk>0.4){ const rg=new THREE.BoxGeometry(b.w*1.03,3,b.d*1.03); rg.translate(0,1.5,0);
-      rg.rotateY(b.rot); rg.translate(b.x,0.8+b.h,b.z); det.push(paintColor(rg,PAL.roof)); }
+      rg.rotateY(b.rot); rg.translate(b.x,0.8+b.h,b.z); det.push(paintColor(rg,new THREE.Color(b.col).multiplyScalar(0.82))); }
     // rooftop machinery (water tanks / AC)
     const nt=b.slim?2:(b.rk>0.55?1:0);
     for(let k=0;k<nt;k++){ const tw=3+b.rk*4, tg=new THREE.BoxGeometry(tw,4+b.rk*5,tw); tg.translate((b.rk-0.5)*b.w*0.4,(4+b.rk*5)/2,(k-0.4)*b.d*0.3);
@@ -647,6 +648,51 @@ function addPlane(g){
   const tail=new THREE.Mesh(new THREE.BoxGeometry(7,1.2,20),m); tail.position.x=-20; p.add(tail);
   const fin=new THREE.Mesh(new THREE.BoxGeometry(7,11,1.4),m); fin.position.set(-20,6,0); p.add(fin);
   p.position.set(-210,205,-360); p.rotation.set(0,-0.6,0.04); p.scale.setScalar(0.92); g.add(p);
+}
+
+/* ---------- little frozen people (posed, static; merged into one mesh) ---------- */
+const SKIN=["#ecc6a0","#d7a67d","#b98a5f","#8f6242","#f0d0b0"];
+const SHIRT=["#c9584a","#3f7cae","#dcab39","#4f9e78","#bd6f95","#5e6a8c","#cf8347","#579aa2","#7f6aa8","#c05470","#7a934f","#c9c3b4"];
+const PANT=["#39404e","#463e37","#54504a","#2f4650","#5f4636","#404a54"];
+function niPaint(parts,geo,col){ const ni=geo.index?geo.toNonIndexed():geo; paintColor(ni,col); parts.push(ni); }
+function makePerson(geos,x,yN,rand){
+  const skin=SKIN[rand()*SKIN.length|0], shirt=SHIRT[rand()*SHIRT.length|0], pant=PANT[rand()*PANT.length|0];
+  const s=0.9+rand()*0.35, face=rand()*6.28, walk=rand()<0.55, lean=walk?0.4*s:0;   // deliberately small, well under the tree line
+  const legH=2.3*s, torsoH=2.5*s, step=walk?0.7*s:0.2*s, parts=[];
+  niPaint(parts,new THREE.BoxGeometry(0.6*s,legH,0.6*s).translate(-0.5*s,legH/2, step), pant);
+  niPaint(parts,new THREE.BoxGeometry(0.6*s,legH,0.6*s).translate( 0.5*s,legH/2,-step), pant);
+  niPaint(parts,new THREE.BoxGeometry(1.7*s,torsoH,1.0*s).translate(0,legH+torsoH/2,lean), shirt);
+  niPaint(parts,new THREE.BoxGeometry(0.4*s,1.9*s,0.4*s).translate(-1.0*s,legH+torsoH-0.9*s, walk? 0.5*s:0), shirt);
+  niPaint(parts,new THREE.BoxGeometry(0.4*s,1.9*s,0.4*s).translate( 1.0*s,legH+torsoH-0.9*s, walk?-0.5*s:0), shirt);
+  niPaint(parts,new THREE.IcosahedronGeometry(0.72*s,0).translate(0,legH+torsoH+0.7*s, lean), skin);
+  parts.forEach(p=>{ p.rotateY(face); p.translate(x,0.8,-yN); geos.push(p); });
+}
+function addPeople(g){
+  const rand=rng(41); const geos=[]; let n=0;
+  const put=(x,yN)=>{ if(!inSG(x,yN)||inWater(x,yN,1.12)) return false;
+    if(POIS.some(p=>{const dx=x-p.x,dy=yN-p.yN;return dx*dx+dy*dy<20*20 && (p.build==="mbs"||p.build==="exchange");})) return false; // off raised plazas/tower feet
+    makePerson(geos,x,yN,rand); n++; return true; };
+  // little gatherings near landmarks / open spots
+  [[95,-150],[162,-118],[46,10],[-40,25],[-118,-78],[300,-25],[205,44]].forEach(([cx,cy])=>{
+    let c=0; for(let i=0;i<40 && c<7;i++){ const a=rand()*6.28, r=rand()*13; if(put(cx+Math.cos(a)*r,cy+Math.sin(a)*r)) c++; } });
+  // scattered all over the island
+  for(let i=0;i<900 && n<98;i++) put(MINX+rand()*SPANX, MINY+rand()*SPANY);
+  const mesh=new THREE.Mesh(mergeGeometries(geos,false),new THREE.MeshStandardMaterial({vertexColors:true,roughness:1,flatShading:true}));
+  mesh.castShadow=true; g.add(mesh);
+}
+function addSwimmers(g){
+  const rand=rng(63); const geos=[], rings=[];
+  [[-10,-212],[22,-218],[48,-210],[-28,-220],[62,-214]].forEach(([x,yN])=>{
+    if(!inWater(x,yN,0.9)) return;
+    const skin=SKIN[rand()*SKIN.length|0], shirt=SHIRT[rand()*SHIRT.length|0], face=rand()*6.28, s=0.95+rand()*0.3, parts=[];
+    niPaint(parts,new THREE.BoxGeometry(1.6*s,0.7*s,2.6*s).translate(0,0.9,0), shirt);       // back/shoulders at the surface
+    niPaint(parts,new THREE.IcosahedronGeometry(0.68*s,0).translate(0,1.35,1.25*s), skin);    // head poking out
+    const arm=new THREE.BoxGeometry(0.4*s,1.9*s,0.4*s).translate(0.85*s,1.3,1.0*s); arm.rotateX(-0.7); niPaint(parts,arm,skin); // mid-stroke arm
+    parts.forEach(p=>{ p.rotateY(face); p.translate(x,0,-yN); geos.push(p); });
+    const ring=new THREE.RingGeometry(1.7*s,2.7*s,16); ring.rotateX(-Math.PI/2); ring.translate(x,0.9,-yN); rings.push(ring);
+  });
+  if(geos.length){ const m=new THREE.Mesh(mergeGeometries(geos,false),new THREE.MeshStandardMaterial({vertexColors:true,roughness:1,flatShading:true})); g.add(m); }
+  if(rings.length){ const rm=new THREE.Mesh(mergeGeometries(rings,false),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.45,depthWrite:false})); g.add(rm); }
 }
 
 /* ---------- signature landmark buildings (one per place) ---------- */
@@ -884,7 +930,7 @@ function init(){
   addShadow(); clouds=addClouds();
   island=new THREE.Group();
   buildIsland(island); addBuildings(island); addMBS(island); addSupertrees(island); addTrees(island);
-  addBirds(island); addBoats(island); addPlane(island); addLandmarks(island);
+  addBirds(island); addBoats(island); addPlane(island); addPeople(island); addSwimmers(island); addLandmarks(island);
   island.position.set(-(MINX+MAXX)/2, 0, (MINY+MAXY)/2);   // centre island at world origin
   scene.add(island);
 
