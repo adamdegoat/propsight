@@ -114,6 +114,8 @@
 
     /* dropdown panel */
     .psnav-drop{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(6px);min-width:255px;background:#fff;border:1px solid #d9e7e0;border-radius:15px;box-shadow:0 22px 48px -22px rgba(16,42,30,.55);padding:8px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s,transform .16s;z-index:320}
+    /* invisible bridge over the 8px gap so hover survives the trip from trigger to panel */
+    .psnav-drop::before{content:"";position:absolute;left:0;right:0;top:-10px;height:10px}
     .psnav-item:hover .psnav-drop,.psnav-item.open .psnav-drop{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
     .psnav-drop.grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;min-width:430px}
     .psnav-di{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:10px;text-decoration:none;color:#191512}
