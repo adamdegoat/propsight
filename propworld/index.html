@@ -93,6 +93,13 @@
   #pcta svg{width:15px;height:15px}
   #psoon{display:none;align-items:center;gap:8px;align-self:flex-start;background:var(--paper);color:var(--sub);border:1px solid var(--line);border-radius:999px;padding:12px 22px;font-size:13.5px;font-weight:800}
   #psoon i{width:8px;height:8px;border-radius:50%;background:var(--pc,#0f7a82)}
+  #paudio{display:none;align-items:center;gap:13px;align-self:stretch;background:var(--paper);border:1px solid var(--line);border-radius:15px;padding:12px 14px;margin-bottom:20px}
+  #paBtn{flex:none;width:46px;height:46px;border-radius:50%;border:none;background:var(--pc,#0f7a82);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  #paBtn:hover{filter:brightness(1.06)}
+  #paBtn svg{width:20px;height:20px}
+  .pa-tx{display:flex;flex-direction:column;line-height:1.28;min-width:0}
+  .pa-tx b{font-size:14px;font-weight:800;color:var(--green)}
+  .pa-tx span{font-size:12px;color:var(--sub)}
 
   /* ---- Aillie chat panel ---- */
   #chat{position:fixed;top:0;right:0;height:100%;width:392px;max-width:88vw;background:var(--card);z-index:31;box-shadow:-20px 0 54px -22px rgba(20,50,40,.42);transform:translateX(104%);transition:transform .42s cubic-bezier(.22,1,.36,1);display:flex;flex-direction:column}
@@ -175,6 +182,11 @@
     <h2 id="ptitle"></h2>
     <div id="pfeat"></div>
     <p id="pblurb"></p>
+    <div id="paudio">
+      <button id="paBtn" aria-label="Play"></button>
+      <div class="pa-tx"><b id="paLbl">Latest report</b><span id="paSub">Narrated by Christine</span></div>
+      <audio id="paAudio" preload="none"></audio>
+    </div>
     <a id="pcta" href="#" target="_blank" rel="noopener">Open<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
     <span id="psoon"><i></i>Coming soon</span>
   </aside>
@@ -286,8 +298,8 @@ const POIS = [
     x:52, yN:-140, y:180, clr:60,
     blurb:"A private space for property agents. Reach clients, follow up automatically, and work with real market intelligence behind you.",
     feat:["Built for Singapore property agents","Reach and follow up with clients","Backed by real market intelligence"] },
-  { id:"market", build:"exchange", name:"Market Analysis", kicker:"Monthly report", color:"#0f7a82",
-    x:-118, yN:-104, y:228, clr:46, href:"https://propsight.sg/market-analysis/", cta:"Read this month",
+  { id:"market", build:"exchange", name:"Market Analysis", kicker:"Monthly report", color:"#0f7a82", audio:true,
+    x:-118, yN:-104, y:228, clr:46, href:"https://propsight.sg/market-analysis/", cta:"Read the latest analysis",
     blurb:"A monthly read on the Singapore private and HDB market, in plain language. What moved, by how much, and what it means this month.",
     feat:["Where prices and rents are moving","Written fresh every month","A plain reading of the official data"] },
   { id:"launches", build:"site", name:"Upcoming Launches", kicker:"New homes", color:"#2f9a8f",
@@ -347,7 +359,7 @@ const POI_ZH = {
   agent:    {name:"经纪空间",kicker:"为房产经纪打造",
              blurb:"为房产经纪打造的专属空间。联系客户、自动跟进，背后还有真实的市场数据撑腰。",
              feat:["为新加坡房产经纪打造","联系并自动跟进客户","背后有真实市场数据支持"]},
-  market:   {name:"市场分析",kicker:"每月报告",cta:"看本月报告",
+  market:   {name:"市场分析",kicker:"每月报告",cta:"阅读最新分析",
              blurb:"每月一份新加坡私宅与组屋市场解读，说人话。这个月什么在变、变了多少、对你意味着什么。",
              feat:["房价和租金往哪走","每个月重新撰写","把官方数据讲清楚"]},
   launches: {name:"新盘预告",kicker:"全新楼盘",cta:"查看新盘",
@@ -769,19 +781,46 @@ function toggleMenu(f){ const m=$("placesMenu"),btn=$("placesBtn"); const open=f
 function closeMenu(){ toggleMenu(false); }
 
 function openFor(p){ if(p.mode==="chat") openChat(); else openInfo(p); }   // route the place to its panel type
-function openInfo(p){ closeChat(); toggleMenu(false);
+function openInfo(p){ closeChat(); toggleMenu(false); stopAudio();
   $("panel").style.setProperty("--pc",p.color);
   $("pkick").textContent=PL(p,"kicker"); $("ptitle").textContent=PL(p,"name"); $("pblurb").textContent=PL(p,"blurb");
   $("pfeat").innerHTML=PL(p,"feat").map(f=>`<div class="pfeat"><i></i><span>${f}</span></div>`).join("");
+  const au=$("paudio");                                    // Christine voice report (Market Analysis only)
+  if(p.audio){ au.style.display="flex"; paIcon(false);
+    if(MKT_AUDIO){ applyMarketAudio(); }
+    else { $("paLbl").textContent=zh?"最新报告":"Latest report"; $("paSub").textContent=zh?"载入中…":"Loading…"; ensureMarketAudio(); } }
+  else au.style.display="none";
   const cta=$("pcta"), soon=$("psoon");
   if(p.mode==="soon"||!p.href){ cta.style.display="none"; soon.style.display="inline-flex"; }
   else { soon.style.display="none"; cta.style.display="inline-flex"; cta.href=p.href; cta.childNodes[0].nodeValue=PL(p,"cta")+" "; }
   $("panel").classList.add("open"); $("backdrop").classList.add("open"); $("pins").classList.add("hide");
   $("panel").setAttribute("aria-hidden","false"); paused=true; document.getElementById("hint")?.classList.add("gone");
 }
-function closeInfo(){ $("panel").classList.remove("open"); $("backdrop").classList.remove("open"); $("pins").classList.remove("hide");
+function closeInfo(){ stopAudio(); $("panel").classList.remove("open"); $("backdrop").classList.remove("open"); $("pins").classList.remove("hide");
   $("panel").setAttribute("aria-hidden","true"); paused=false; needsRender=true; }
 function closeAll(){ closeInfo(); closeChat(); }
+
+/* ---------- Market Analysis: the Christine-narrated voice report (latest edition) ---------- */
+const PLAY_SVG=`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>`;
+const PAUSE_SVG=`<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="4.2" height="14" rx="1.3"/><rect x="13.3" y="5" width="4.2" height="14" rx="1.3"/></svg>`;
+let MKT_AUDIO=null, mktTried=false;
+function paIcon(playing){ const b=$("paBtn"); if(b){ b.innerHTML=playing?PAUSE_SVG:PLAY_SVG; b.setAttribute("aria-label",playing?"Pause":"Play"); } }
+function stopAudio(){ const a=$("paAudio"); if(a) a.pause(); paIcon(false); }
+function applyMarketAudio(){ if(!MKT_AUDIO) return;
+  $("paAudio").src=MKT_AUDIO.mp3;
+  $("paLbl").textContent = MKT_AUDIO.label + (zh?" 报告":" report");
+  $("paSub").textContent = zh?"约 4 分钟，由 Christine 朗读":"About 4 min, narrated by Christine"; }
+function ensureMarketAudio(){
+  if(MKT_AUDIO){ applyMarketAudio(); return; }
+  if(mktTried) return; mktTried=true;
+  fetch("https://propsight.sg/market-analysis/").then(r=>r.text()).then(html=>{
+    const a=new DOMParser().parseFromString(html,"text/html").querySelector("a.malead"); if(!a) throw 0;
+    const base=(a.getAttribute("href")||"").replace(/\.html$/,""); const mm=base.match(/^([a-z]+)-(\d{4})/i);
+    MKT_AUDIO={ mp3:"https://propsight.sg/market-analysis/"+base+".mp3",
+                label: mm?(mm[1][0].toUpperCase()+mm[1].slice(1)+" "+mm[2]):"Latest" };
+    applyMarketAudio();
+  }).catch(()=>{ $("paudio").style.display="none"; });   // e.g. offline / local: just hide the player
+}
 
 /* ---------- Ask Aillie: the same brain as the PropSight homepage (/api/ask) ---------- */
 const AILLIE_API="https://web-production-07326.up.railway.app/api/ask";
@@ -854,6 +893,10 @@ function init(){
   buildPins(); buildMenu();
   $("placesBtn").addEventListener("click",e=>{e.stopPropagation();toggleMenu();});
   $("pclose").addEventListener("click",closeInfo);
+  $("paBtn").addEventListener("click",()=>{ const a=$("paAudio"); if(!a.src) return; a.paused?a.play():a.pause(); });
+  $("paAudio").addEventListener("play",()=>paIcon(true));
+  $("paAudio").addEventListener("pause",()=>paIcon(false));
+  $("paAudio").addEventListener("ended",()=>paIcon(false));
   $("chatX").addEventListener("click",closeChat);
   $("chatSend").addEventListener("click",aSend);
   $("chatInput").addEventListener("keydown",e=>{ if(e.key==="Enter") aSend(); });
