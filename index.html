@@ -846,15 +846,25 @@ em{color:var(--brass)}
 .hboard .mv .nm{font-weight:800;font-size:15px;margin-top:2px}
 .hboard .mv .v{font-weight:800;color:#2e9e6b;font-size:16px}
 .hboard .bf{display:block;padding:13px 20px;text-align:center;font-size:12.5px;font-weight:700;color:var(--brass)}
-/* ---- Aillie band (relocated chat, in-brand) ---- */
-.aillieband{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2)}
-.aillieband .abw{max-width:1200px;margin:0 auto;padding:44px 36px;display:grid;grid-template-columns:.82fr 1.18fr;gap:48px;align-items:center}
-.aillieband .al-lbl{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);display:inline-flex;align-items:center;gap:9px}
-.aillieband .al-lbl .dot{width:7px;height:7px;border-radius:50%;background:var(--brass2)}
-.aillieband h3{font-family:"Schibsted Grotesk",sans-serif;font-weight:900;font-size:30px;letter-spacing:-.02em;color:var(--green3);margin:13px 0 11px}
-.aillieband p{font-size:16px;color:var(--ink2);max-width:36ch}
-.aillieband .allink{display:inline-block;margin-top:14px;font-size:14px;font-weight:700;color:var(--green2);box-shadow:inset 0 -2px 0 var(--brass3)}
-.aillieband #heroChatMount{margin:0;min-height:0}
+/* ---- Insights: narrative market-analysis + deep-dive cards (replaces the Meet Aillie band) ---- */
+.insgrid{display:grid;grid-template-columns:1.12fr .88fr;gap:20px}
+.inscard{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:20px;padding:30px 32px 26px;text-decoration:none;color:inherit;background:#fff;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease)}
+.inscard:hover{transform:translateY(-3px);box-shadow:0 24px 48px -28px rgba(15,35,26,.42);border-color:var(--line2)}
+.ins-month{background:radial-gradient(120% 92% at 100% 0,#eef7f2,#fff 58%)}
+.ins-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:20px}
+.ins-lbl{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);display:inline-flex;align-items:center;gap:8px}
+.ins-lbl .dot{width:7px;height:7px;border-radius:50%;background:var(--brass2);box-shadow:0 0 0 0 rgba(21,160,160,.5);animation:cpulse 2.6s ease-in-out infinite}
+.ins-lbl-dive{color:var(--green2)}
+.ins-when{flex:none;font-size:12px;font-weight:700;color:var(--ink3)}
+.ins-quote{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:500;font-size:clamp(21px,2vw,25px);line-height:1.36;letter-spacing:-.018em;color:var(--green3);margin:0 0 15px;padding-left:18px;border-left:2.5px solid var(--brass3)}
+.ins-q{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:800;font-size:clamp(20px,1.9vw,24px);line-height:1.18;letter-spacing:-.02em;color:var(--green3);margin:0 0 12px}
+.ins-sub{font-size:15px;line-height:1.55;color:var(--ink2);margin:0}
+.ins-go{margin-top:auto;padding-top:22px;font-size:14px;font-weight:800;color:var(--green2);display:inline-flex;align-items:center;gap:7px}
+.ins-go::after{content:"\2192";transition:transform .25s var(--ease)}
+.inscard:hover .ins-go::after{transform:translateX(4px)}
+@media(max-width:820px){.insgrid{grid-template-columns:1fr;gap:16px}.inscard{padding:26px 24px 22px}.ins-quote{font-size:21px}}
+/* Aillie is now a floating corner popup on every viewport: enlarge the panel on tablet/desktop so it opens big, not as a small banner */
+@media(min-width:640px){.cpanel{width:428px;height:min(720px,86vh)}}
 /* restyle the Aillie panel to match (no glass) */
 .cpanel.inhero{background:#fcfffe!important;box-shadow:0 18px 48px rgba(25,21,18,.1)!important;height:440px!important;min-height:0!important;max-height:none!important;border:1px solid var(--line)!important}
 .cpanel.inhero .chead{background:linear-gradient(180deg,#f4fbf9,#eaf5f1)!important;color:var(--ink)!important;border-bottom:1px solid var(--line)!important}
@@ -1063,14 +1073,36 @@ if(sa){var e=document.getElementById('navInstall');if(e)e.style.display='none';}
   })();</script>
   </div></section>
 
-<section class="aillieband"><div class="abw">
-  <div>
-    <span class="al-lbl"><span class="dot"></span><span data-i18n="Meet Aillie">Meet Aillie</span></span>
-    <h3 data-i18n="Not sure where to start? Just ask.">Not sure where to start? Just ask.</h3>
-    <p data-i18n="Tell Aillie what you're trying to do, in plain English. She answers with the real numbers behind it.">Tell Aillie what you're trying to do, in plain English. She answers with the real numbers behind it.</p>
-    <a class="allink" href="#talk" onclick="if(window.askAillie){event.preventDefault();window.askAillie();}" data-i18n="Open a full conversation →">Open a full conversation →</a>
+<section class="sec divtop" id="insights"><div class="wrap">
+  <div class="sec-h">
+    <div>
+      <span class="eyebrow rv" data-i18n="Insights">Insights</span>
+      <h2 class="rv" data-i18n="The market, read properly.">The market, read properly.</h2>
+      <svg class="hl" viewBox="0 0 188 15" preserveAspectRatio="none" aria-hidden="true"><path d="M4 9 C 48 4, 140 4, 184 8"/></svg>
+    </div>
+    <p class="rv" data-i18n="Our plain-English read of Singapore property, from real transacted prices. The monthly analysis, plus deep dives on one sharp question at a time.">Our plain-English read of Singapore property, from real transacted prices. The monthly analysis, plus deep dives on one sharp question at a time.</p>
   </div>
-  <aside class="hero-chat-mount" id="heroChatMount" aria-label="Ask Aillie"></aside>
+  <div class="insgrid rv">
+    <a class="inscard ins-month" href="market-analysis/">
+      <div class="ins-top">
+        <span class="ins-lbl"><span class="dot"></span><span data-i18n="Monthly Market Analysis">Monthly Market Analysis</span></span>
+        <span class="ins-when">June 2026</span>
+      </div>
+      <p class="ins-quote" data-i18n="The mass market is leading. Suburbs and city-fringe are rising and central HDB towns are up sharply, while prime is the only segment falling.">The mass market is leading. Suburbs and city-fringe are rising and central HDB towns are up sharply, while prime is the only segment falling.</p>
+      <p class="ins-sub" data-i18n="A monthly read on the whole market, from real transacted prices.">A monthly read on the whole market, from real transacted prices.</p>
+      <span class="ins-go" data-i18n="Read the analysis">Read the analysis</span>
+    </a>
+    <a class="inscard ins-dive" href="market-analysis/is-prime-finally-on-sale.html">
+      <div class="ins-top">
+        <span class="ins-lbl ins-lbl-dive" data-i18n="Deep Dive">Deep Dive</span>
+        <span class="ins-when">10 Jul 2026</span>
+      </div>
+      <h3 class="ins-q" data-i18n="Is prime finally on sale?">Is prime finally on sale?</h3>
+      <p class="ins-sub" data-i18n="Prime is the only segment falling, a real opening for local buyers who plan to hold, but an easing, not a fire sale.">Prime is the only segment falling, a real opening for local buyers who plan to hold, but an easing, not a fire sale.</p>
+      <span class="ins-go" data-i18n="Read the deep dive">Read the deep dive</span>
+    </a>
+  </div>
+  <a class="notes-all rv" href="market-analysis/"><span data-i18n="See all analysis and deep dives">See all analysis and deep dives</span> <span>&rarr;</span></a>
 </div></section>
 
 <section class="sec" id="news"><div class="wrap">
@@ -2098,15 +2130,8 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
   window.askAillie=()=>{ if(panel.classList.contains('inhero')){panel.scrollIntoView({behavior:'smooth',block:'center'});} else {open();} };
   addEventListener('keydown',e=>{if(e.key==='Escape'&&panel.classList.contains('open'))close();});
   // Desktop: feature Aillie INLINE in the hero (move the panel up, always open, no corner pin). Mobile: floating launcher, auto-open once per session.
-  const heroMount=document.getElementById('heroChatMount');
-  if(heroMount && innerWidth>880){
-    heroMount.appendChild(panel);
-    panel.classList.add('inhero');
-    open();
-  } else {
-    // Mobile: never auto-open. Draw the eye to the launcher with a soft ring + the teaser bubble.
-    btn.classList.add('cbtn-attn');
-  }
+  // Aillie is a floating launcher on every viewport now: a corner popup that opens big on click, with the teaser bubble as a nudge. Never auto-open.
+  btn.classList.add('cbtn-attn');
   form.onsubmit=e=>{e.preventDefault();const v=inp.value.trim();if(!v)return;inp.value='';if(pendingAsk){pendingAsk(v);return;}handle(v);};
   // nudge: rotating input placeholder (only while empty + unfocused), translated in zh
   const _tz=s=>(window.PSI18N&&window.PSI18N.t?window.PSI18N.t(s):s);
