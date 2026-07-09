@@ -142,7 +142,11 @@ html.menu-open,html.menu-open body{overflow:hidden}
 .hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(52px,5.8vw,86px);line-height:.97;letter-spacing:-.028em;margin:22px 0 0}
 .hero h1.h1-1line{font-size:clamp(30px,4.2vw,46px);font-weight:700;letter-spacing:-.03em}
 .hero h1.h1-1line .ln i{white-space:nowrap}
-@media(min-width:900px){.hero h1.h1-1line{white-space:nowrap}}
+/* below desktop the long headline must wrap instead of overflowing the hero (nowrap only makes sense once the wrapper goes nowrap at 900px) */
+@media(max-width:899px){.hero h1.h1-1line .ln i{white-space:normal;text-wrap:balance}}
+@media(min-width:900px){.hero h1.h1-1line{white-space:nowrap}
+/* longer value-prop headline: cap the desktop size so the long first line breathes inside the hero column instead of kissing the market-board gap */
+.hero h1.h1-1line{font-size:clamp(38px,4.05vw,56px)!important}}
 .hero h1 .ln{display:block;overflow:hidden;padding-bottom:.14em;margin-bottom:-.07em}
 .hero h1 .ln i{display:inline-block;font-style:normal;transform:translateY(115%);transition:transform .9s var(--ease)}
 .hero h1 .ln:nth-child(2) i{transition-delay:.08s}.hero h1 .ln:nth-child(3) i{transition-delay:.16s}
@@ -930,7 +934,7 @@ if(sa){var e=document.getElementById('navInstall');if(e)e.style.display='none';}
   <div class="wrap hero-in">
   <div>
     <div class="herotop rv"><span class="eyebrow" data-i18n="hero.eyebrow">Singapore property intelligence</span><span class="heroclock"><span class="hcdot"></span><time id="psClock">--:--:--</time><span class="hcz">SGT</span></span></div>
-    <h1 class="h1-1line"><span class="ln"><i data-i18n="hero.h1a">Singapore property,</i></span> <span class="ln"><i data-i18n="hero.h1b">decoded.</i></span></h1>
+    <h1 class="h1-1line"><span class="ln"><i data-i18n="hero.h1a">We do the research and analysis,</i></span> <span class="ln"><i data-i18n="hero.h1b">so you don't have to.</i></span></h1>
     <p class="lead lead-lg rv" data-i18n="hero.leadLg">PropSight is your all-in-one Singapore property platform, free and in plain English. Value any home on real sales, explore upcoming launches and neighbourhood guides, follow the market, and step into PropWorld, with Aillie to ask her anything.</p>
     <p class="lead lead-sm rv" data-i18n="hero.leadSm">Your all-in-one Singapore property platform, free and in plain English. Value any home, explore launches and neighbourhood guides, follow the market, and step into PropWorld, with Aillie to ask anything.</p>
     <div class="hdoors rv">
