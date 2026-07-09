@@ -804,7 +804,8 @@ const $=id=>document.getElementById(id);
 function wrapAngle(a){ return Math.atan2(Math.sin(a),Math.cos(a)); }
 
 function buildPins(){ const host=$("pins");
-  POIS.forEach(p=>{ const b=document.createElement("button"); b.className="pin"; b.style.setProperty("--pc",p.color); b.dataset.id=p.id;
+  POIS.forEach(p=>{ if(p.id==="aillie") return;   // no floating pin on the pavilion; Aillie stays in the Places menu
+    const b=document.createElement("button"); b.className="pin"; b.style.setProperty("--pc",p.color); b.dataset.id=p.id;
     b.innerHTML=`<span class="tag"><i></i>${PL(p,"name")}</span><span class="stem"></span><span class="dot"></span>`;
     b.addEventListener("click",e=>{ e.stopPropagation(); openFor(p); });
     host.appendChild(b); p._pin=b; });
