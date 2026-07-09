@@ -13,6 +13,10 @@
   var ITEMS = [
     { k:'world', t:'PropWorld', href: BASE + '/propworld/' },
     { k:'link',  t:'Upcoming Launches', feat:true, href: BASE + '/launches/' },
+    { k:'menu',  t:'Insights', smart:true, href: BASE + '/research/', kids:[
+        ['Research',        BASE + '/research/',               'spark', 'Side by side, every condo and HDB'],
+        ['Market Analysis', BASE + '/market-analysis/', 'chart', 'Monthly analyst report'],
+        ['News',            BASE + '/news/',            'news',  'Daily Singapore property news'] ] },
     { k:'menu',  t:'Tools', href: BASE + '/#tools', kids:[
         ['Value a home',        BASE + '/tools/value.html',      'calc'],
         ['What you can afford',  BASE + '/tools/afford.html',     'calc'],
@@ -22,10 +26,6 @@
         ['Mortgage',            BASE + '/tools/mortgage.html',   'calc'],
         ['Eligibility',         BASE + '/tools/eligibility.html','calc'],
         ['Selling',             BASE + '/tools/sell.html',       'calc'] ] },
-    { k:'menu',  t:'Insights', smart:true, href: BASE + '/research/', kids:[
-        ['Research',        BASE + '/research/',               'spark', 'Side by side, every condo and HDB'],
-        ['Market Analysis', BASE + '/market-analysis/', 'chart', 'Monthly analyst report'],
-        ['News',            BASE + '/news/',            'news',  'Daily Singapore property news'] ] },
     { k:'link',  t:'Area Guides',  href: BASE + '/areaguides/' },
     { k:'link',  t:'Beginners Guide', href: BASE + '/guide/' }
   ];
@@ -270,7 +270,7 @@
   var mobileShort = { 'What you can afford':'Afford', 'Schools nearby':'Schools' };
   function mlabel(s){ return mobileShort[s] || s; }
   function chip(label, href, icon, cls){ return '<a class="psm-chip'+(cls?' '+cls:'')+'" href="'+href+'">'+ic(icon)+'<b>'+t(mlabel(label))+'</b></a>'; }
-  var PW = ITEMS[0], NL = ITEMS[1], TOOLS = ITEMS[2], INS = ITEMS[3], AREAS = ITEMS[4], BG = ITEMS[5];
+  var PW = ITEMS[0], NL = ITEMS[1], INS = ITEMS[2], TOOLS = ITEMS[3], AREAS = ITEMS[4], BG = ITEMS[5];
 
   var TG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3l-3.3 15.6c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.2L18.5 6c.4-.3-.1-.5-.6-.2L7.4 12.6l-4.8-1.5c-1-.3-1-1 .2-1.5l18.7-7.2c.9-.3 1.6.2 1.4 1.9z"/></svg>';
   var PHN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10.5 18.5h3"/></svg>';
@@ -278,11 +278,11 @@
   var menuHTML = '<div class="psnav-menu" id="psMenu">' +
     '<a class="psm-world" href="'+PW.href+'"><span class="wl"><span class="badge">'+t('Featured')+'</span><b>PropWorld</b><span class="s">'+t('Singapore property, brought to life')+'</span></span><svg class="worb" viewBox="0 0 24 24">'+IC.orb+'</svg></a>' +
     '<div class="psm-grp"><div class="psm-chips">' + chip('Upcoming Launches', NL.href, 'build', 'wide feat') + '</div></div>' +
-    '<div class="psm-grp"><div class="psm-glbl">'+t('Tools')+'</div><div class="psm-chips">' +
-      TOOLS.kids.map(function(k){ return chip(k[0], k[1], k[2]); }).join('') +
-    '</div></div>' +
     '<div class="psm-grp"><div class="psm-glbl">'+t('Insights')+' <span class="mtag">'+t('Smart')+'</span></div><div class="psm-chips">' +
       INS.kids.map(function(k){ return chip(k[0], k[1], k[2], 'acc'); }).join('') +
+    '</div></div>' +
+    '<div class="psm-grp"><div class="psm-glbl">'+t('Tools')+'</div><div class="psm-chips">' +
+      TOOLS.kids.map(function(k){ return chip(k[0], k[1], k[2]); }).join('') +
     '</div></div>' +
     '<div class="psm-grp"><div class="psm-chips">' +
       chip('Area Guides', AREAS.href, 'pin') + chip('Beginners Guide', BG.href, 'book') +
