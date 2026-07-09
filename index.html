@@ -141,12 +141,9 @@ html.menu-open,html.menu-open body{overflow:hidden}
 .hero-in{display:grid;grid-template-columns:1.08fr .92fr;gap:64px;align-items:center}
 .hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(52px,5.8vw,86px);line-height:.97;letter-spacing:-.028em;margin:22px 0 0}
 .hero h1.h1-1line{font-size:clamp(30px,4.2vw,46px);font-weight:700;letter-spacing:-.03em}
-.hero h1.h1-1line .ln i{white-space:nowrap}
-/* below desktop the long headline must wrap instead of overflowing the hero (nowrap only makes sense once the wrapper goes nowrap at 900px) */
-@media(max-width:899px){.hero h1.h1-1line .ln i{white-space:normal;text-wrap:balance}}
-@media(min-width:900px){.hero h1.h1-1line{white-space:nowrap}
-/* longer value-prop headline: cap the desktop size so the long first line breathes inside the hero column instead of kissing the market-board gap */
-.hero h1.h1-1line{font-size:clamp(38px,4.05vw,56px)!important}}
+.hero h1.h1-1line .ln i{white-space:normal;text-wrap:balance}
+/* the long value-prop headline wraps to three balanced lines; on desktop cap its measure (em, so it tracks the font) so line 1 breaks instead of running off the right past the market board */
+@media(min-width:900px){.hero h1.h1-1line{font-size:clamp(38px,4vw,54px)!important;max-width:12em}}
 .hero h1 .ln{display:block;overflow:hidden;padding-bottom:.14em;margin-bottom:-.07em}
 .hero h1 .ln i{display:inline-block;font-style:normal;transform:translateY(115%);transition:transform .9s var(--ease)}
 .hero h1 .ln:nth-child(2) i{transition-delay:.08s}.hero h1 .ln:nth-child(3) i{transition-delay:.16s}
