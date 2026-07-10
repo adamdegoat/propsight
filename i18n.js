@@ -17,12 +17,11 @@
     // ── shared chrome (nav + footer + badges), keyed by the English string ──
     'Tools': '工具', 'Research': '楼盘研究', 'New Launches': '新盘', 'Market Pulse': '市场动态', 'Market Analysis': '市场分析',
     'News': '房产新闻', 'Guide': '购房指南', 'About us': '关于我们', 'Contact': '联系我们', 'Analysis': '分析',
-    'Listing Platform': '房源平台', 'Coming soon': '即将推出',
+    'Coming soon': '即将推出',
     // ── new nav (2026-07): PropWorld + Area Guides + Insights grouping ──
     'Area Guides': '区域指南', 'Insights': '洞察', 'Beginners Guide': '新手指南',
     'Upcoming Launches': '新盘预告', 'New condos coming to market': '即将上市的新盘', 'Enter PropWorld': '进入 PropWorld',
-    'Buy and rent': '买房与租房', 'Singapore property, brought to life': '新加坡房产，栩栩如生',
-    'Browse homes for sale and rent': '浏览待售与出租房源',
+    'Singapore property, brought to life': '新加坡房产，栩栩如生',
     'Side by side, every condo and HDB': '并排对比每个公寓与组屋',
     'Monthly analyst report': '每月分析报告', 'Daily Singapore property news': '每日新加坡房产新闻',
     'Deep Dives': '深度分析', 'Monthly whole-market report': '每月全景市场报告', 'Weekly single-question reads': '每周单一主题解读',
@@ -75,8 +74,6 @@
     'cta.join': '加入我们的 Telegram', 'cta.askAillie': '问 Aillie', 'cta.value': '估算房价',
     'Enter PropWorld': '走进 PropWorld', 'Singapore property, brought to life': '让新加坡房产活起来',
     'PropWorld': 'PropWorld', 'Brought to life': '让房产活起来',
-    'PropSight Listings': 'PropSight 房源平台', 'Homes for sale and rent': '在售与出租房源',
-    'Buy and rent': '买房与租房', 'Browse homes for sale and rent': '浏览在售与出租房源',
     'chatcue.t': '有问题尽管问 Aillie', 'chatcue.s': '真实数据 · 免费',
 
     // ── Aillie chat (display-only: greeting + disclaimer; keyed by the English text) ──
