@@ -32,10 +32,8 @@
   #chrome{position:fixed;top:0;left:0;right:0;z-index:20;padding:20px 26px;display:flex;align-items:flex-start;justify-content:space-between;gap:18px;pointer-events:none}
   .lt,.rt{pointer-events:auto}
   .lt{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
-  .back{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);border:1px solid var(--line);color:var(--green);text-decoration:none;flex:none;backdrop-filter:blur(7px);box-shadow:0 5px 16px -7px rgba(20,50,40,.45)}
+  .back{display:none;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);border:1px solid var(--line);color:var(--green);text-decoration:none;flex:none;backdrop-filter:blur(7px);box-shadow:0 5px 16px -7px rgba(20,50,40,.45)}
   .back:hover{background:#fff}
-  /* desktop shows the brand description, so top-align the back button to sit beside the PropWorld wordmark, not float beside the description */
-  @media (min-width:621px){.back{align-self:flex-start}}
   .back svg{width:21px;height:21px}
   .lt .brand{display:flex;flex-direction:column}
   .mark{display:inline-block;text-decoration:none;font-size:clamp(26px,3.4vw,38px);font-weight:800;letter-spacing:-.038em;line-height:.96;color:var(--green)}
@@ -231,6 +229,8 @@ const PAL = {
           "#8fb6aa","#a4c1cf","#a8bd8d","#e0a58c","#cf9f9a","#b4c2c1","#c1b3c6"],  // mixed muted estate colours
   condo: ["#cfe6e6","#bcdcdc","#dbeeee"],
   cbd:   ["#e6eef0","#d7e6e8","#eef4f4","#c9dede"],
+  lux:   ["#f4ecdc","#ece0c8","#f1e6d2","#e4d3b6","#efe8dc","#dfe6d6"],  // low waterfront villas - warm creams
+
   glass: "#a9d3d6", roof:"#b06a4a",
   sky:   { top:"#a3cbd9", mid:"#dbeee9", low:"#f7f0e0" },
 };
@@ -254,7 +254,7 @@ function applyTOD(){ if(!scene) return; const t=currentTOD();
   document.body.style.background=t.bg; needsRender=true;
 }
 const orbit = { theta:0.16, phi:1.14, r:1000, tr:1000 };   // hero: south, low, across Marina Bay to the skyline
-const lim = { phiMin:0.52, phiMax:1.40, rMin:440, rMax:3200 };
+const lim = { phiMin:0.50, phiMax:1.40, rMin:380, rMax:4600 };   // rMin = crisp close-in floor (no blur past this), rMax = far overview
 let dragging=false,lastX=0,lastY=0,moved=0,vT=0,vP=0,idleT=0,needsRender=true,tPrev=0;
 let phiEase=false, phiTgt=1.14;
 // as you zoom out the camera gently lifts toward a top-down overview (whole island); zoom in drops to the hero
@@ -262,11 +262,32 @@ function phiForZoom(r){ const t=(r-lim.rMin)/(lim.rMax-lim.rMin); return THREE.M
 function zoomTo(r){ orbit.tr=THREE.MathUtils.clamp(r,lim.rMin,lim.rMax); phiTgt=phiForZoom(orbit.tr); phiEase=true; needsRender=true; }
 
 /* ---------- Singapore outline (local: x east+, y north+) ---------- */
-const SG = [
-  [-500,30],[-455,-55],[-355,-120],[-235,-175],[-95,-206],[-15,-208],
-  [70,-200],[160,-206],[260,-206],[368,-168],[475,-70],[455,20],
-  [340,92],[225,140],[110,108],[10,140],[-130,128],[-270,92],[-400,55],
+/* control points for the coastline (x east+, y north+). the spline below flows smoothly
+   through these; where a point pushes out past its neighbours it becomes a gentle natural
+   headland - a few houses get dropped on those bumps so the coast feels lived-in, not a clean oval. */
+const SG_CTRL = [
+  [-520,-25],                 // west
+  [-440,-150],[-260,-240],    // south-west shoulder
+  [-150,-300],                // south peninsula (bump + houses)
+  [-20,-282],
+  [140,-300],                 // south-east nub (headland, houses) - west arm of the cove
+  [210,-292],                 // cove west headland
+  [260,-208],                 // cove inner west (deeper cut)
+  [300,-186],                 // cove head - smooth cut into the world (marina + luxury homes)
+  [340,-206],                 // cove inner east (deeper cut)
+  [392,-238],                 // cove east headland
+  [458,-170],
+  [512,-20],                  // east point
+  [478,95],[350,205],
+  [175,272],                  // north headland (bump + houses)
+  [35,255],
+  [-120,270],                 // north-west bump (houses)
+  [-285,222],[-425,150],
+  [-512,58],
 ];
+// smooth closed coastline: Catmull-Rom through the control points, densified so edges flow
+const SG = (()=>{ const cv=new THREE.CatmullRomCurve3(SG_CTRL.map(([x,y])=>new THREE.Vector3(x,0,y)),true,"catmullrom",0.5);
+  return cv.getPoints(180).map(p=>[p.x,p.z]); })();
 let MINX=1e9,MAXX=-1e9,MINY=1e9,MAXY=-1e9;
 SG.forEach(([x,y])=>{ MINX=Math.min(MINX,x);MAXX=Math.max(MAXX,x);MINY=Math.min(MINY,y);MAXY=Math.max(MAXY,y); });
 const PADX=60,PADY=60; MINX-=PADX;MAXX+=PADX;MINY-=PADY;MAXY+=PADY;
@@ -278,11 +299,13 @@ const WATER = [
   {c:[26,-196],rx:80,ry:32,rot:0},     // Marina Bay - waterfront basin, clearly SOUTH of the skyline (foreground)
   {c:[-100,58],rx:92,ry:54,rot:.3},    // central catchment reservoir
   {c:[198,92],rx:60,ry:32,rot:-.3},    // NE reservoir
+  {c:[300,-156],rx:40,ry:46,rot:0},    // south-east marina basin - reaches out to the cove mouth (opens to sea)
 ];
 function inWater(x,yN,margin){ for(const p of WATER){ const dx=x-p.c[0],dy=yN-p.c[1];
   const cs=Math.cos(-p.rot),sn=Math.sin(-p.rot), rx=dx*cs-dy*sn, ry=dx*sn+dy*cs;
   if((rx*rx)/(p.rx*p.rx)+(ry*ry)/(p.ry*p.ry) < (margin||1)) return true; } return false; }
-const PARKS = [ {c:[-95,55],rx:150,ry:96,col:0}, {c:[-300,30],rx:96,ry:64,col:1}, {c:[120,88],rx:120,ry:70,col:2}, {c:[300,20],rx:86,ry:60,col:1}, {c:[40,-120],rx:60,ry:44,col:0} ];
+const PARKS = [ {c:[-95,55],rx:150,ry:96,col:0}, {c:[-300,30],rx:96,ry:64,col:1}, {c:[120,88],rx:120,ry:70,col:2}, {c:[300,20],rx:86,ry:60,col:1}, {c:[40,-120],rx:60,ry:44,col:0},
+  {c:[-40,178],rx:130,ry:78,col:0}, {c:[430,-20],rx:80,ry:66,col:2}, {c:[-420,-30],rx:78,ry:72,col:1}, {c:[-240,-190],rx:70,ry:48,col:2} ];  // greenery over the new towns
 const CLUSTERS = [
   {c:[-52,-126],n:22,r:42,h:[110,225],pal:"cbd",slim:true},   // Raffles Place / Tanjong Pagar (behind the bay)
   {c:[-70,-88],n:13,r:52,h:[60,116],pal:"condo"},             // Orchard
@@ -298,12 +321,50 @@ const CLUSTERS = [
   {c:[350,50],n:14,r:62,h:[38,72],pal:"hdb"},                 // Pasir Ris
   {c:[255,-95],n:14,r:62,h:[38,74],pal:"hdb"},                // Bedok
   {c:[10,104],n:15,r:68,h:[38,74],pal:"hdb"},                 // Yishun
+  // --- a few houses out on the natural headlands (low, landed feel) ---
+  {c:[-150,-250],n:5,r:26,h:[16,28],pal:"hdb"},               // south peninsula houses
+  {c:[140,-252],n:4,r:22,h:[16,26],pal:"hdb"},                // south-east nub houses
+  {c:[300,-118],n:16,r:34,h:[15,28],pal:"lux"},               // marina north shore villas
+  {c:[246,-148],n:11,r:24,h:[15,26],pal:"lux"},               // marina west shore villas
+  {c:[354,-148],n:11,r:24,h:[15,26],pal:"lux"},               // marina east shore villas
+  {c:[214,-176],n:6,r:20,h:[14,22],pal:"lux"},                // west headland spit
+  {c:[388,-176],n:6,r:20,h:[14,22],pal:"lux"},                // east headland spit
+  {c:[172,232],n:5,r:26,h:[16,28],pal:"hdb"},                 // north headland houses
+  {c:[-118,228],n:4,r:22,h:[16,26],pal:"hdb"},                // north-west bump houses
+  // --- new towns filling the expanded land (north bulge, west, east, south) ---
+  {c:[-46,182],n:17,r:82,h:[36,72],pal:"hdb"},                // Sembawang (far north)
+  {c:[150,178],n:16,r:76,h:[36,72],pal:"hdb"},                // Punggol North
+  {c:[-232,166],n:14,r:70,h:[36,70],pal:"hdb"},               // Woodlands North
+  {c:[80,140],n:10,r:48,h:[52,98],pal:"condo"},               // north condo enclave
+  {c:[-424,8],n:12,r:56,h:[34,66],pal:"hdb"},                 // Boon Lay (west)
+  {c:[-404,-118],n:12,r:56,h:[34,66],pal:"hdb"},              // Jurong West
+  {c:[-332,66],n:11,r:54,h:[36,66],pal:"hdb"},                // Choa Chu Kang
+  {c:[442,16],n:14,r:62,h:[36,70],pal:"hdb"},                 // Changi (east)
+  {c:[432,-92],n:12,r:54,h:[34,66],pal:"hdb"},                // Changi South
+  {c:[-250,-198],n:12,r:56,h:[30,60],pal:"hdb"},              // southern shore town
+];
+
+/* street-level Singaporean props (built by addSGDetails). building scatter keeps `clr` clear around each,
+   so nothing ever grows through a prop. edit here to move/add them. */
+const SG_PROPS = [
+  {t:"kopi",   x:-14, yN:-52, rot:0.3,  clr:15},   // coffeeshops dotted through the estates
+  {t:"kopi",   x:96,  yN:-46, rot:-0.4, clr:15},
+  {t:"kopi",   x:-104,yN:20,  rot:0.1,  clr:15},
+  {t:"kopi",   x:188, yN:20,  rot:-0.2, clr:15},
+  {t:"kopi",   x:-292,yN:-60, rot:0.5,  clr:15},
+  {t:"kopi",   x:64,  yN:150, rot:0.2,  clr:15},
+  {t:"hawker", x:88,  yN:-92, rot:0.2,  clr:30},   // hawker centre / food court
+  {t:"hawker", x:150, yN:-2,  rot:-0.3, clr:30},
+  {t:"dragon", x:20,  yN:-250,rot:0.4,  clr:22},   // dragon playground on the south lawn
+  {t:"mrt",    x:-70, yN:132, rot:0,    clr:56},   // elevated MRT station + train
+  {t:"garden", x:-120,yN:-30, rot:0.2,  clr:16},   // community gardens
+  {t:"garden", x:214, yN:124, rot:-0.2, clr:16},
 ];
 
 /* ---------- places (the pressable destinations, each living on a landmark) ---------- */
 const POIS = [
   { id:"guide", build:"gateway", name:"Beginners Guide", kicker:"Start here", color:"#1f9aa0",
-    x:162, yN:-122, y:30, clr:36, href:"https://propsight.sg/guide/", cta:"Open the guide",
+    x:180, yN:-170, y:30, clr:36, href:"https://propsight.sg/guide/", cta:"Open the guide",
     blurb:"New to all this? A step-by-step walk through buying and selling in Singapore, in plain English, with the tips that quietly save people money.",
     feat:["How buying and selling actually work","What you pay at each step","Beginner tips worth knowing"] },
   { id:"agent", build:"mbs", name:"SkyPark Lounge", kicker:"Live chat", color:"#0e6b71",
@@ -315,29 +376,39 @@ const POIS = [
     blurb:"A monthly read on the Singapore private and HDB market, in plain language. What moved, by how much, and what it means this month.",
     feat:["Where prices and rents are moving","Written fresh every month","A plain reading of the official data"] },
   { id:"launches", build:"site", name:"Upcoming Launches", kicker:"New homes", color:"#2f9a8f",
-    x:205, yN:36, y:136, clr:52, href:"https://propsight.sg/launches/", cta:"See the launches",
+    x:280, yN:130, y:136, clr:52, href:"https://propsight.sg/launches/", cta:"See the launches",
     blurb:"The new launch projects coming to market, with the details that matter and a simple way to register your interest.",
     feat:["New projects as they open","Full project details and unit mixes","Register interest in a tap"] },
-  { id:"areas", build:"area", name:"Area Guides", kicker:"Know the area", color:"#d98f60",
-    x:300, yN:-30, y:88, clr:46, href:"https://propsight.sg/research/area-guides.html", cta:"Explore the areas",
+  { id:"areas", build:"estate", name:"Area Guides", kicker:"Know the area", color:"#d98f60",
+    x:370, yN:-30, y:62, clr:46, href:"https://propsight.sg/research/area-guides.html", cta:"Explore the areas",
     blurb:"A guide to every neighbourhood in Singapore. Transport, schools, amenities and the feel of each town, in plain terms.",
     feat:["A guide to every HDB town","Transport, schools and amenities","What each neighbourhood is really like"] },
   { id:"research", build:"library", name:"Research", kicker:"Condos and HDB", color:"#3a6e88",
-    x:-200, yN:-100, y:44, clr:40, href:"https://propsight.sg/research/", cta:"Open research",
+    x:-250, yN:20, y:44, clr:40, href:"https://propsight.sg/research/", cta:"Open research",
     blurb:"Go deeper on any condo or HDB project. The data behind prices, transactions and trends, gathered in one place.",
     feat:["Every condo and HDB project","Prices, transactions and trends","The data behind the numbers"] },
   { id:"tools", build:"workshop", name:"Property Tools", kicker:"Free toolkit", color:"#6f9a5e",
-    x:-255, yN:-52, y:64, clr:46, href:"https://propsight.sg/#tools", cta:"Open the toolkit",
+    x:-390, yN:-50, y:40, clr:46, href:"https://propsight.sg/#tools", cta:"Open the toolkit",
     blurb:"A set of free tools to value a home, run the numbers, and plan your next move with confidence.",
     feat:["Value a home in seconds","Work out stamp duty and sums","Plan your buying roadmap"] },
   { id:"news", build:"media", name:"Property News", kicker:"Updated daily", color:"#2f7d8a",
-    x:112, yN:-58, y:98, clr:40, href:"https://propsight.sg/news/", cta:"Read the news",
+    x:10, yN:150, y:98, clr:40, href:"https://propsight.sg/news/", cta:"Read the news",
     blurb:"Today's property news for Singapore, gathered together each morning so you can catch up in one place.",
     feat:["The day's Singapore headlines","Gathered every morning","One calm feed, no noise"] },
   { id:"aillie", build:"pavilion", name:"Ask Aillie", kicker:"Your assistant", color:"#2bb0a0", mode:"chat",
     x:46, yN:4, y:40, clr:34,
     blurb:"Aillie is the assistant of this world. Ask a property question in plain words and get a straight answer, any time.",
     feat:["Ask anything about property here","Straight answers, any hour","Points you to the right tool"] },
+
+  /* ---- future-linkable landmarks: rendered as scenery in the new towns, but NO pin/menu entry yet.
+     To turn one into a live clickable place later: remove `soon:true` and add
+       href:"https://...", cta:"Open ...", blurb:"...", feat:["...","...","..."], kicker:"..."
+     ...and it becomes a full pressable destination like the ones above. ---- */
+  { id:"lm_cc",         build:"pavilion", soon:true, name:"Community Club",  color:"#2f9a8f", x:-78,  yN:150, y:0, clr:30 },  // north town green
+  { id:"lm_showflat",   build:"estate",   soon:true, name:"Show Gallery",    color:"#d98f60", x:150,  yN:144, y:0, clr:40 },  // north new-launch
+  { id:"lm_civic",      build:"library",  soon:true, name:"Civic Centre",    color:"#3a6e88", x:-408, yN:-34, y:0, clr:38 },  // west park quarter
+  { id:"lm_enterprise", build:"workshop", soon:true, name:"Enterprise Park", color:"#6f9a5e", x:432,  yN:-26, y:0, clr:38 },  // east light-industry
+  { id:"lm_gate",       build:"gateway",  soon:true, name:"Town Gateway",    color:"#1f9aa0", x:-252, yN:-182,y:0, clr:26 },  // south-west arrival
 ];
 
 /* ---------- language (shares propsight.sg's ps_lang so it carries across the site) ---------- */
@@ -412,7 +483,7 @@ function makeSky(){ const c=document.createElement("canvas");c.width=8;c.height=
 
 /* ---------- painted top-surface map (green land, parks, water, urban tint, roads) ---------- */
 function landMap(){
-  const S=1536, c=document.createElement("canvas"); c.width=c.height=S; const g=c.getContext("2d");
+  const S=3072, c=document.createElement("canvas"); c.width=c.height=S; const g=c.getContext("2d");   // hi-res so the ground stays crisp on close zoom
   const L2C=(x,y)=>[ (x-MINX)/SPANX*S, (1-(y-MINY)/SPANY)*S ];
   const R=(rx)=> rx/SPANX*S, RY=(ry)=> ry/SPANY*S;
   const rnd=(s=>()=>{s=Math.sin(s*99.1)*4390.7;return s-Math.floor(s);})(3);
@@ -460,7 +531,7 @@ function landMap(){
     g.strokeStyle="rgba(255,255,255,.4)"; g.lineWidth=R(2.4); g.beginPath();g.ellipse(cx,cy,R(p.rx)*.96,RY(p.ry)*.96,p.rot,0,7);g.stroke();
     g.fillStyle="rgba(255,255,255,.16)";g.beginPath();g.ellipse(cx-R(p.rx)*.22,cy-RY(p.ry)*.28,R(p.rx)*.48,RY(p.ry)*.38,p.rot,0,7);g.fill(); });
   g.restore();
-  const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=4; return t;
+  const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=8; return t;
 }
 
 /* ---------- island: slab (thickness) + painted top ---------- */
@@ -512,17 +583,28 @@ let FACADE_MAT;
 /* ---------- buildings ---------- */
 function addBuildings(g){
   const all=[];
+  // a building's WHOLE footprint (plus a margin) must sit on dry land - no overhang past the world edge, no corner in water
+  const footClear=(x,yN,w,d,rot,m)=>{ const hw=w/2+m, hd=d/2+m, cs=Math.cos(rot), sn=Math.sin(rot);
+    for(let sx=-1;sx<=1;sx+=2) for(let sy=-1;sy<=1;sy+=2){
+      const px=x+(sx*hw)*cs-(sy*hd)*sn, py=yN+(sx*hw)*sn+(sy*hd)*cs;
+      if(!inSG(px,py) || inWater(px,py,1.0)) return false; }
+    return true; };
   CLUSTERS.forEach((cl,ci)=>{ const rand=rng(ci*97+5);
     for(let i=0;i<cl.n;i++){ const a=rand()*Math.PI*2, rr=Math.pow(rand(),.8)*cl.r;
       const x=cl.c[0]+Math.cos(a)*rr, yN=cl.c[1]+Math.sin(a)*rr*0.82;
-      if(!inSG(x,yN) || inWater(x,yN,1.25)) continue;
+      if(!inSG(x,yN) || inWater(x,yN,1.05)) continue;
       if(POIS.some(p=>{const dx=x-p.x,dy=yN-p.yN;return dx*dx+dy*dy < (p.clr||40)*(p.clr||40);})) continue;  // keep landmark plots clear
       const h=cl.h[0]+rand()*(cl.h[1]-cl.h[0]);
       const slab = cl.pal==="hdb";
       const w=(cl.slim?13:(slab?26:22))+rand()*(cl.slim?10:(slab?20:14));
       const d=(cl.slim?13:(slab?11:16))+rand()*(cl.slim?10:(slab?6:12));
+      const rot=(rand()-.5)*0.34;
+      const half=Math.max(w,d)*0.5;                               // this building's own footprint radius
+      if(SG_PROPS.some(s=>{const dx=x-s.x,dy=yN-s.yN, rr=s.clr+half; return dx*dx+dy*dy < rr*rr;})) continue;  // keep street-prop plots truly clear (accounts for building size - no clipping)
+      const podium=h>90?1.28:1;                                   // tall towers have a wider podium base
+      if(!footClear(x,yN,w*podium,d*podium,rot,10)) continue;     // keep the full base on dry land - no edge overhang, not in water
       const palA=PAL[cl.pal]; const col=palA[Math.floor(rand()*palA.length)];
-      all.push({x,z:-yN,w,h,d,col,rot:(rand()-.5)*0.34,slim:!!cl.slim,slab,tall:h>90,rk:rand()}); }
+      all.push({x,z:-yN,w,h,d,col,rot,slim:!!cl.slim,slab,tall:h>90,rk:rand()}); }
   });
   const geos=[], det=[];                                          // det = rooftop detail (plain)
   all.forEach(b=>{
@@ -590,9 +672,13 @@ function addTrees(g){
   const rand=rng(11); const geos=[]; let count=0;
   const greens=["#8fb673","#7ea867","#a0c483","#6f9a5e","#5f8a54","#95c17f"];
   const frond=["#6fa85e","#7fb56a","#619a52"];
-  for(let i=0;i<1500 && count<660;i++){
+  for(let i=0;i<2600 && count<1020;i++){
     const x=MINX+rand()*SPANX, yN=MINY+rand()*SPANY;
-    if(!inSG(x,yN) || inWater(x,yN,1.05)) continue; count++;
+    if(!inSG(x,yN) || inWater(x,yN,1.05)) continue;
+    if(!inSG(x+5,yN)||!inSG(x-5,yN)||!inSG(x,yN+5)||!inSG(x,yN-5)) continue;  // keep trunks off the cliff lip
+    if(SG_PROPS.some(s=>{const dx=x-s.x,dy=yN-s.yN;return dx*dx+dy*dy < s.clr*s.clr;})) continue;  // don't grow trees on the street props
+    if(POIS.some(p=>{const dx=x-p.x,dy=yN-p.yN;return dx*dx+dy*dy < (p.clr||30)*(p.clr||30);})) continue;  // ...or on the landmark plots
+    count++;
     const r=rand(), typ=rand();
     if(typ<0.14){                                                 // palm: slim trunk + fan top
       const th=9+r*11, trunk=new THREE.CylinderGeometry(0.7,1.2,th,5).toNonIndexed(); trunk.translate(0,th/2,0);
@@ -681,6 +767,7 @@ function makePerson(geos,x,yN,rand){
 function addPeople(g){
   const rand=rng(41); const geos=[]; let n=0;
   const put=(x,yN)=>{ if(!inSG(x,yN)||inWater(x,yN,1.12)) return false;
+    if(!inSG(x+5,yN)||!inSG(x-5,yN)||!inSG(x,yN+5)||!inSG(x,yN-5)) return false;  // keep people off the very edge
     if(POIS.some(p=>{const dx=x-p.x,dy=yN-p.yN;return dx*dx+dy*dy<20*20 && (p.build==="mbs"||p.build==="exchange");})) return false; // off raised plazas/tower feet
     makePerson(geos,x,yN,rand); n++; return true; };
   // bayfront + landmark gatherings (the foreground crowd is what you meet when you zoom in)
@@ -706,6 +793,97 @@ function addSwimmers(g){
   });
   if(geos.length){ const m=new THREE.Mesh(mergeGeometries(geos,false),new THREE.MeshStandardMaterial({vertexColors:true,roughness:1,flatShading:true})); g.add(m); }
   if(rings.length){ const rm=new THREE.Mesh(mergeGeometries(rings,false),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.45,depthWrite:false})); g.add(rm); }
+}
+
+/* ---------- Singaporean street-level details: real geometry, stays crisp on zoom-in ---------- */
+function addSGDetails(g){
+  const rand=rng(77); const geos=[];
+  const mk=(geo,hex)=>{ const ni=geo.index?geo.toNonIndexed():geo; return paintColor(ni,hex); };  // non-indexed so mixed shapes merge (matches addPeople)
+  const place=(parts,x,yN,rot)=>{ parts.forEach(p=>{ if(rot)p.rotateY(rot); p.translate(x,0.8,-yN); geos.push(p); }); };
+
+  // kopitiam / coffeeshop: unit + bright awning + square tables with colourful stools (box-only so it merges)
+  const kopi=()=>{ const P=[], aw=rand()<.5?"#c9584a":"#4f9e78";
+    P.push(mk(new THREE.BoxGeometry(20,11,13).translate(0,5.5,-4),"#ece0c8"));
+    P.push(mk(new THREE.BoxGeometry(22,1.4,6).translate(0,10.6,4),aw));
+    P.push(mk(new THREE.BoxGeometry(14,3,0.6).translate(0,8.4,2.6),"#f4efe4"));
+    P.push(mk(new THREE.BoxGeometry(14,1.3,0.7).translate(0,7,2.7),aw));
+    const sc=["#c9584a","#dcab39","#579aa2","#7a934f"];
+    for(let t=0;t<3;t++){ const tx=-6+t*6, tz=10.5;
+      P.push(mk(new THREE.BoxGeometry(5,0.5,5).translate(tx,4,tz),"#d8d2c4"));                             // table top
+      P.push(mk(new THREE.BoxGeometry(0.8,4,0.8).translate(tx,2,tz),"#b7b1a4"));                           // pedestal
+      for(let s=0;s<4;s++){ const a=s/4*6.283; P.push(mk(new THREE.BoxGeometry(1.8,2.4,1.8).translate(tx+Math.cos(a)*3.6,1.2,tz+Math.sin(a)*3.6), sc[(t+s)%4])); } }
+    return P; };
+  // hawker centre / food court: open hall, stepped roof, colourful stalls (box-only)
+  const hawker=()=>{ const P=[];
+    P.push(mk(new THREE.BoxGeometry(46,2,34).translate(0,1,0),"#d8cdb4"));
+    [[-20,-14],[20,-14],[20,14],[-20,14]].forEach(([x,z])=>P.push(mk(new THREE.BoxGeometry(2,15,2).translate(x,8,z),"#cfc4a8")));
+    P.push(mk(new THREE.BoxGeometry(50,2,38).translate(0,16,0),"#c8bea2"));                                // eaves
+    P.push(mk(new THREE.BoxGeometry(40,2,28).translate(0,18,0),"#b06a4a"));                                // stepped roof
+    P.push(mk(new THREE.BoxGeometry(28,2,18).translate(0,20,0),"#a25f45"));
+    P.push(mk(new THREE.BoxGeometry(16,2,10).translate(0,22,0),"#94553d"));
+    const sc=["#c9584a","#dcab39","#579aa2","#4f9e78","#7f6aa8"];
+    for(let i=0;i<8;i++){ const x=-16+(i%4)*10.5, z=(i<4?-8:8); P.push(mk(new THREE.BoxGeometry(8,6,7).translate(x,4,z), sc[i%5])); }
+    return P; };
+
+  // dragon playground (the mosaic classic): sand pit + undulating red/cream climb-arches + head (box-only)
+  const dragon=()=>{ const P=[];
+    P.push(mk(new THREE.BoxGeometry(34,1,22).translate(0,0.5,0),"#c7ac72"));                               // sand border
+    P.push(mk(new THREE.BoxGeometry(31,1.2,19).translate(0,0.75,0),"#e7cd93"));                            // sand
+    for(let i=0;i<6;i++){ const x=-11+i*4.2, top=4.6+Math.sin(i*0.9)*1.4, col=i%2?"#c9584a":"#f1e8d5";     // arches = 2 posts + lintel
+      P.push(mk(new THREE.BoxGeometry(1.1,top,1.1).translate(x,top/2+1,-2.3),col));
+      P.push(mk(new THREE.BoxGeometry(1.1,top,1.1).translate(x,top/2+1,2.3),col));
+      P.push(mk(new THREE.BoxGeometry(1.4,1.3,6).translate(x,top+1.1,0),col)); }
+    P.push(mk(new THREE.BoxGeometry(5.4,5.4,6).translate(-15,3.4,0),"#dcab39"));                           // head
+    P.push(mk(new THREE.BoxGeometry(3,2.6,4).translate(-18.4,2.6,0),"#c9584a"));                           // snout
+    P.push(mk(new THREE.BoxGeometry(0.7,1.1,0.7).translate(-17.6,4.6,-1.5),"#33312c"));                    // eyes
+    P.push(mk(new THREE.BoxGeometry(0.7,1.1,0.7).translate(-17.6,4.6,1.5),"#33312c"));
+    P.push(mk(new THREE.BoxGeometry(1,3,1).translate(-15,7,-1.7),"#6f5a3c"));                              // horns
+    P.push(mk(new THREE.BoxGeometry(1,3,1).translate(-15,7,1.7),"#6f5a3c"));
+    return P; };
+
+  // MRT: elevated viaduct + station + a train
+  const mrt=()=>{ const P=[], pier="#cfc9bb", deck="#d7d1c2", steel="#9aa6a2";
+    for(let i=-2;i<=2;i++) P.push(mk(new THREE.BoxGeometry(3.4,16,3.4).translate(i*20,8,0),pier));
+    P.push(mk(new THREE.BoxGeometry(84,3,9).translate(0,17,0),deck));
+    P.push(mk(new THREE.BoxGeometry(84,0.7,1).translate(0,18.8,-2.2),steel));
+    P.push(mk(new THREE.BoxGeometry(84,0.7,1).translate(0,18.8,2.2),steel));
+    P.push(mk(new THREE.BoxGeometry(30,9,17).translate(0,23.5,0),"#e6eef0"));       // station
+    P.push(mk(new THREE.BoxGeometry(34,1.6,21).translate(0,28.5,0),"#9fb0b2"));      // station roof
+    const tc="#2f9a8f", win="#cfe6e6";
+    for(let c=0;c<2;c++){ const cx=20+c*17; P.push(mk(new THREE.BoxGeometry(15,6,7).translate(cx,21.5,0),tc)); P.push(mk(new THREE.BoxGeometry(15.2,2,7.1).translate(cx,22.6,0),win)); }
+    return P; };
+
+  // community garden
+  const garden=()=>{ const P=[];
+    P.push(mk(new THREE.BoxGeometry(22,1,15).translate(0,0.5,0),"#b39668"));
+    for(let i=0;i<3;i++) P.push(mk(new THREE.BoxGeometry(18,1.4,2.8).translate(0,1.4,-4.4+i*4.4),"#6f9a5e"));
+    P.push(mk(new THREE.BoxGeometry(5,5,4).translate(-8,2.5,6),"#c07a4e"));
+    return P; };
+
+  // place every prop from the shared SG_PROPS list (same list the building scatter avoids)
+  const BUILDERS={kopi,hawker,dragon,mrt,garden};
+  SG_PROPS.forEach(s=>{ const b=BUILDERS[s.t]; if(b) place(b(),s.x,s.yN,s.rot); });
+
+  // marina jetty out into the cove basin
+  const jetty=()=>{ const P=[];
+    P.push(mk(new THREE.BoxGeometry(6,1,26).translate(0,1.4,0),"#b89768"));
+    for(let i=0;i<5;i++){ P.push(mk(new THREE.BoxGeometry(0.8,3,0.8).translate(-2.6,0.4,-11+i*5.5),"#8a6f4e")); P.push(mk(new THREE.BoxGeometry(0.8,3,0.8).translate(2.6,0.4,-11+i*5.5),"#8a6f4e")); }
+    return P; };
+  place(jetty(),300,-172,0);
+
+  const mesh=new THREE.Mesh(mergeGeometries(geos,false),new THREE.MeshStandardMaterial({vertexColors:true,roughness:1,flatShading:true}));
+  mesh.castShadow=true; mesh.receiveShadow=true; g.add(mesh);
+
+  // little sailboats moored in the marina
+  const hull=mat("#efe8dc"), sailm=mat("#ffffff"), sailc=mat("#dfe6e8");
+  [[286,-150,0.4,0.72],[313,-158,-0.5,0.78],[298,-166,0.1,0.66]].forEach(([x,yN,rot,sc])=>{
+    const b=new THREE.Group();
+    const body=new THREE.Mesh(new THREE.BoxGeometry(12,3,5),hull); body.position.y=1.6;
+    const bow=new THREE.Mesh(new THREE.ConeGeometry(3,7,4),hull); bow.rotation.z=-Math.PI/2; bow.rotation.y=Math.PI/4; bow.scale.set(1,1,.55); bow.position.set(8,1.6,0);
+    const mast=new THREE.Mesh(new THREE.BoxGeometry(0.5,12,0.5),sailm); mast.position.set(0,7,0);
+    const sail=new THREE.Mesh(new THREE.BoxGeometry(0.4,8,6),sailc); sail.position.set(0,7,1);
+    b.add(body,bow,mast,sail); b.position.set(x,-0.4,-yN); b.rotation.y=rot; b.scale.setScalar(sc); b.castShadow=true; g.add(b);
+  });
 }
 
 /* ---------- signature landmark buildings (one per place) ---------- */
@@ -806,13 +984,14 @@ const $=id=>document.getElementById(id);
 function wrapAngle(a){ return Math.atan2(Math.sin(a),Math.cos(a)); }
 
 function buildPins(){ const host=$("pins");
-  POIS.forEach(p=>{ const b=document.createElement("button"); b.className="pin"; b.style.setProperty("--pc",p.color); b.dataset.id=p.id;
+  POIS.forEach(p=>{ if(p.id==="aillie"||p.soon) return;   // no floating pin on the pavilion, or on "soon" landmarks (scenery until given an href)
+    const b=document.createElement("button"); b.className="pin"; b.style.setProperty("--pc",p.color); b.dataset.id=p.id;
     b.innerHTML=`<span class="tag"><i></i>${PL(p,"name")}</span><span class="stem"></span><span class="dot"></span>`;
     b.addEventListener("click",e=>{ e.stopPropagation(); openFor(p); });
     host.appendChild(b); p._pin=b; });
 }
 const _v=new THREE.Vector3();
-function updatePins(){ const W=innerWidth,H=innerHeight, farZoom=orbit.r>1900;
+function updatePins(){ const W=innerWidth,H=innerHeight, farZoom=orbit.r>2600;   // collapse labels to dots only on the genuine far overview (mobile default sits below this)
   const vis=[];
   POIS.forEach(p=>{ if(!p._anchor||!p._pin) return; p._anchor.getWorldPosition(_v); _v.project(camera);
     const on = _v.z<1 && _v.x>-1.05 && _v.x<1.05 && _v.y>-1.05 && _v.y<1.15;
@@ -823,15 +1002,22 @@ function updatePins(){ const W=innerWidth,H=innerHeight, farZoom=orbit.r>1900;
   // declutter: nearer pins (lower on screen) keep their label; a label that would collide collapses to a dot
   vis.sort((a,b)=>b.sy-a.sy);
   const placed=[];
-  vis.forEach(o=>{ const pin=o.p._pin;
-    if(farZoom){ pin.classList.add("mini"); return; }
-    const tag=pin.querySelector(".tag"), tw=tag.offsetWidth||96, th=25;
+  vis.forEach(o=>{ const pin=o.p._pin, tag=pin.querySelector(".tag");
+    if(farZoom){ pin.classList.add("mini"); if(tag) tag.style.transform=""; return; }
+    const tw=tag.offsetWidth||96, th=25;
     const r={l:o.sx-tw/2-5, rt:o.sx+tw/2+5, t:o.sy-18-th-5, b:o.sy-18+5};
-    if(placed.some(q=> !(r.rt<q.l||r.l>q.rt||r.b<q.t||r.t>q.b))) pin.classList.add("mini");
-    else placed.push(r); });
+    if(placed.some(q=> !(r.rt<q.l||r.l>q.rt||r.b<q.t||r.t>q.b))){ pin.classList.add("mini"); tag.style.transform=""; }
+    else { placed.push(r);
+      // keep the label fully on-screen: nudge only the label horizontally, the dot stays on its landmark
+      const M=8; let shift=0;
+      if(o.sx-tw/2 < M) shift = M-(o.sx-tw/2);
+      else if(o.sx+tw/2 > W-M) shift = (W-M)-(o.sx+tw/2);
+      tag.style.transform = shift ? `translateX(${shift}px)` : "";
+    } });
 }
 function buildMenu(){ const m=$("placesMenu"); m.innerHTML=`<div class="mh">${T("goto")}</div>`;
-  POIS.forEach(p=>{ const b=document.createElement("button"); b.className="pitem"; b.style.setProperty("--pc",p.color);
+  POIS.forEach(p=>{ if(p.soon) return;   // "soon" landmarks aren't in the Places menu until promoted to a link
+    const b=document.createElement("button"); b.className="pitem"; b.style.setProperty("--pc",p.color);
     b.innerHTML=`<span class="sw"></span><span class="tx"><b>${PL(p,"name")}</b><span>${PL(p,"kicker")}</span></span>`;
     b.addEventListener("click",()=>{ closeMenu(); flyTo(p); }); m.appendChild(b); });
 }
@@ -931,8 +1117,8 @@ function init(){
   host.appendChild(renderer.domElement);
 
   scene=new THREE.Scene(); scene.background=makeSky();
-  scene.fog=new THREE.Fog(new THREE.Color(PAL.sky.mid),1900,3800);
-  camera=new THREE.PerspectiveCamera(40,innerWidth/innerHeight,1,6000);camera.rotation.order="YXZ";
+  scene.fog=new THREE.Fog(new THREE.Color(PAL.sky.mid),3000,7000);   // no fog at the default hero; gentle haze only when zoomed way out
+  camera=new THREE.PerspectiveCamera(40,innerWidth/innerHeight,1,8000);camera.rotation.order="YXZ";
 
   LHEMI=new THREE.HemisphereLight(0xf1f7ff,0x92978f,0.72); scene.add(LHEMI);
   LKEY=new THREE.DirectionalLight(0xfff0cf,1.72);LKEY.position.set(-640,780,540);LKEY.castShadow=true;
@@ -943,7 +1129,7 @@ function init(){
   addShadow(); clouds=addClouds();
   island=new THREE.Group();
   buildIsland(island); addBuildings(island); addMBS(island); addSupertrees(island); addTrees(island);
-  addBirds(island); addBoats(island); addPlane(island); addPeople(island); addSwimmers(island); addLandmarks(island);
+  addBirds(island); addBoats(island); addPlane(island); addPeople(island); addSwimmers(island); addLandmarks(island); addSGDetails(island);
   island.position.set(-(MINX+MAXX)/2, 0, (MINY+MAXY)/2);   // centre island at world origin
   scene.add(island);
 
@@ -985,7 +1171,7 @@ function bindControls(){
     if(pts.size>=2){ dragging=false; pinching=true; pinchD=dist(); vT=vP=0; }               // second finger down -> enter pinch, stop rotating
     else { dragging=true; moved=0; lastX=e.clientX; lastY=e.clientY; vT=vP=0; idleT=0; phiEase=false; } };
   const move=(e)=>{ if(!pts.has(e.pointerId))return; pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
-    if(pinching){ if(pts.size<2)return; const d=dist(); if(pinchD)zoomTo(orbit.tr+(pinchD-d)*2.2); pinchD=d; needsRender=true; return; }
+    if(pinching){ if(pts.size<2)return; const d=dist(); if(pinchD)zoomTo(orbit.tr+(pinchD-d)*2.2*Math.max(0.4,orbit.tr/1200)); pinchD=d; needsRender=true; return; }
     if(!dragging)return; const dx=e.clientX-lastX,dy=e.clientY-lastY; lastX=e.clientX; lastY=e.clientY; moved+=Math.abs(dx)+Math.abs(dy);
     vT=-dx*0.005; vP=-dy*0.005; orbit.theta+=vT; orbit.phi+=vP; idleT=0; needsRender=true; document.getElementById("hint")?.classList.add("gone"); };
   const up=(e)=>{ pts.delete(e.pointerId);
@@ -995,11 +1181,11 @@ function bindControls(){
   host.addEventListener("pointerdown",down);
   host.addEventListener("pointermove",move);
   host.addEventListener("pointerup",up); host.addEventListener("pointercancel",up);
-  host.addEventListener("wheel",e=>{if(paused)return;e.preventDefault();zoomTo(orbit.tr+e.deltaY*0.8);},{passive:false});
+  host.addEventListener("wheel",e=>{if(paused)return;e.preventDefault();zoomTo(orbit.tr+e.deltaY*0.8*Math.max(0.4,orbit.tr/1200));},{passive:false});   // proportional: gentle steps up close, bigger steps far out
 }
 function onResize(){ camera.aspect=innerWidth/innerHeight; const portrait=innerWidth/innerHeight<0.85;
   camera.fov=portrait?48:40;
-  orbit.tr=orbit.r=THREE.MathUtils.clamp(portrait?1040:1000, lim.rMin, lim.rMax);
+  orbit.tr=orbit.r=THREE.MathUtils.clamp(portrait?1960:1060, lim.rMin, lim.rMax);   // pull back enough to frame the whole rounded island incl. both flank pins (portrait needs more)
   camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); needsRender=true; }
 
 function loop(t){ requestAnimationFrame(loop); if(document.hidden)return;
