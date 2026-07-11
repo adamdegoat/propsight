@@ -134,6 +134,21 @@
     .psnav-lang svg{width:15px;height:15px;flex:none;stroke:currentColor;fill:none;stroke-width:1.7}
     .psnav-lang:hover{background:#1b3a2d;color:#eaf6f4;transform:translateY(-1px)}
 
+    /* Studio pill: prominent solid teal link to the free video maker */
+    .psnav-studio{position:relative;display:inline-flex;align-items:center;gap:8px;flex:none;margin-left:8px;text-decoration:none;background:linear-gradient(180deg,#17a6a6,#0e767d);color:#f2fffb;font-family:inherit;font-size:13px;font-weight:800;letter-spacing:-.005em;padding:8px 15px;border-radius:30px;border:1px solid #0c666d;box-shadow:0 8px 20px -8px rgba(15,122,130,.75);white-space:nowrap;transition:transform .2s,box-shadow .2s,filter .2s}
+    .psnav-studio:hover{transform:translateY(-1px);filter:brightness(1.06);box-shadow:0 13px 26px -8px rgba(15,122,130,.85)}
+    .psnav-studio .stic{width:17px;height:17px;flex:none;display:inline-flex;color:#c9fff1}
+    .psnav-studio .stic svg{width:100%;height:100%}
+    .psnav-studio .st-sub{font-weight:700;color:rgba(242,255,251,.85)}
+    .psnav-studio .st-sub::before{content:"·";margin:0 6px 0 5px;color:rgba(242,255,251,.55)}
+    .psnav-studio::before{content:"New";position:absolute;left:50%;bottom:calc(100% - 4px);transform:translateX(-50%);font:800 7.5px/1 "Schibsted Grotesk",system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#0d6169;background:#c9fef0;padding:2px 7px;border-radius:20px;white-space:nowrap;box-shadow:0 2px 6px rgba(15,122,130,.4)}
+    html.lang-zh .psnav-studio::before{content:"新"}
+    @media(max-width:1300px){.psnav-studio .st-sub{display:none}}
+    @media(max-width:1180px){.psnav-studio{display:none}}
+    /* mobile menu Studio card (mirrors psm-world, pine-teal) */
+    .psm-studio{background:linear-gradient(135deg,#12888e,#0d6b72)}
+    .psm-studio .worb{stroke-width:1.9}
+
     .psnav-back{display:none;margin-right:2px;width:40px;height:40px;flex:none;align-items:center;justify-content:center;border:1px solid #bfdbd5;border-radius:11px;background:rgba(255,255,255,.6);cursor:pointer;color:#1b3a2d;-webkit-tap-highlight-color:transparent}
     .psnav-back svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
     @media(max-width:1180px){.psnav-back{display:inline-flex}}
@@ -237,6 +252,7 @@
     '<button class="psnav-back" id="psBack" type="button" aria-label="Go back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>' +
     '<a class="psnav-brand" href="' + BASE + '/"><span class="pm-tile">' + MARK + '</span><span class="bw"><b>PropSight</b><span>' + t('Singapore') + '</span></span></a>' +
     '<nav class="psnav-links">' + ITEMS.map(itemHtml).join('') + '</nav>' +
+    '<a class="psnav-studio" href="https://studio.propsight.sg" target="_blank" rel="noopener" aria-label="PropSight Studio, free listing video maker"><span class="stic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.3l4.4 2.7-4.4 2.7z" fill="currentColor" stroke="none"/></svg></span><span class="st-nm">' + t('Studio') + '</span><span class="st-sub">' + t('Free video maker') + '</span></a>' +
     '<button class="psnav-lang" id="psLang" type="button" aria-label="Switch language">' + LANG_SVG + (curLang() === 'zh' ? 'EN' : '中文') + '</button>' +
     '<button class="psnav-mlang" id="psMLang" type="button" aria-label="Switch language">' + (curLang() === 'zh' ? 'EN' : '中文') + '</button>' +
     '<button class="psnav-burger" id="psBurger" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>' +
@@ -253,6 +269,7 @@
 
   var menuHTML = '<div class="psnav-menu" id="psMenu">' +
     '<a class="psm-world" href="'+PW.href+'"><span class="wl"><span class="badge">'+t('Featured')+'</span><b>PropWorld</b><span class="s">'+t('Singapore property, brought to life')+'</span></span><svg class="worb" viewBox="0 0 24 24">'+IC.orb+'</svg></a>' +
+    '<a class="psm-world psm-studio" href="https://studio.propsight.sg" target="_blank" rel="noopener" style="margin-top:9px"><span class="wl"><span class="badge">'+t('Free')+'</span><b>'+t('Studio')+'</b><span class="s">'+t('Free listing video maker')+'</span></span><svg class="worb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.3l4.4 2.7-4.4 2.7z" fill="currentColor" stroke="none"/></svg></a>' +
     '<div class="psm-grp"><div class="psm-chips">' + chip('Upcoming Launches', NL.href, 'build', 'wide feat') + '</div></div>' +
     '<div class="psm-grp"><div class="psm-glbl">'+t('Insights')+' <span class="mtag">'+t('Smart')+'</span></div><div class="psm-chips">' +
       INS.kids.map(function(k){ return chip(k[0], k[1], k[2], 'acc'); }).join('') +

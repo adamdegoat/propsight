@@ -59,6 +59,10 @@
     'hero.h1a': '我们替您研究和分析，', 'hero.h1b': '省去您的功夫。',
     'hero.leadLg': 'PropSight 是您的一站式新加坡房产平台，免费且通俗易懂。用真实成交估算任何房子的价值，探索即将推出的新盘与区域指南，紧跟市场动态，走进 PropWorld，随时问 Aillie。',
     'hero.leadSm': '您的一站式新加坡房产平台，免费且通俗易懂。估算房价、探索新盘与区域指南、紧跟市场，还能走进 PropWorld，随时问 Aillie。',
+    // ── PropSight Studio (free listing video maker) ──
+    'Studio': '视频工作室', 'Free video maker': '免费', 'Free listing video maker': '免费房源视频',
+    'hero.studioLine': '新功能：把您的房源照片变成可直接发布的视频，免费。',
+    'hero.studioLink': '打开 PropSight Studio →',
     // ── homepage Insights section (narrative market analysis + deep dive) ──
     'The market, read properly.': '把市场，读明白。',
     'Our plain-English read of Singapore property, from real transacted prices. The monthly analysis, plus deep dives on one sharp question at a time.': '我们用通俗的语言解读新加坡房产，全部基于真实成交价格。每月市场分析，加上每次聚焦一个问题的深度分析。',
