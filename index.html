@@ -172,12 +172,12 @@ html.menu-open,html.menu-open body{overflow:hidden}
 .hdoor .hd-ar{margin-left:auto;flex:none;color:var(--brass3);transition:transform .25s var(--ease)}
 .hdoor .hd-ar svg{width:18px;height:18px}
 .hdoor:hover .hd-ar{transform:translateX(4px)}
-.hdoor.hd-world{background:var(--gtex,none),linear-gradient(155deg,#1F6B4F 0%,#123a30 92%);border-color:var(--brass2);animation:hdWorldGlow 3.4s ease-in-out infinite}
+
 .hdoor.hd-world .hd-ic{background:rgba(201,180,137,.26)}
-.hdoor.hd-world::after{content:"";position:absolute;top:0;left:-65%;width:48%;height:100%;background:linear-gradient(100deg,rgba(191,240,232,0) 0%,rgba(191,240,232,.32) 50%,rgba(191,240,232,0) 100%);transform:skewX(-18deg);pointer-events:none;animation:hdWorldSheen 5.6s ease-in-out infinite}
-@keyframes hdWorldGlow{0%,100%{box-shadow:0 14px 30px -10px rgba(15,35,26,.42),0 0 0 0 rgba(46,196,182,0)}50%{box-shadow:0 16px 34px -10px rgba(15,35,26,.46),0 0 22px 1px rgba(46,196,182,.42)}}
-@keyframes hdWorldSheen{0%,74%{left:-65%}88%,100%{left:135%}}
-@media(prefers-reduced-motion:reduce){.hdoor.hd-world{animation:none}.hdoor.hd-world::after{display:none}}
+
+
+
+@media(prefers-reduced-motion:reduce){}
 .hdoor-sec{display:flex;gap:12px;margin-top:15px;flex-wrap:wrap;align-items:center}
 .hdoor-sec .btn-tg{display:inline-flex;align-items:center;gap:8px;background:var(--gtex,none),#1E3A2C;color:#F2ECE0;border:1px solid var(--brass);border-radius:40px;padding:10px 17px;font-weight:800;font-size:14px;font-family:inherit;cursor:pointer;box-shadow:0 8px 20px rgba(15,35,26,.3);transition:transform .2s var(--ease),box-shadow .2s}
 .hdoor-sec .btn-tg:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(15,35,26,.42)}
@@ -731,9 +731,9 @@ html.menu-open .cbtn{opacity:0;visibility:hidden;pointer-events:none}
 .chead .ct b{font-family:var(--serif);font-weight:600;font-size:17px;display:block;line-height:1.1}
 .chead .ct span{font-size:11.5px;color:rgba(230,243,240,.78);font-weight:500}
 .chead .ct .cstat{display:flex;align-items:center;gap:7px;margin-top:3px}
-.chead .cstat .cdot{flex:none;width:7px;height:7px;border-radius:50%;background:#86d6a8;box-shadow:0 0 0 0 rgba(134,214,168,.55);animation:cpulse 2.6s ease-in-out infinite}
+.chead .cstat .cdot{flex:none;width:7px;height:7px;border-radius:50%;background:#86d6a8;position:relative}.chead .cstat .cdot::after{content:'';position:absolute;inset:0;border-radius:50%;background:rgba(134,214,168,.55);animation:cpulse 2.6s ease-in-out infinite;will-change:transform,opacity}
 .chead .cstat #cliveTxt{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .3s ease}
-@keyframes cpulse{0%{box-shadow:0 0 0 0 rgba(134,214,168,.5);opacity:.85}70%{box-shadow:0 0 0 6px rgba(134,214,168,0);opacity:1}100%{box-shadow:0 0 0 0 rgba(134,214,168,0);opacity:.85}}
+@keyframes cpulse{0%{transform:scale(1);opacity:.55}70%{transform:scale(2.7);opacity:0}100%{transform:scale(2.7);opacity:0}}
 .chead .cx{flex:none;width:32px;height:32px;border-radius:10px;border:1px solid rgba(230,243,240,.25);background:rgba(255,255,255,.06);color:#F2ECE0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s}
 .chead .cx:hover{background:rgba(255,255,255,.14)}.chead .cx svg{width:16px;height:16px}
 .cbody{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:18px 16px 8px;display:flex;flex-direction:column;gap:12px}
@@ -938,7 +938,7 @@ em{color:var(--brass)}
 .ins-month{background:radial-gradient(130% 100% at 100% 0,#edf6f0 0,#fff 38%)}
 .ins-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:20px}
 .ins-lbl{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);display:inline-flex;align-items:center;gap:8px}
-.ins-lbl .dot{width:7px;height:7px;border-radius:50%;background:var(--brass2);box-shadow:0 0 0 0 rgba(46,125,91,.5);animation:cpulse 2.6s ease-in-out infinite}
+.ins-lbl .dot{width:7px;height:7px;border-radius:50%;background:var(--brass2);position:relative}.ins-lbl .dot::after{content:'';position:absolute;inset:0;border-radius:50%;background:rgba(46,125,91,.5);animation:cpulse 2.6s ease-in-out infinite;will-change:transform,opacity}
 .ins-lbl-dive{color:var(--green2)}
 .ins-when{flex:none;font-size:12px;font-weight:700;color:var(--ink3)}
 .ins-quote{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;font-size:clamp(19px,1.7vw,22px);line-height:1.38;letter-spacing:-.02em;color:var(--green3);margin:0 0 15px;padding-left:18px;border-left:2.5px solid var(--brass3)}
