@@ -2162,6 +2162,17 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
       return {text:"Deep Dives are longer written explainers on how one part of the Singapore market actually works, researched and written out properly rather than summarised.",
               link:{href:'deep-dives/',label:'Read the Deep Dives'}};
 
+    // a place name on its own goes straight to that guide. Longest slug first,
+    // so "serangoon gardens" is not swallowed by "serangoon".
+    const AREAS=['serangoon-gardens','holland-village','kallang-whampoa','bukit-panjang','choa-chu-kang','marine-parade','telok-blangah','central-area','potong-pasir','river-valley','bukit-batok','bukit-merah','bukit-timah','jurong-east','jurong-west','tiong-bahru','ang-mo-kio','marina-bay','queenstown','west-coast','balestier','boon-keng','joo-chiat','one-north','pasir-ris','sembawang','serangoon','toa-payoh','woodlands','bidadari','clementi','ghim-moh','lavender','sengkang','sin-ming','tampines','frankel','geylang','hougang','orchard','punggol','redhill','sentosa','tanglin','whampoa','bishan','dakota','dawson','katong','newton','novena','outram','rochor','siglap','yishun','bedok'];
+    for(const a of AREAS){
+      const nm=a.replace(/-/g,' ');
+      if(s.indexOf(nm)>=0){
+        const pretty=nm.replace(/\b[a-z]/g,c=>c.toUpperCase());
+        return {text:"There is a guide for "+pretty+": what homes there cost, how prices have moved, what is nearby, and who the area suits.",
+                link:{href:'areaguides/'+a+'.html',label:'Open the '+pretty+' guide'}};
+      }
+    }
     // area guides
     if(has(/(area|town|neighbourhood|neighborhood|estate|district|guide for|live in|moving to)/))
       return {text:"There is a guide for every HDB town: what homes there cost, how prices have moved, what is nearby, and who the area suits.",
