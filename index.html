@@ -2369,7 +2369,7 @@ applyFilter((()=>{try{return sessionStorage.getItem('adamToolFilter')}catch(e){r
     const tz=document.getElementById('cteaser');if(tz)tz.classList.remove('show');
     if(!greeted){greeted=true;
       setTimeout(()=>{
-        const gtxt=(window.PSI18N?window.PSI18N.t:function(s){return s;})("Hi, I'm Aillie. I know my way around PropSight and I answer from what is actually on it: the sale records, the weekly market tracker, the launches and the tools. I stick to what those can show, so if I do not have something I will say so rather than guess. Tap Show me around, or ask me anything below.");
+        const gtxt=(window.PSI18N?window.PSI18N.t:function(s){return s;})("Hi, I'm Aillie. I answer from what is actually on PropSight: the sale records, the weekly market tracker, the launches and the tools. If I do not have something, I will say so rather than guess.");
         const gb=botReply(gtxt);
         
         showPillRow();

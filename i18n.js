@@ -197,7 +197,7 @@
   'Ask about prices, your budget, a project…': '问价格、预算或某个楼盘…',
   "What's the market doing?": "市场最近怎么样？",
   "What's my home worth?": "我的房子值多少？",
-  "Hi, I'm Aillie. I know my way around PropSight and I answer from what is actually on it: the sale records, the weekly market tracker, the launches and the tools. I stick to what those can show, so if I do not have something I will say so rather than guess. Tap Show me around, or ask me anything below.": "你好，我是 Aillie。PropSight 上有什么我都熟，回答也都出自站上的真实内容：成交记录、每周更新的市场追踪、新盘和各项工具。我只讲这些数据能说明的事，没有的我会直说，不会猜。点「带我逛一圈」，或在下面随便问我。",
+  "Hi, I'm Aillie. I answer from what is actually on PropSight: the sale records, the weekly market tracker, the launches and the tools. If I do not have something, I will say so rather than guess.": "你好，我是 Aillie。我的回答都出自 PropSight 上的真实内容：成交记录、每周更新的市场追踪、新盘和各项工具。没有的我会直说，不会猜。",
   "Let us work out your real budget from your income and savings, using the actual lending rules (TDSR, MSR and LTV).": "我们根据你的收入和存款，用实际的贷款规则（TDSR、MSR 和 LTV）算出你真正的预算。",
   "I can check whether you are eligible for an HDB flat, an EC or a condo before you fall for the wrong one.": "我可以先帮你查清楚，组屋、执行共管公寓还是私人公寓，你符合哪一种的条件，免得看上了才发现买不了。",
   "I can value any HDB or condo on real recent transactions, with an honest confidence range and the comparable sales behind it.": "我可以依据近期的真实成交，为任何组屋或公寓估价，并附上诚实的区间和背后的可比成交。",
