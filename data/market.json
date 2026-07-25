@@ -15,6 +15,55 @@
   "chg": 5.6,
   "n": 236
  },
+ "bto": {
+  "when": "October 2026",
+  "sites": [
+   "Bayshore",
+   "Caldecott",
+   "Mattar",
+   "Tengah",
+   "Chencharu",
+   "Sembawang North"
+  ],
+  "towns": [
+   {
+    "site": "Caldecott",
+    "town": "Toa Payoh",
+    "med": 1019000,
+    "n": 90
+   },
+   {
+    "site": "Mattar",
+    "town": "Geylang",
+    "med": 710000,
+    "n": 58
+   },
+   {
+    "site": "Sembawang North",
+    "town": "Sembawang",
+    "med": 595000,
+    "n": 76
+   },
+   {
+    "site": "Bayshore",
+    "town": "Bedok",
+    "med": 585000,
+    "n": 123
+   },
+   {
+    "site": "Chencharu",
+    "town": "Yishun",
+    "med": 545000,
+    "n": 192
+   },
+   {
+    "site": "Tengah",
+    "town": "Tengah",
+    "med": null,
+    "n": 0
+   }
+  ]
+ },
  "town_moves": {
   "up": [
    {
