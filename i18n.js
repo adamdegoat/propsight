@@ -102,6 +102,7 @@
   'resale nearby': '周边转售',
   'above': '高于',
   'Million-dollar flats': '百万组屋',
+  'Where HDB prices moved, past 3 months': '组屋价格涨跌最大的市镇 · 过去三个月',
   'Price change by area, past 3 months': '各区价格变化 · 近三个月',
   'tools.lede': '决定一次置业的三个数字。其他工具都在上方菜单里。',
   'Step one': '第一步',

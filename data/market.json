@@ -15,6 +15,41 @@
   "chg": 5.6,
   "n": 236
  },
+ "town_moves": {
+  "up": [
+   {
+    "town": "Toa Payoh",
+    "psf": 753,
+    "prev": 713,
+    "chg": 5.6,
+    "n": 236
+   },
+   {
+    "town": "Bukit Merah",
+    "psf": 809,
+    "prev": 777,
+    "chg": 4.1,
+    "n": 255
+   }
+  ],
+  "down": [
+   {
+    "town": "Serangoon",
+    "psf": 640,
+    "prev": 658,
+    "chg": -2.7,
+    "n": 82
+   },
+   {
+    "town": "Geylang",
+    "psf": 608,
+    "prev": 646,
+    "chg": -5.9,
+    "n": 171
+   }
+  ],
+  "n": 23
+ },
  "hdb_series": [
   0,
   0,
