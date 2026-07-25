@@ -90,6 +90,20 @@
   "gap": 93,
   "towns": 23
  },
+ "mdollar": {
+  "n": 491,
+  "of": 6194,
+  "pct": 7.9,
+  "prev_pct": 6.8,
+  "one_in": 13,
+  "prev_one_in": 15,
+  "top_town": "Toa Payoh",
+  "record": {
+   "price": 1728000,
+   "name": "Blk 96A Henderson Rd",
+   "town": "Bukit Merah"
+  }
+ },
  "headline_en": "HDB resale has stopped moving",
  "headline_zh": "HDB 转售价格已经停下来"
 }
